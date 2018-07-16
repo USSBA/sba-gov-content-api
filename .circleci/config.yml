@@ -1,0 +1,190 @@
+# Environment Variables required to be set in circleci web config
+#
+# LOWER_AWS_KEY=
+# LOWER_AWS_SECRET=
+# UPPER_AWS_KEY=
+# UPPER_AWS_SECRET=
+
+version: 2
+workflows:
+  version: 2
+  test-build-deploy:
+    jobs:
+    - cache-dependencies:
+        filters:
+          branches:
+            only: 
+            - /.*/
+          tags:
+            only: 
+            - /.*/
+    - npm-test:
+        requires: [cache-dependencies]
+        filters:
+          branches:
+            only: 
+            - /.*/
+          tags:
+            only: 
+            - /.*/
+    - build-package:
+        requires: [npm-test]
+        filters:
+          branches:
+            only:
+            - master
+            - /[Ff]eature-\w+-\d+[-\w]*/
+          tags:
+            only:
+            - production
+            - staging
+            - demo
+            - mint
+            - /int-\w+/
+    - upload-package:
+        requires: [build-package]
+        filters:
+          branches:
+            ignore:
+            - /.*/
+          tags:
+            only:
+            - production
+            - staging
+            - demo
+            - mint
+            - /int-\w+/
+    - deploy-package:
+        requires: [upload-package]
+        filters:
+          branches:
+            ignore:
+            - /.*/
+          tags:
+            only:
+            - production
+            - staging
+            - demo
+            - mint
+            - /int-\w+/
+jobs:
+  cache-dependencies:
+    docker:
+      - image: circleci/node:8.10
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: install dependencies
+          command: |
+            npm install --silent --no-save
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v2-dependencies-{{ checksum "package.json" }}
+  npm-test:
+    docker:
+    - image: circleci/node:8.10
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: run mocha
+          command: |
+            npm test
+  build-package:
+    docker:
+      - image: circleci/node:8.10
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: create zip package
+          command: |
+            mkdir build
+            mkdir workspace
+            cp package.json build/
+            cp -R src/* build/
+            cd build
+            npm i --prod --silent
+            rm package.json
+            zip -r -q ../workspace/sba-gov-content-api.zip .
+            cd ..
+            rm -rf build
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - sba-gov-content-api.zip
+  upload-package:
+    docker:
+      - image: ussba/cc-docker-git-aws:latest
+    steps:
+      - checkout
+      - attach_workspace:
+          at: workspace
+      - run:
+          name: publish
+          shell: /bin/bash -eo pipefail
+          command: |
+            if [ -z "${CIRCLE_BRANCH}" ]
+            then
+              function set_lower(){ export AWS_ACCESS_KEY_ID=$LOWER_AWS_KEY AWS_SECRET_ACCESS_KEY=$LOWER_AWS_SECRET BUCKET_NAME=$LOWER_BUCKET_NAME;}
+              function set_upper(){ export AWS_ACCESS_KEY_ID=$UPPER_AWS_KEY AWS_SECRET_ACCESS_KEY=$UPPER_AWS_SECRET BUCKET_NAME=$UPPER_BUCKET_NAME;}
+  
+              export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+              export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
+  
+              case $CIRCLE_TAG in
+                production|staging)
+                  set_upper
+                  ;;
+                *)
+                  set_lower
+                  ;;
+              esac
+  
+              aws s3api put-object --body "workspace/sba-gov-content-api.zip" --bucket "${BUCKET_NAME}" --key "${CIRCLE_TAG}/sba-gov-content-api.zip"
+            fi
+  deploy-package:
+    docker:
+      - image: ussba/cc-docker-git-aws:latest
+    steps:
+      - checkout
+      - run:
+          name: deploy
+          shell: /bin/bash -eo pipefail
+          command: |
+            if [ -z "${CIRCLE_BRANCH}" ]
+            then
+              function set_lower(){ export AWS_ACCESS_KEY_ID=$LOWER_AWS_KEY AWS_SECRET_ACCESS_KEY=$LOWER_AWS_SECRET BUCKET_NAME=$LOWER_BUCKET_NAME;}
+              function set_upper(){ export AWS_ACCESS_KEY_ID=$UPPER_AWS_KEY AWS_SECRET_ACCESS_KEY=$UPPER_AWS_SECRET BUCKET_NAME=$UPPER_BUCKET_NAME;}
+  
+              case $CIRCLE_TAG in
+                production)
+                  export ENVIRONMENT=production
+                  set_upper
+                  ;;
+                staging)
+                  export ENVIRONMENT=staging
+                  set_upper
+                  ;;
+                *)
+                  export ENVIRONMENT=${CIRCLE_TAG}
+                  set_lower
+                  ;;
+              esac
+  
+              export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+              export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
+  
+              export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix sba-gov-content-api.zip | jq '.Versions[0].VersionId')
+              export LAMBDA_NAME="${ENVIRONMENT}-content-api-lambda"
+  
+              aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${CIRCLE_TAG}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
+            fi

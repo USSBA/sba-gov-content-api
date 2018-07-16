@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  FunctionName:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs8.10
+      CodeUri: s3://sbagovlower-source/sba-gov-content-api.zip
+      Environment:
+        Variables:
+          CLOUDSEARCH_SEARCH_ENDPOINT: search-mint-hdgvyg66mwvfnu46tzaszesh5u.us-east-1.cloudsearch.amazonaws.com
+          CLOUDSEARCH_OFFICE_ENDPOINT: search-mint-offices-mjhazqnua7k5nqkxojddfhkrw4.us-east-1.cloudsearch.amazonaws.com
+          CONTENT_BUCKET: mint-content-sba-gov
+          ZIP_CODE_DYNAMODB_TABLE: ZipCodesLower
+      Tags:
+        Environment: int-rh
+      Events:
+        GetByTypeAndIdResource:
+          Type: Api
+          Properties:
+            Path: /api/content/{type}/{id}.json
+            Method: get
+        GetByTypeResource:
+          Type: Api
+          Properties:
+            Path: /api/content/{type}.json
+            Method: get       
