@@ -7,7 +7,10 @@ exports.handler = (event, context, callback) => {
     .then(result => {
       callback(null, result);
     })
-    .catch(callback)
+    .catch(err => {
+      console.error(err);
+      callback(err)
+    })
 }
 
 async function run(event) {
@@ -15,14 +18,23 @@ async function run(event) {
   console.log(JSON.stringify(event))
   if (event && event.pathParameters) {
     let params = event.pathParameters;
+    let body = ""
     if (params.id) {
       let type = params.type;
       let { first: id, second: extension } = splitAsObject(params.id);
-      result = await content.fetchContentById({ id, type, extension }, event.headers)
+      body = await content.fetchContentById({ id, type, extension }, event.headers || {})
+
     }
     else {
       let { first: type, second: extension } = splitAsObject(params.type);
-      result = await content.fetchContentByType({ type, extension })
+      body = await content.fetchContentByType({ type, extension })
+    }
+    result = {
+      statusCode: 200,
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json"
+      }
     }
   }
   else {
