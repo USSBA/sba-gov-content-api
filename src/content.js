@@ -1,5 +1,5 @@
 const HttpStatus = require('http-status-codes')
-const s3CacheReader = require('./s3-cache-reader.js')
+const s3CacheReader = require('./clients/s3-cache-reader.js')
 const {
   fetchAnnouncements,
   fetchArticles,
@@ -10,10 +10,10 @@ const {
   fetchFormattedNode,
   fetchNodes,
   fetchTaxonomys
-} = require('../service/drupal-eight.js')
-const { fetchCourses, fetchCourse } = require('../service/courses.js')
-const { runSearch } = require('../service/search.js')
-const { fetchOffices } = require('../service/office-search.js')
+} = require('./service/drupal-eight.js')
+const { fetchCourses, fetchCourse } = require('./service/courses.js')
+const { runSearch } = require('./service/search.js')
+const { fetchOffices } = require('./service/office-search.js')
 
 const fetchFunctions = {
   node: fetchFormattedNode

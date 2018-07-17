@@ -1,13 +1,14 @@
 /* eslint-env mocha */
-let config = require('config')
+let config = require('../config')
 let chai = require('chai')
 chai.should()
+let expect = chai.expect;
 
 let officeSearch = require('./office-search.js')
 
 let aws = require('aws-sdk')
 const csd = new aws.CloudSearchDomain({
-  endpoint: config.get('aws.cloudsearch.officeEndpoint'),
+  endpoint: config.cloudSearch.officeEndpoint,
   region: 'us-east-1',
   apiVersions: '2013-01-01'
 })
@@ -69,7 +70,7 @@ async function insertDocuments (docs) {
     contentType: 'application/json',
     documents: JSON.stringify(documents)
   }
-  console.log('Upload documents to ' + config.get('aws.cloudsearch.officeEndpoint'))
+  console.log('Upload documents to ' + config.cloudSearch.officeEndpoint)
   let result = await csd.uploadDocuments(params).promise()
   console.log('Results of upload were ', result)
 }
@@ -177,8 +178,7 @@ describe('# Office Search', function () {
 
     it('should not return any offices when searching with an invalid zip code 99998', async () => {
       let result = await officeSearch.officeSearch({ address: '99998', pageSize: 2 })
-      let hits = result.hit
-      hits.should.have.length(0)
+      result.should.have.length(0)
     })
 
     it('should return offices in alphabetical order when searching without an address', async () => {

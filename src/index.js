@@ -2,7 +2,7 @@
 let content = require('./content.js')
 
 exports.handler = (event, context, callback) => {
-  run()
+  run(event)
     .then(result => {
       callback(null, {
         statusCode: 200,
@@ -12,7 +12,7 @@ exports.handler = (event, context, callback) => {
     .catch(callback)
 }
 
-async function run() {
+async function run(event) {
   let result = null;
   if (event && event.params) {
     let params = event.params.path;

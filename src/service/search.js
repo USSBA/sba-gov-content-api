@@ -6,7 +6,7 @@ const csd = new aws.CloudSearchDomain({
   apiVersions: '2013-01-01'
 })
 
-async function search (req, res) {
+async function runSearch (req, res) {
   const { term, pageSize, start } = req
   const fixedTerm = term.replace(/%20/g, ' ')
   const params = {

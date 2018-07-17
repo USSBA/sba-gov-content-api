@@ -5,18 +5,19 @@
   "main": "src/index.js",
   "scripts": {
     "test": "CLOUDSEARCH_OFFICE_ENDPOINT=csoffice.test CLOUDSEARCH_SEARCH_ENDPOINT=cs.test CONTENT_BUCKET=my-bucket ZIP_CODE_DYNAMODB_TABLE=zipcodetable NODE_ENV=test mocha src/**/*.test.js",
+    "test-int": "CLOUDSEARCH_OFFICE_ENDPOINT=doc-automated-testing-offices-xjifz4ykng45x326ysoly4eygi.us-east-1.cloudsearch.amazonaws.com CLOUDSEARCH_SEARCH_ENDPOINT=cs.test CONTENT_BUCKET=my-bucket ZIP_CODE_DYNAMODB_TABLE=ZipCodesLower NODE_ENV=test mocha src/**/*.integration-test.js",
     "lint": "standard --fix  || true"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/USSBA/sba-gov-content-api-api.git"
+    "url": "git+https://github.com/USSBA/sba-gov-content-api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/USSBA/sba-gov-content-api-api/issues"
+    "url": "https://github.com/USSBA/sba-gov-content-api/issues"
   },
-  "homepage": "https://github.com/USSBA/sba-gov-content-api-api#readme",
+  "homepage": "https://github.com/USSBA/sba-gov-content-api#readme",
   "devDependencies": {
     "aws-sdk": "^2.132.0",
     "chai": "^4.1.2",
@@ -24,8 +25,7 @@
     "chai-subset": "^1.6.0",
     "mocha": "^4.0.1",
     "sinon": "^4.0.1",
-    "standard": "^10.0.3",
-    "lodash": "^4.17.4"
+    "standard": "^10.0.3"
   },
   "dependencies": {
     "accept-language-parser": "^1.5.0",
