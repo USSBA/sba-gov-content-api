@@ -14,6 +14,7 @@ exports.handler = (event, context, callback) => {
 
 async function run(event) {
   let result = null;
+  console.log(JSON.stringify(event))
   if (event && event.params) {
     let params = event.params.path;
     if (params.id) {

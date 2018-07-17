@@ -185,8 +185,8 @@ jobs:
               export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
               export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
   
-              export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix sba-gov-content-api.zip | jq '.Versions[0].VersionId')
+              export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix "${ENVIRONMENT}/sba-gov-content-api.zip" | jq '.Versions[0].VersionId')
               export LAMBDA_NAME="${ENVIRONMENT}-content-api-lambda"
   
-              aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${CIRCLE_TAG}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
+              aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${ENVIRONMENT}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
             fi
