@@ -1,5 +1,4 @@
 const HttpStatus = require('http-status-codes')
-const s3CacheReader = require('./clients/s3-cache-reader.js')
 const {
   fetchAnnouncements,
   fetchArticles,
@@ -9,7 +8,9 @@ const {
   fetchFormattedMenu,
   fetchFormattedNode,
   fetchNodes,
-  fetchTaxonomys
+  fetchTaxonomys,
+  fetchDisaster,
+  fetchMainMenu
 } = require('./service/drupal-eight.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { runSearch } = require('./service/search.js')
@@ -26,10 +27,10 @@ const fetchContentTypeFunctions = {
   counsellorCta: fetchCounsellorCta,
   courses: fetchCourses,
   course: fetchCourse,
-  disaster: s3CacheReader.getKey,
+  disaster: fetchDisaster,
   documents: fetchDocuments,
   offices: fetchOffices,
-  mainMenu: s3CacheReader.getKey,
+  mainMenu: fetchMainMenu,
   nodes: fetchNodes,
   search: runSearch,
   siteMap: fetchFormattedMenu,
@@ -68,13 +69,13 @@ async function fetchContentById (params, headers) {
   }
 }
 
-async function fetchContentByType (params) {
-  if (params && params.type) {
-    const type = params.type
+async function fetchContentByType (pathParams, queryStringParameters) {
+  if (pathParams && pathParams.type) {
+    const type = pathParams.type
     const fetchFunction = fetchContentTypeFunctions[type]
     if (fetchFunction) {
       try {
-        let result = await fetchFunction()
+        let result = await fetchFunction(queryStringParameters)
         return result
       } catch (e) {
         console.error('Error fetching data: ', e)

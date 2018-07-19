@@ -4,8 +4,8 @@
   "description": "the api for the website content",
   "main": "src/index.js",
   "scripts": {
-    "test": "CLOUDSEARCH_OFFICE_ENDPOINT=csoffice.test CLOUDSEARCH_SEARCH_ENDPOINT=cs.test CONTENT_BUCKET=my-bucket ZIP_CODE_DYNAMODB_TABLE=zipcodetable NODE_ENV=test mocha src/**/*.test.js",
-    "test-int": "CLOUDSEARCH_OFFICE_ENDPOINT=doc-automated-testing-offices-xjifz4ykng45x326ysoly4eygi.us-east-1.cloudsearch.amazonaws.com CLOUDSEARCH_SEARCH_ENDPOINT=cs.test CONTENT_BUCKET=my-bucket ZIP_CODE_DYNAMODB_TABLE=ZipCodesLower NODE_ENV=test mocha src/**/*.integration-test.js",
+    "test": "CLOUDSEARCH_OFFICE_ENDPOINT=csoffice.test CLOUDSEARCH_SEARCH_ENDPOINT=cs.test CONTENT_BUCKET=my-bucket ZIP_CODE_DYNAMODB_TABLE=zipcodetable NODE_ENV=test mocha \"src/**/*.test.js\"",
+    "test-int": "CLOUDSEARCH_OFFICE_ENDPOINT=doc-automated-testing-offices-xjifz4ykng45x326ysoly4eygi.us-east-1.cloudsearch.amazonaws.com CLOUDSEARCH_SEARCH_ENDPOINT=cs.test CONTENT_BUCKET=my-bucket ZIP_CODE_DYNAMODB_TABLE=ZipCodesLower NODE_ENV=test mocha \"src/**/*.integration-test.js\"",
     "lint": "standard --fix  || true"
   },
   "repository": {

@@ -228,6 +228,14 @@ function fetchNodes () {
   return getKey('nodes')
 }
 
+function fetchDisaster(){
+  return getKey("disaster")
+}
+
+function fetchMainMenu(){
+  return getKey("mainMenu")
+}
+
 module.exports.fetchAnnouncements = fetchAnnouncements
 module.exports.fetchArticles = fetchArticles
 module.exports.fetchContacts = fetchContacts
@@ -239,3 +247,5 @@ module.exports.fetchNodes = fetchNodes
 module.exports.fetchTaxonomys = fetchTaxonomys
 module.exports.filterArticles = filterArticles
 module.exports.sortDocumentsByDate = sortDocumentsByDate
+module.exports.fetchDisaster = fetchDisaster
+module.exports.fetchMainMenu = fetchMainMenu
