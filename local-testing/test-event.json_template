@@ -1,0 +1,56 @@
+{
+    "resource": "/api/content/{type}",
+    "path": "/api/content/siteMap.json",
+    "httpMethod": "GET",
+    "headers": {
+        "Accept": "*/*",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "US",
+        "Host": "ftvr8mv9ca.execute-api.us-east-1.amazonaws.com",
+        "User-Agent": "curl/7.53.1",
+        "Via": "2.0 eb53c6a0d1be72f83a75c1af82e646b7.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "i0rKpQ28dfTiQQ0REo8-UkDV96tvLSRkxSzIm9Goc3dIA7AqbJ3POA==",
+        "X-Amzn-Trace-Id": "Root=1-5b4dcdf9-d88c9ef821d3f5e294fe6c1e",
+        "X-Forwarded-For": "54.167.240.62, 54.240.144.47",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "queryStringParameters": null,
+    "pathParameters": {
+        "type": "siteMap.json"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "mpk30g",
+        "resourcePath": "/api/content/{type}",
+        "httpMethod": "GET",
+        "extendedRequestId": "KK0fBFyqIAMF_ow=",
+        "requestTime": "17/Jul/2018:11:07:37 +0000",
+        "path": "/Prod/api/content/siteMap.json",
+        "accountId": "248615503339",
+        "protocol": "HTTP/1.1",
+        "stage": "Prod",
+        "requestTimeEpoch": 1531825657719,
+        "requestId": "9d5db1f4-89b1-11e8-bed2-0367d0235d0b",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "54.167.240.62",
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "curl/7.53.1",
+            "user": null
+        },
+        "apiId": "ftvr8mv9ca"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}

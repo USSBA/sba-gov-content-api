@@ -41,6 +41,7 @@ workflows:
             - demo
             - mint
             - /int-\w+/
+            - /RELEASE-\d+/
     - upload-package:
         requires: [build-package]
         filters:
@@ -49,11 +50,12 @@ workflows:
             - /.*/
           tags:
             only:
-            - production
-            - staging
+            # - production
+            # - staging
             - demo
             - mint
             - /int-\w+/
+            - /RELEASE-\d+/
     - deploy-package:
         requires: [upload-package]
         filters:
@@ -62,8 +64,8 @@ workflows:
             - /.*/
           tags:
             only:
-            - production
-            - staging
+            # - production
+            # - staging
             - demo
             - mint
             - /int-\w+/
