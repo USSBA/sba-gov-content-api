@@ -1,5 +1,7 @@
 # Content API development guide
 
+## How do I push to my environment?
+Use `./push-tag.sh int-(bl|kl|ls|as|rh)`
 
 ## Environment Setup
 1. Install [NVM](https://github.com/creationix/nvm)
@@ -15,7 +17,7 @@
 1. `npm install`
 1. `npm run lint`
 1. `npm test` to execute the tests
-1. ./push-tag.sh <environment name>` to push to an environment (valid values are: production, staging, demo, mint, int-*)
+1. `./push-tag.sh <environment name>` to push to an environment (valid values are: production, staging, demo, mint, int-*)
 
 ## Local Development Process 
 1. `npm install` to install the dependencies
