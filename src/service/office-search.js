@@ -51,26 +51,50 @@ function formatString (string) {
   return result
 }
 
+function buildQuery (query) {
+  const queryStatements = []
+  let queryString = `type: 'office'`
+
+  if (query) {
+    const fieldsToSearch = ['title', 'location_name', 'office_type']
+    for (const field of fieldsToSearch) {
+      queryStatements.push(`${field}: '${formatString(query)}'`)
+    }
+  }
+  if (queryStatements.length > 1) {
+    queryString = `(or ${queryStatements.join(' ')})`
+  }
+  return queryString
+}
+
 function buildFilters (service, type) {
-  const filters = [
+  let filters = [
     service ? `office_service: '${formatString(service)}'` : null,
     type ? `office_type: '${formatString(type)}'` : null
   ]
-  // remove any null filters
-  return filters.filter(item => item)
+  filters = filters.filter(item => item)
+  let filterString = null
+  if (filters.length === 1) {
+    filterString = filters[0]
+  } else if (filters.length > 1) {
+    filterString = `(and ${filters.join(' ')})`
+  }
+  return filterString
 }
 
 function buildParams (query, geo) {
   const { pageSize, start, q, service, type, distance } = query // eslint-disable-line id-length
   const { latitude, longitude } = geo
-  const filters = buildFilters(service, type, distance)
+  const filterString = buildFilters(service, type, distance)
+  const queryString = buildQuery(q)
   const defaultPageSize = 20
   const defaultStart = 0
   let params = {
-    query: q || 'office', // eslint-disable-line id-length
-    filterQuery: filters && filters.length > 0 ? filters.join(' and ') : null,
+    query: queryString,
+    filterQuery: filterString,
     return: '_all_fields',
     sort: 'title asc',
+    queryParser: 'structured',
     size: pageSize || defaultPageSize,
     start: start || defaultStart
   }

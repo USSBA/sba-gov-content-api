@@ -2,7 +2,6 @@
 let config = require('../config')
 let chai = require('chai')
 chai.should()
-let expect = chai.expect;
 
 let officeSearch = require('./office-search.js')
 

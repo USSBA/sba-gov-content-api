@@ -1,4 +1,4 @@
-/* eslint-env mocha , eslint no-unused-expressions: 0 */
+/* eslint-env mocha */
 let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
@@ -34,7 +34,6 @@ let exampleDynamoDBResponse = {
   ScannedCount: 1
 }
 
-/* TODO: write tests to use this example response
 let exampleCloudSearchResponse = {
   status: { timems: 3, rid: '3sCN9b4slBwKlnJa' },
   hits: {
@@ -77,7 +76,6 @@ let exampleCloudSearchResponse = {
     ]
   }
 }
-*/
 
 let exampleCloudSearchEmptyResponse = {
   status: { timems: 31, rid: '//mU9b4s+C0KlCOm' },
@@ -133,8 +131,9 @@ describe('# Office Search', () => {
       let result = await officeSearch.officeSearch({ address: null })
       officeSearchRunSearchStub.calledOnce.should.be.true
       officeSearchRunSearchStub.calledWith({
-        query: 'office',
+        query: `type: 'office'`,
         filterQuery: null,
+        queryParser: 'structured',
         return: '_all_fields',
         sort: 'title asc',
         size: 20,
@@ -149,8 +148,9 @@ describe('# Office Search', () => {
       let result = await officeSearch.officeSearch({})
       officeSearchRunSearchStub.calledOnce.should.be.true
       officeSearchRunSearchStub.calledWith({
-        query: 'office',
+        query: `type: 'office'`,
         filterQuery: null,
+        queryParser: 'structured',
         return: '_all_fields',
         sort: 'title asc',
         size: 20,
@@ -165,8 +165,9 @@ describe('# Office Search', () => {
       let result = await officeSearch.officeSearch({ address: '06870' })
       officeSearchRunSearchStub.calledOnce.should.be.true
       officeSearchRunSearchStub.calledWith({
-        query: 'office',
+        query: `type: 'office'`,
         filterQuery: null,
+        queryParser: 'structured',
         return: '_all_fields,distance',
         sort: 'distance asc',
         size: 20,

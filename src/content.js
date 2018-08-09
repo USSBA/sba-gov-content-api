@@ -98,6 +98,5 @@ async function fetchContentByType (pathParams, queryStringParameters) {
   }
 }
 
-module.exports.fetchContentById = fetchContentById;
-module.exports.fetchContentByType = fetchContentByType;
-
+module.exports.fetchContentById = fetchContentById
+module.exports.fetchContentByType = fetchContentByType

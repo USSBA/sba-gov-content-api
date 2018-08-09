@@ -53,4 +53,3 @@ function fetchCourse (params) {
 
 module.exports.fetchCourses = fetchCourses
 module.exports.fetchCourse = fetchCourse
-

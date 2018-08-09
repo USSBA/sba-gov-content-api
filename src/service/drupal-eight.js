@@ -228,12 +228,12 @@ function fetchNodes () {
   return getKey('nodes')
 }
 
-function fetchDisaster(){
-  return getKey("disaster")
+function fetchDisaster () {
+  return getKey('disaster')
 }
 
-function fetchMainMenu(){
-  return getKey("mainMenu")
+function fetchMainMenu () {
+  return getKey('mainMenu')
 }
 
 module.exports.fetchAnnouncements = fetchAnnouncements
