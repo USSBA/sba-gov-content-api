@@ -1,7 +1,7 @@
-const { get } = require('./drupal-eight.js')
+const { fetchAllCourses } = require('./drupal-eight.js')
 
 function fetchCourses (params) {
-  return get('courses').then(result => {
+  return fetchAllCourses().then(result => {
     const filteredItems = []
     if (!params.businessStage || params.businessStage === 'All') {
       const sortedItems = sortItems(result, params.sortBy)
@@ -36,7 +36,7 @@ function sortItems (items, sortBy) {
 }
 
 function fetchCourse (params) {
-  return get('courses').then(courses => {
+  return fetchAllCourses().then(courses => {
     const result = courses.find((course, index) => {
       let item
 
