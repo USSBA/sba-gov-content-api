@@ -18,18 +18,18 @@ async function run (event) {
   console.log(JSON.stringify(event))
   if (event && event.pathParameters) {
     let pathParams = event.pathParameters
-    let body = ''
+    let fetchResult = ''
     if (pathParams.id) {
       let type = pathParams.type
       let { first: id, second: extension } = splitAsObject(pathParams.id)
-      body = await content.fetchContentById({ id, type, extension }, event.headers || {})
+      fetchResult = await content.fetchContentById({ id, type, extension }, event.headers || {})
     } else {
       let { first: type, second: extension } = splitAsObject(pathParams.type)
-      body = await content.fetchContentByType({ type, extension }, event.queryStringParameters)
+      fetchResult = await content.fetchContentByType({ type, extension }, event.queryStringParameters)
     }
     result = {
-      statusCode: 200,
-      body: JSON.stringify(body),
+      statusCode: fetchResult.statusCode,
+      body: JSON.stringify(fetchResult.body),
       headers: {
         'Content-Type': 'application/json'
       }

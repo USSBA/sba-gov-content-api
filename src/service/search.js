@@ -34,4 +34,4 @@ async function runSearch (req, res) {
   }
 }
 
-module.exports.search = runSearch
+module.exports.runSearch = runSearch

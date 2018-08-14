@@ -1,0 +1,61 @@
+{
+    "resource": "/api/content/{type}",
+    "path": "/api/content/offices.json",
+    "httpMethod": "GET",
+    "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "US",
+        "Host": "nuwikyq93j.execute-api.us-east-1.amazonaws.com",
+        "User-Agent": "axios/0.16.1",
+        "Via": "1.1 f836f0becf2336403b85afae8113495d.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "90aKi_zT55cMm21oE2xYiePFPjF2368FDtM42VPL-JHkIDtuUYn-PA==",
+        "X-Amzn-Trace-Id": "Root=1-5b73591b-7555cf1805fd684f3ae37905",
+        "X-Forwarded-For": "107.23.132.50, 54.239.145.60",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "queryStringParameters": {
+        "start": "0",
+        "pageSize": "5",
+        "address": "20024",
+        "pageNumber": "1"
+    },
+    "pathParameters": {
+        "type": "offices.json"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "tbnp31",
+        "resourcePath": "/api/content/{type}",
+        "httpMethod": "GET",
+        "extendedRequestId": "LorcUFRpoAMFskQ=",
+        "requestTime": "14/Aug/2018:22:35:07 +0000",
+        "path": "/Prod/api/content/offices.json",
+        "accountId": "248615503339",
+        "protocol": "HTTP/1.1",
+        "stage": "Prod",
+        "requestTimeEpoch": 1534286107690,
+        "requestId": "4bd4e951-a012-11e8-98e7-19acdab8cc38",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "107.23.132.50",
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "axios/0.16.1",
+            "user": null
+        },
+        "apiId": "nuwikyq93j"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}

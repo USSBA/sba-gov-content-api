@@ -149,7 +149,7 @@ function parseGeocodeString (geocodeString) {
 }
 
 /* This is separate from search because it will need to have custom search to handle searching by specific indecies */
-async function officeSearch (query) {
+async function fetchOffices (query) {
   const { address, mapCenter } = query
   let geo
   if (mapCenter) {
@@ -182,7 +182,7 @@ async function officeSearch (query) {
   }
 }
 
-module.exports.officeSearch = officeSearch
+module.exports.fetchOffices = fetchOffices
 module.exports.computeLocation = computeLocation
 
 // for testing purposes

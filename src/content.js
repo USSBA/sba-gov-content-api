@@ -47,7 +47,10 @@ async function fetchContentById (params, headers) {
         let result = await fetchFunction(id, {
           headers
         })
-        return result
+        return {
+          statusCode: HttpStatus.OK,
+          body: result
+        }
       } catch (e) {
         console.error('Error fetching data: ', e)
         return {
@@ -76,7 +79,10 @@ async function fetchContentByType (pathParams, queryStringParameters) {
     if (fetchFunction) {
       try {
         let result = await fetchFunction(queryStringParameters)
-        return result
+        return {
+          statusCode: HttpStatus.OK,
+          body: result
+        }
       } catch (e) {
         console.error('Error fetching data: ', e)
         return {

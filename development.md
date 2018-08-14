@@ -23,7 +23,7 @@ Use `./push-tag.sh int-(bl|kl|ls|as|rh)`
 1. `npm install` to install the dependencies
 1. Create a test file: `cp local-testing/test-event.json_template local-testing/test-event.json`
 1. Update `local-testing/test-event.json`
-1. `node local-testing/probe.js` 
+1. `npm run test-local` 
 #### *TODO* replace ^^^^ with SAM LOCAL (See https://github.com/awslabs/aws-sam-cli)
 
 ## Required Environment Variables

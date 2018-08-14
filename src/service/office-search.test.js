@@ -128,7 +128,7 @@ describe('# Office Search', () => {
     it('should properly handle an empty address', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
-      let result = await officeSearch.officeSearch({ address: null })
+      let result = await officeSearch.fetchOffices({ address: null })
       officeSearchRunSearchStub.calledOnce.should.be.true
       officeSearchRunSearchStub.calledWith({
         query: `type: 'office'`,
@@ -145,7 +145,7 @@ describe('# Office Search', () => {
     it('should properly handle no address', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
-      let result = await officeSearch.officeSearch({})
+      let result = await officeSearch.fetchOffices({})
       officeSearchRunSearchStub.calledOnce.should.be.true
       officeSearchRunSearchStub.calledWith({
         query: `type: 'office'`,
@@ -162,7 +162,7 @@ describe('# Office Search', () => {
     it('should enter the lat and long into the params for cloudsearch query', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
-      let result = await officeSearch.officeSearch({ address: '06870' })
+      let result = await officeSearch.fetchOffices({ address: '06870' })
       officeSearchRunSearchStub.calledOnce.should.be.true
       officeSearchRunSearchStub.calledWith({
         query: `type: 'office'`,
