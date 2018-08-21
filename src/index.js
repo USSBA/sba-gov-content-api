@@ -25,7 +25,7 @@ async function run (event) {
       fetchResult = await content.fetchContentById({ id, type, extension }, event.headers || {})
     } else {
       let { first: type, second: extension } = splitAsObject(pathParams.type)
-      fetchResult = await content.fetchContentByType({ type, extension }, event.queryStringParameters)
+      fetchResult = await content.fetchContentByType({ type, extension }, event.queryStringParameters || {})
     }
     result = {
       statusCode: fetchResult.statusCode,
