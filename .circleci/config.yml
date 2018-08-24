@@ -50,8 +50,8 @@ workflows:
             - /.*/
           tags:
             only:
-            # - production
-            # - staging
+            - production
+            - staging
             - demo
             - mint
             - /int-\w+/
@@ -146,7 +146,8 @@ jobs:
   
               case $CIRCLE_TAG in
                 production|staging)
-                  set_upper
+                  # set_upper
+                  set_lower
                   ;;
                 *)
                   set_lower
