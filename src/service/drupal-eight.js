@@ -207,16 +207,22 @@ function fetchArticles (queryParams) {
   }
 
   return getKey('articles')
+    .then(result => orderBy(result, sortField, sortOrder))
     .then(result => {
-      return orderBy(result, sortField, sortOrder)
-    })
-    .then(results => {
-      const filteredArticles = filterArticles(queryParams, results)
+      let items = result
+
+      if (queryParams) {
+        let items = filterArticles(queryParams, result)
+
+        const { end, start } = queryParams
+        if (start === 'all' || end === 'all') {
+          items = filteredArticles.slice(start, end)
+        }
+      }
+
       return {
-        items: queryParams.start === 'all' || queryParams.end === 'all'
-          ? filteredArticles
-          : filteredArticles.slice(queryParams.start, queryParams.end),
-        count: filteredArticles.length
+        items,
+        count: items.length
       }
     })
 }
