@@ -26,7 +26,7 @@
         "pageNumber": "1"
     },
     "pathParameters": {
-        "type": "officesRaw.json"
+        "type": "articles.json"
     },
     "stageVariables": null,
     "requestContext": {
