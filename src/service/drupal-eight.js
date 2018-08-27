@@ -236,21 +236,31 @@ function fetchMainMenu () {
   return getKey('mainMenu')
 }
 
-function fetchAllCourses(){
+function fetchAllCourses () {
   return getKey('courses')
 }
 
+function fetchOfficesRaw () {
+  return getKey('offices')
+}
+
+function fetchPersons () {
+  return getKey('persons')
+}
+
+module.exports.fetchAllCourses = fetchAllCourses
 module.exports.fetchAnnouncements = fetchAnnouncements
 module.exports.fetchArticles = fetchArticles
 module.exports.fetchContacts = fetchContacts
 module.exports.fetchCounsellorCta = fetchCounsellorCta
+module.exports.fetchDisaster = fetchDisaster
 module.exports.fetchDocuments = fetchDocuments
 module.exports.fetchFormattedMenu = fetchFormattedMenu
 module.exports.fetchFormattedNode = fetchFormattedNode
+module.exports.fetchMainMenu = fetchMainMenu
 module.exports.fetchNodes = fetchNodes
+module.exports.fetchOfficesRaw = fetchOfficesRaw
+module.exports.fetchPersons = fetchPersons
 module.exports.fetchTaxonomys = fetchTaxonomys
 module.exports.filterArticles = filterArticles
 module.exports.sortDocumentsByDate = sortDocumentsByDate
-module.exports.fetchDisaster = fetchDisaster
-module.exports.fetchMainMenu = fetchMainMenu
-module.exports.fetchAllCourses = fetchAllCourses;
