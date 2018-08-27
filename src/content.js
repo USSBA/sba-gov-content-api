@@ -60,7 +60,7 @@ async function fetchContentById (params, headers) {
       }
     } else {
       return {
-        statusCode: HttpStatus.BAD_REQUEST,
+        statusCode: HttpStatus.NOT_FOUND,
         body: 'Unknown type ' + type
       }
     }
@@ -92,7 +92,7 @@ async function fetchContentByType (pathParams, queryStringParameters) {
       }
     } else {
       return {
-        statusCode: HttpStatus.BAD_REQUEST,
+        statusCode: HttpStatus.NOT_FOUND,
         body: 'Unknown type ' + type
       }
     }
