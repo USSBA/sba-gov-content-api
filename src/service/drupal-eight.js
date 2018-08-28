@@ -212,7 +212,7 @@ function fetchArticles (queryParams) {
       let items = result
 
       if (queryParams) {
-        let items = filterArticles(queryParams, result)
+        items = filterArticles(queryParams, result)
 
         const { end, start } = queryParams
         if (start === 'all' || end === 'all') {
