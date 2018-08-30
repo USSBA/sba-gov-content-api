@@ -215,8 +215,8 @@ function fetchArticles (queryParams) {
         items = filterArticles(queryParams, result)
 
         const { end, start } = queryParams
-        if (start === 'all' || end === 'all') {
-          items = filteredArticles.slice(start, end)
+        if (!(start === 'all' || end === 'all')) {
+          items = items.slice(start, end)
         }
       }
 
