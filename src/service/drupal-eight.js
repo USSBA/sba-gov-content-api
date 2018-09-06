@@ -180,13 +180,17 @@ function sortDocumentsByDate (docs) {
 
 function fetchTaxonomys (queryParams) {
   return getKey('taxonomys').then(data => {
-    let names = map(data, 'name')
-    if (queryParams.names) {
-      names = queryParams.names.split(',')
+    if (queryParams) {
+      let names = map(data, 'name')
+
+      if (queryParams.names) {
+        names = queryParams.names.split(',')
+      }
+
+      return data.filter(item => {
+        return includes(names, item.name)
+      })
     }
-    return data.filter(item => {
-      return includes(names, item.name)
-    })
   })
 }
 
