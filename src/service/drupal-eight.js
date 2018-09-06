@@ -9,7 +9,7 @@ const { getKey } = require('../clients/s3-cache-reader.js')
 const langCodes = { es: 'es', en: 'en' }
 
 function fetchFormattedNode (nodeId, options) {
-  let langCode = langParser.parse(options.headers['accept-language']).filter(lang => {
+  let langCode = langParser.parse(options.headers['Accept-Language']).filter(lang => {
     return langCodes.hasOwnProperty(lang.code)
   })
 
