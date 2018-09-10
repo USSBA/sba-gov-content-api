@@ -1,6 +1,6 @@
 {
     "resource": "/api/content/{type}",
-    "path": "/api/content/offices.json",
+    "path": "/api/content/articles.json",
     "httpMethod": "GET",
     "headers": {
         "Accept": "application/json, text/plain, */*",
@@ -10,7 +10,7 @@
         "CloudFront-Is-SmartTV-Viewer": "false",
         "CloudFront-Is-Tablet-Viewer": "false",
         "CloudFront-Viewer-Country": "US",
-        "Host": "nuwikyq93j.execute-api.us-east-1.amazonaws.com",
+        "Host": "ph7ftzgq7k.execute-api.us-east-1.amazonaws.com",
         "User-Agent": "axios/0.16.1",
         "Via": "1.1 f836f0becf2336403b85afae8113495d.cloudfront.net (CloudFront)",
         "X-Amz-Cf-Id": "90aKi_zT55cMm21oE2xYiePFPjF2368FDtM42VPL-JHkIDtuUYn-PA==",
@@ -20,13 +20,14 @@
         "X-Forwarded-Proto": "https"
     },
     "queryStringParameters": {
-        "start": "0",
+        "start": 30,
+        "end": 33,
         "pageSize": "5",
         "address": "20024",
         "pageNumber": "1"
     },
     "pathParameters": {
-        "type": "offices.json"
+        "type": "articles.json"
     },
     "stageVariables": null,
     "requestContext": {
@@ -35,7 +36,7 @@
         "httpMethod": "GET",
         "extendedRequestId": "LorcUFRpoAMFskQ=",
         "requestTime": "14/Aug/2018:22:35:07 +0000",
-        "path": "/Prod/api/content/offices.json",
+        "path": "/Prod/api/content/articles.json",
         "accountId": "248615503339",
         "protocol": "HTTP/1.1",
         "stage": "Prod",

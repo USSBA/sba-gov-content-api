@@ -1,7 +1,7 @@
 /* eslint-disable id-length,space-infix-ops, object-property-newline */
 const moment = require('moment')
 const langParser = require('accept-language-parser')
-const { filter, includes, isEmpty, map, mapValues, maxBy, orderBy } = require('lodash')
+const { filter, includes, isEmpty, map, mapValues, maxBy, orderBy, size } = require('lodash')
 
 const config = require('../config')
 const { getKey } = require('../clients/s3-cache-reader.js')
@@ -180,40 +180,55 @@ function sortDocumentsByDate (docs) {
 
 function fetchTaxonomys (queryParams) {
   return getKey('taxonomys').then(data => {
-    let names = map(data, 'name')
-    if (queryParams.names) {
-      names = queryParams.names.split(',')
+    if (queryParams) {
+      let names = map(data, 'name')
+
+      if (queryParams.names) {
+        names = queryParams.names.split(',')
+      }
+
+      return data.filter(item => {
+        return includes(names, item.name)
+      })
     }
-    return data.filter(item => {
-      return includes(names, item.name)
-    })
   })
 }
 
 function fetchArticles (queryParams) {
-  let sortOrder = 'asc'
-  let sortField
-  if (queryParams.sortBy === 'Title') {
-    sortField = 'title'
-  } else if (queryParams.sortBy === 'Last Updated') {
-    sortField = 'updated'
-    sortOrder = 'desc'
-  } else if (queryParams.sortBy === 'Authored on Date') {
-    sortField = 'created'
-    sortOrder = 'desc'
+  let sortField = 'updated'
+  let sortOrder = 'desc'
+
+  if (queryParams) {
+    const { sortBy } = queryParams
+
+    if (sortBy === 'Title') {
+      sortField = 'title'
+      sortOrder = 'asc'
+    // } else if (sortBy == 'Last Updated') {
+    } else if (sortBy === 'Authored on Date') {
+      sortField = 'created'
+    }
   }
 
   return getKey('articles')
+    .then(result => orderBy(result, sortField, sortOrder))
     .then(result => {
-      return orderBy(result, sortField, sortOrder)
-    })
-    .then(results => {
-      const filteredArticles = filterArticles(queryParams, results)
+      let items = result
+      let count = items.length
+
+      if (queryParams) {
+        items = filterArticles(queryParams, result)
+        count = items.length
+
+        const { end, start } = queryParams
+        if (!(start === 'all' || end === 'all')) {
+          items = items.slice(start, end)
+        }
+      }
+
       return {
-        items: queryParams.start === 'all' || queryParams.end === 'all'
-          ? filteredArticles
-          : filteredArticles.slice(queryParams.start, queryParams.end),
-        count: filteredArticles.length
+        items,
+        count
       }
     })
 }
@@ -236,21 +251,31 @@ function fetchMainMenu () {
   return getKey('mainMenu')
 }
 
-function fetchAllCourses(){
+function fetchAllCourses () {
   return getKey('courses')
 }
 
+function fetchOfficesRaw () {
+  return getKey('offices')
+}
+
+function fetchPersons () {
+  return getKey('persons')
+}
+
+module.exports.fetchAllCourses = fetchAllCourses
 module.exports.fetchAnnouncements = fetchAnnouncements
 module.exports.fetchArticles = fetchArticles
 module.exports.fetchContacts = fetchContacts
 module.exports.fetchCounsellorCta = fetchCounsellorCta
+module.exports.fetchDisaster = fetchDisaster
 module.exports.fetchDocuments = fetchDocuments
 module.exports.fetchFormattedMenu = fetchFormattedMenu
 module.exports.fetchFormattedNode = fetchFormattedNode
+module.exports.fetchMainMenu = fetchMainMenu
 module.exports.fetchNodes = fetchNodes
+module.exports.fetchOfficesRaw = fetchOfficesRaw
+module.exports.fetchPersons = fetchPersons
 module.exports.fetchTaxonomys = fetchTaxonomys
 module.exports.filterArticles = filterArticles
 module.exports.sortDocumentsByDate = sortDocumentsByDate
-module.exports.fetchDisaster = fetchDisaster
-module.exports.fetchMainMenu = fetchMainMenu
-module.exports.fetchAllCourses = fetchAllCourses;

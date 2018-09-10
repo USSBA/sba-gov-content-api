@@ -4,13 +4,15 @@ const {
   fetchArticles,
   fetchContacts,
   fetchCounsellorCta,
+  fetchDisaster,
   fetchDocuments,
   fetchFormattedMenu,
   fetchFormattedNode,
+  fetchMainMenu,
   fetchNodes,
-  fetchTaxonomys,
-  fetchDisaster,
-  fetchMainMenu
+  fetchOfficesRaw,
+  fetchPersons,
+  fetchTaxonomys
 } = require('./service/drupal-eight.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { runSearch } = require('./service/search.js')
@@ -25,13 +27,15 @@ const fetchContentTypeFunctions = {
   articles: fetchArticles,
   contacts: fetchContacts,
   counsellorCta: fetchCounsellorCta,
-  courses: fetchCourses,
   course: fetchCourse,
+  courses: fetchCourses,
   disaster: fetchDisaster,
   documents: fetchDocuments,
-  offices: fetchOffices,
   mainMenu: fetchMainMenu,
   nodes: fetchNodes,
+  offices: fetchOffices,
+  officesRaw: fetchOfficesRaw,
+  persons: fetchPersons,
   search: runSearch,
   siteMap: fetchFormattedMenu,
   taxonomys: fetchTaxonomys
@@ -55,7 +59,7 @@ async function fetchContentById (params, headers) {
         console.error('Error fetching data: ', e)
         return {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-          body: 'Server Error'
+          body: `Server Error, ${e}`
         }
       }
     } else {
@@ -87,7 +91,7 @@ async function fetchContentByType (pathParams, queryStringParameters) {
         console.error('Error fetching data: ', e)
         return {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-          body: 'Server Error'
+          body: `Server Error, ${e}`
         }
       }
     } else {
