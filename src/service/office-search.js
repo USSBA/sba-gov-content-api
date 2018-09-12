@@ -152,10 +152,10 @@ function parseGeocodeString (geocodeString) {
 async function fetchOffices (query) {
   const { address, mapCenter } = query
   let geo
-  if (mapCenter) {
-    geo = parseGeocodeString(mapCenter)
-  } else {
+  if (address) {
     geo = await computeLocation(address)
+  } else {
+    geo = parseGeocodeString(mapCenter)
   }
   if (!geo) {
     return []
