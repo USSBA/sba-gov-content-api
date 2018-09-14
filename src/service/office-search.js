@@ -151,15 +151,13 @@ function parseGeocodeString (geocodeString) {
 /* This is separate from search because it will need to have custom search to handle searching by specific indecies */
 async function fetchOffices (query) {
   const { address, mapCenter } = query
-  let geo
+  let geo = []
   if (address) {
     geo = await computeLocation(address)
-  } else {
+  } else if (mapCenter) {
     geo = parseGeocodeString(mapCenter)
   }
-  if (!geo) {
-    return []
-  }
+
   const params = buildParams(query, geo)
   try {
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
@@ -168,6 +166,12 @@ async function fetchOffices (query) {
       const newHitList = hits.hit.map(item => {
         if (item && item.exprs && item.exprs.distance) {
           return Object.assign({}, item, { exprs: { distance: item.exprs.distance / kilometersPerMile } })
+        } else if (item && item.fields.location_zipcode) {
+        // if there is no address, and no mapCenter, then there will be no item.exprs
+          // therefore, if there is a zipcode available
+            // derive address from item location zipcode and compute it's location
+          item.fields.geolocation = computeLocation(item.fields.location_zipcode[0])
+          return item
         } else {
           return item
         }
