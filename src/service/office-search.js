@@ -166,13 +166,16 @@ async function fetchOffices (query) {
     const hits = result.hits
     if (hits && hits.length > 0) {
       const newHitList = hits.hit.map(item => {
-        if (item && item.exprs && item.exprs.distance) {
+        if (item && item.exprs && item.exprs.distance >= 0) {
+          let _item
           if(!address) {
-            const _item  = Object.assign({}, item)
+            _item  = Object.assign({}, item)
             delete _item.exprs
-            return _item
+          } else {
+            _item = Object.assign({}, item, { exprs: { distance: item.exprs.distance / kilometersPerMile } })
           }
-          return Object.assign({}, item, { exprs: { distance: item.exprs.distance / kilometersPerMile } })
+          return _item
+
         }
       })
       return Object.assign({}, hits, { hit: newHitList })
