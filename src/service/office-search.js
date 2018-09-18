@@ -164,13 +164,18 @@ async function fetchOffices (query) {
   try {
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
     const hits = result.hits
-    if (hits && hits.length > 0) {
+    if (hits && hits.found > 0) {
       const newHitList = hits.hit.map(item => {
-        if (item && item.exprs && item.exprs.distance) {
-          return Object.assign({}, item, { exprs: { distance: item.exprs.distance / kilometersPerMile } })
-        } else {
-          return item
+        let _item = item
+        if (item && item.exprs && item.exprs.distance >= 0) {
+          if(!address) {
+            _item  = Object.assign({}, item)
+            delete _item.exprs
+          } else {
+            _item = Object.assign({}, item, { exprs: { distance: item.exprs.distance / kilometersPerMile } })
+          }
         }
+        return _item
       })
       return Object.assign({}, hits, { hit: newHitList })
     } else {

@@ -54,6 +54,9 @@ let exampleCloudSearchResponse = {
           office_website: ['http://www.montana.edu/launchpad/accelerator.html'],
           type: ['office'],
           location_street_address: ['251 A&B Strand Union Building']
+        },
+        exprs: {
+          distance: 100
         }
       },
       {
@@ -140,6 +143,43 @@ describe('# Office Search', () => {
         start: 0
       }).should.be.true
       result.should.eql(exampleCloudSearchEmptyResponse.hits)
+    })
+
+    it('should convert distance from miles to kg when address is present', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
+      const kilometersToMiles = 0.621371
+      const distanceInKilometers = exampleCloudSearchResponse.hits.hit[0].exprs.distance
+      expectedApproximateMiles = distanceInKilometers * kilometersToMiles
+      let result = await officeSearch.fetchOffices({address: 21202})
+      const actualMiles = result.hit[0].exprs.distance
+      const actualAndExpectedDiference = Math.abs(expectedApproximateMiles - actualMiles)
+      const actualAndOriginalDifference = Math.abs(distanceInKilometers - actualMiles)
+      // done this way to handle imprecision in floats
+      actualAndExpectedDiference.should.be.lessThan(actualAndOriginalDifference)
+    })
+
+    it('should not return distance when no query parameters are present', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
+      let result = await officeSearch.fetchOffices({})
+      result.hit[0].hasOwnProperty('exprs').should.be.false
+      result.hit[1].hasOwnProperty('exprs').should.be.false
+    })
+
+    it('should not return distance when no only mapCenter parameter is present', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
+      let result = await officeSearch.fetchOffices({mapCenter:'1,1'})
+      result.hit[0].hasOwnProperty('exprs').should.be.false
+      result.hit[1].hasOwnProperty('exprs').should.be.false
+    })
+
+    it('should return distance when there is an address parameter present', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
+      let result = await officeSearch.fetchOffices({address:'21202'})
+      result.hit[0].hasOwnProperty('exprs').should.be.true
     })
 
     it('should properly handle no address', async () => {
