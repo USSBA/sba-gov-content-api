@@ -179,7 +179,6 @@ async function fetchOffices (query) {
       })
       return Object.assign({}, hits, { hit: newHitList })
     } else {
-     // console.log('HITS',hits)
       return hits
     }
   } catch (err) {
