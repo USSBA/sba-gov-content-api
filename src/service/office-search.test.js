@@ -233,7 +233,7 @@ describe('# Office Search', () => {
         expr: `{"distance":"haversin(41.033347,-73.568040,geolocation.latitude,geolocation.longitude)"}`,
         queryParser: 'structured',
         size: 1,
-        start: 1
+        start: 0
       }).should.be.true
       result.hasOwnProperty('suggestedResults').should.be.true
     })

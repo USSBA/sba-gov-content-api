@@ -103,7 +103,7 @@ function buildDefaultOfficeQueryParams (geo) {
     expr: `{"distance":"haversin(${latitude},${longitude},geolocation.latitude,geolocation.longitude)"}`,
     queryParser: 'structured',
     size: numberOfResults,
-    start: 1
+    start: 0
   }
   return params
 }
