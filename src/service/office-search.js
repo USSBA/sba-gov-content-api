@@ -96,6 +96,7 @@ function buildDefaultOfficeQueryParams (geo) {
     longitude = defaultOfficeGeocode.longitude
   }
   let params = {
+    query:`type: 'office'`,
     filterQuery: `office_type: '${defaultOfficeType}'`,
     sort: 'distance asc',
     return: '_all_fields,distance',
@@ -175,14 +176,15 @@ function parseGeocodeString (geocodeString) {
 
 /* This is separate from search because it will need to have custom search to handle searching by specific indecies */
 async function fetchOffices (query) {
-  const { address, mapCenter } = query
+  const queryObj = query || {}
+  const { address, mapCenter } = queryObj
   let geo
   if (address) {
     geo = await computeLocation(address)
   } else {
     geo = parseGeocodeString(mapCenter)
   }
-  const params = buildParams(query, geo)
+  const params = buildParams(queryObj, geo)
   try {
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
     const hits = result.hits
@@ -203,7 +205,7 @@ async function fetchOffices (query) {
     } else {
       const defaultParams = buildDefaultOfficeQueryParams(geo)
       const suggestedResults = await module.exports.runSearch(defaultParams)
-      return Object.assign({}, hits, { suggestedResults: suggestedResults })
+      return Object.assign({}, hits, { suggestedResults: suggestedResults.hits })
     }
   } catch (err) {
     console.error(err, err.stack)

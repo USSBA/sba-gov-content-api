@@ -132,7 +132,6 @@ describe('# Office Search', () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
       let result = await officeSearch.fetchOffices({ address: null })
-      officeSearchRunSearchStub.calledOnce.should.be.true
       officeSearchRunSearchStub.calledWith({
         query: `type: 'office'`,
         filterQuery: null,
@@ -142,7 +141,9 @@ describe('# Office Search', () => {
         size: 20,
         start: 0
       }).should.be.true
-      result.should.eql(exampleCloudSearchEmptyResponse.hits)
+      result.hit.should.eql(exampleCloudSearchEmptyResponse.hits.hit)
+      result.found.should.eql(exampleCloudSearchEmptyResponse.hits.found)
+      result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
     })
 
     it('should convert distance from miles to kg when address is present', async () => {
@@ -186,7 +187,6 @@ describe('# Office Search', () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
       let result = await officeSearch.fetchOffices({})
-      officeSearchRunSearchStub.calledOnce.should.be.true
       officeSearchRunSearchStub.calledWith({
         query: `type: 'office'`,
         filterQuery: null,
@@ -196,14 +196,15 @@ describe('# Office Search', () => {
         size: 20,
         start: 0
       }).should.be.true
-      result.should.eql(exampleCloudSearchEmptyResponse.hits)
+      result.hit.should.eql(exampleCloudSearchEmptyResponse.hits.hit)
+      result.found.should.eql(exampleCloudSearchEmptyResponse.hits.found)
+      result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
     })
 
     it('should enter the lat and long into the params for cloudsearch query', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
       let result = await officeSearch.fetchOffices({ address: '06870' })
-      officeSearchRunSearchStub.calledOnce.should.be.true
       officeSearchRunSearchStub.calledWith({
         query: `type: 'office'`,
         filterQuery: null,
@@ -214,7 +215,45 @@ describe('# Office Search', () => {
         start: 0,
         expr: '{"distance":"haversin(41.033347,-73.568040,geolocation.latitude,geolocation.longitude)"}'
       }).should.be.true
-      result.should.eql(exampleCloudSearchEmptyResponse.hits)
+      result.hit.should.eql(exampleCloudSearchEmptyResponse.hits.hit)
+      result.found.should.eql(exampleCloudSearchEmptyResponse.hits.found)
+      result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
+    })
+
+    it('when there is no result it should fetch the district sba office closest to the provided geolocation', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
+      let result = await officeSearch.fetchOffices({ address: '06870' })
+      officeSearchRunSearchStub.callCount.should.eql(2)
+      officeSearchRunSearchStub.calledWith({
+        query:`type: 'office'`,
+        filterQuery: `office_type: 'SBA district office'`,
+        sort: 'distance asc',
+        return: '_all_fields,distance',
+        expr: `{"distance":"haversin(41.033347,-73.568040,geolocation.latitude,geolocation.longitude)"}`,
+        queryParser: 'structured',
+        size: 1,
+        start: 1
+      }).should.be.true
+      result.hasOwnProperty('suggestedResults').should.be.true
+    })
+
+    it('when there are no results with no address it defaults to the geocode for the dc office', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
+      let result = await officeSearch.fetchOffices()
+      officeSearchRunSearchStub.callCount.should.eql(2)
+      officeSearchRunSearchStub.calledWith({
+        query:`type: 'office'`,
+        filterQuery: `office_type: 'SBA district office'`,
+        sort: 'distance asc',
+        return: '_all_fields,distance',
+        expr: `{"distance":"haversin(38.893311,-77.014647,geolocation.latitude,geolocation.longitude)"}`,
+        queryParser: 'structured',
+        size: 1,
+        start: 1
+      }).should.be.true
+      result.hasOwnProperty('suggestedResults').should.be.true
     })
   })
 })
