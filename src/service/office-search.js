@@ -7,6 +7,11 @@ const csd = new aws.CloudSearchDomain({
 })
 
 const kilometersPerMile = 1.60934
+const defaultOfficeType = 'SBA district office'
+const defaultOfficeGeocode = {
+  latitude:38.893311,
+  longitude:-77.014647
+}
 const dynamoDbClient = require('../clients/dynamo-db-client.js')
 
 // for testing purposes
@@ -80,6 +85,26 @@ function buildFilters (service, type) {
     filterString = `(and ${filters.join(' ')})`
   }
   return filterString
+}
+
+function buildDefaultOfficeQueryParams (geo) {
+  let { latitude, longitude } = geo
+  const numberOfResults = 1
+  //if no search for lat and long, use dc office coordinates
+  if (!(latitude && longitude)) {
+    latitude = defaultOfficeGeocode.latitude
+    longitude = defaultOfficeGeocode.longitude
+  }
+  let params = {
+    filterQuery: `office_type: '${defaultOfficeType}'`,
+    sort: 'distance asc',
+    return: '_all_fields,distance',
+    expr: `{"distance":"haversin(${latitude},${longitude},geolocation.latitude,geolocation.longitude)"}`,
+    queryParser: 'structured',
+    size: numberOfResults,
+    start: 1
+  }
+  return params
 }
 
 function buildParams (query, geo) {
@@ -157,9 +182,6 @@ async function fetchOffices (query) {
   } else {
     geo = parseGeocodeString(mapCenter)
   }
-  if (!geo) {
-    return []
-  }
   const params = buildParams(query, geo)
   try {
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
@@ -179,7 +201,9 @@ async function fetchOffices (query) {
       })
       return Object.assign({}, hits, { hit: newHitList })
     } else {
-      return hits
+      const defaultParams = buildDefaultOfficeQueryParams(geo)
+      const suggestedResults = await module.exports.runSearch(defaultParams)
+      return Object.assign({}, hits, { suggestedResults: suggestedResults })
     }
   } catch (err) {
     console.error(err, err.stack)
