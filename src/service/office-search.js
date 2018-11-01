@@ -7,6 +7,11 @@ const csd = new aws.CloudSearchDomain({
 })
 
 const kilometersPerMile = 1.60934
+const defaultOfficeType = 'SBA district office'
+const defaultOfficeGeocode = {
+  latitude:38.893311,
+  longitude:-77.014647
+}
 const dynamoDbClient = require('../clients/dynamo-db-client.js')
 
 // for testing purposes
@@ -82,6 +87,27 @@ function buildFilters (service, type) {
   return filterString
 }
 
+function buildDefaultOfficeQueryParams (geo) {
+  let { latitude, longitude } = geo
+  const numberOfResults = 1
+  //if no search for lat and long, use dc office coordinates
+  if (!(latitude && longitude)) {
+    latitude = defaultOfficeGeocode.latitude
+    longitude = defaultOfficeGeocode.longitude
+  }
+  let params = {
+    query:`type: 'office'`,
+    filterQuery: `office_type: '${defaultOfficeType}'`,
+    sort: 'distance asc',
+    return: '_all_fields,distance',
+    expr: `{"distance":"haversin(${latitude},${longitude},geolocation.latitude,geolocation.longitude)"}`,
+    queryParser: 'structured',
+    size: numberOfResults,
+    start: 0
+  }
+  return params
+}
+
 function buildParams (query, geo) {
   const { pageSize, start, q, service, type, distance } = query // eslint-disable-line id-length
   const { latitude, longitude } = geo
@@ -150,17 +176,15 @@ function parseGeocodeString (geocodeString) {
 
 /* This is separate from search because it will need to have custom search to handle searching by specific indecies */
 async function fetchOffices (query) {
-  const { address, mapCenter } = query
+  const queryObj = query || {}
+  const { address, mapCenter } = queryObj
   let geo
   if (address) {
     geo = await computeLocation(address)
   } else {
     geo = parseGeocodeString(mapCenter)
   }
-  if (!geo) {
-    return []
-  }
-  const params = buildParams(query, geo)
+  const params = buildParams(queryObj, geo)
   try {
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
     const hits = result.hits
@@ -179,7 +203,9 @@ async function fetchOffices (query) {
       })
       return Object.assign({}, hits, { hit: newHitList })
     } else {
-      return hits
+      const defaultParams = buildDefaultOfficeQueryParams(geo)
+      const suggestedResults = await module.exports.runSearch(defaultParams)
+      return Object.assign({}, hits, { suggestedResults: suggestedResults.hits })
     }
   } catch (err) {
     console.error(err, err.stack)
