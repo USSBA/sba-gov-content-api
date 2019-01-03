@@ -41,8 +41,32 @@ workflows:
             - demo
             - mint
             - /int-\w+/
-            - /RELEASE-\d+/
     - upload-package:
+        requires: [build-package]
+        filters:
+          branches:
+            ignore:
+            - /.*/
+          tags:
+            only:
+            - demo
+            - mint
+            - /int-\w+/
+        context: sba-gov-lower
+    - deploy-package:
+        requires: [upload-package]
+        filters:
+          branches:
+            ignore:
+            - /.*/
+          tags:
+            only:
+            - demo
+            - mint
+            - /int-\w+/
+        context: sba-gov-lower
+    - hold:
+        type: approval
         requires: [build-package]
         filters:
           branches:
@@ -52,23 +76,29 @@ workflows:
             only:
             - production
             - staging
-            - demo
-            - mint
-            - /int-\w+/
-            - /RELEASE-\d+/
-    - deploy-package:
-        requires: [upload-package]
+        context: sba-gov-upper
+    - upload-package-with-approval:
+        requires: [hold]
         filters:
           branches:
             ignore:
             - /.*/
           tags:
             only:
-            # - production
-            # - staging
-            - demo
-            - mint
-            - /int-\w+/
+            - production
+            - staging
+        context: sba-gov-upper
+    - deploy-package-with-approval:
+        requires: [upload-package-with-approval]
+        filters:
+          branches:
+            ignore:
+            - /.*/
+          tags:
+            only:
+            - production
+            - staging
+        context: sba-gov-upper
 jobs:
   cache-dependencies:
     docker:
@@ -138,21 +168,8 @@ jobs:
           command: |
             if [ -z "${CIRCLE_BRANCH}" ]
             then
-              function set_lower(){ export AWS_ACCESS_KEY_ID=$LOWER_AWS_KEY AWS_SECRET_ACCESS_KEY=$LOWER_AWS_SECRET BUCKET_NAME=$LOWER_BUCKET_NAME;}
-              function set_upper(){ export AWS_ACCESS_KEY_ID=$UPPER_AWS_KEY AWS_SECRET_ACCESS_KEY=$UPPER_AWS_SECRET BUCKET_NAME=$UPPER_BUCKET_NAME;}
-  
               export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
               export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
-  
-              case $CIRCLE_TAG in
-                production|staging)
-                  # set_upper
-                  set_lower
-                  ;;
-                *)
-                  set_lower
-                  ;;
-              esac
   
               aws s3api put-object --body "workspace/sba-gov-content-api.zip" --bucket "${BUCKET_NAME}" --key "${CIRCLE_TAG}/sba-gov-content-api.zip"
             fi
@@ -167,29 +184,50 @@ jobs:
           command: |
             if [ -z "${CIRCLE_BRANCH}" ]
             then
-              function set_lower(){ export AWS_ACCESS_KEY_ID=$LOWER_AWS_KEY AWS_SECRET_ACCESS_KEY=$LOWER_AWS_SECRET BUCKET_NAME=$LOWER_BUCKET_NAME;}
-              function set_upper(){ export AWS_ACCESS_KEY_ID=$UPPER_AWS_KEY AWS_SECRET_ACCESS_KEY=$UPPER_AWS_SECRET BUCKET_NAME=$UPPER_BUCKET_NAME;}
-  
-              case $CIRCLE_TAG in
-                production)
-                  export ENVIRONMENT=production
-                  set_upper
-                  ;;
-                staging)
-                  export ENVIRONMENT=staging
-                  set_upper
-                  ;;
-                *)
-                  export ENVIRONMENT=${CIRCLE_TAG}
-                  set_lower
-                  ;;
-              esac
-  
+              ENVIRONMENT=${CIRCLE_TAG}
               export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
               export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
   
               export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix "${ENVIRONMENT}/sba-gov-content-api.zip" | jq '.Versions[0].VersionId')
-              export LAMBDA_NAME="${ENVIRONMENT}-content-api-lambda"
+              export LAMBDA_NAME="${ENVIRONMENT}-ContentLambda"
+  
+              aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${ENVIRONMENT}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
+            fi
+  upload-package-with-approval:
+    docker:
+      - image: ussba/cc-docker-git-aws:latest
+    steps:
+      - checkout
+      - attach_workspace:
+          at: workspace
+      - run:
+          name: publish
+          shell: /bin/bash -eo pipefail
+          command: |
+            if [ -z "${CIRCLE_BRANCH}" ]
+            then
+              export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+              export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
+  
+              aws s3api put-object --body "workspace/sba-gov-content-api.zip" --bucket "${BUCKET_NAME}" --key "${CIRCLE_TAG}/sba-gov-content-api.zip"
+            fi
+  deploy-package-with-approval:
+    docker:
+      - image: ussba/cc-docker-git-aws:latest
+    steps:
+      - checkout
+      - run:
+          name: deploy
+          shell: /bin/bash -eo pipefail
+          command: |
+            if [ -z "${CIRCLE_BRANCH}" ]
+            then
+              ENVIRONMENT=${CIRCLE_TAG}
+              export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+              export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
+  
+              export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix "${ENVIRONMENT}/sba-gov-content-api.zip" | jq '.Versions[0].VersionId')
+              export LAMBDA_NAME="${ENVIRONMENT}-ContentLambda"
   
               aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${ENVIRONMENT}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
             fi

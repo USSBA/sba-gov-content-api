@@ -17,6 +17,7 @@ const {
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { runSearch } = require('./service/search.js')
 const { fetchOffices } = require('./service/office-search.js')
+const json2csv = require('json2csv').parse
 
 const fetchFunctions = {
   node: fetchFormattedNode
@@ -41,7 +42,7 @@ const fetchContentTypeFunctions = {
   taxonomys: fetchTaxonomys
 }
 
-async function fetchContentById (params, headers) {
+async function fetchContentById(params, headers) {
   if (params && params.type && params.id) {
     const type = params.type
     const id = params.id
@@ -55,20 +56,23 @@ async function fetchContentById (params, headers) {
           statusCode: HttpStatus.OK,
           body: result
         }
-      } catch (e) {
+      }
+      catch (e) {
         console.error('Error fetching data: ', e)
         return {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
           body: `Server Error, ${e}`
         }
       }
-    } else {
+    }
+    else {
       return {
         statusCode: HttpStatus.NOT_FOUND,
         body: 'Unknown type ' + type
       }
     }
-  } else {
+  }
+  else {
     return {
       statusCode: HttpStatus.BAD_REQUEST,
       body: 'Incorrect request format: missing type or id'
@@ -76,36 +80,54 @@ async function fetchContentById (params, headers) {
   }
 }
 
-async function fetchContentByType (pathParams, queryStringParameters) {
+async function fetchContentByType(pathParams, queryStringParameters) {
   if (pathParams && pathParams.type) {
     const type = pathParams.type
     const fetchFunction = fetchContentTypeFunctions[type]
     if (fetchFunction) {
+      let returnType = "application/json"
       try {
         let result = await fetchFunction(queryStringParameters)
+        if (pathParams.extension) {
+          if (pathParams.extension === "csv") {
+            result = createCsvFromJson(result)
+            returnType = "text/csv"
+          }
+        }
         return {
           statusCode: HttpStatus.OK,
           body: result
         }
-      } catch (e) {
+      }
+      catch (e) {
         console.error('Error fetching data: ', e)
         return {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-          body: `Server Error, ${e}`
+          body: `Server Error, ${e}`,
+          headers: {
+            "content-type": returnType
+          }
         }
       }
-    } else {
+    }
+    else {
       return {
         statusCode: HttpStatus.NOT_FOUND,
         body: 'Unknown type ' + type
       }
     }
-  } else {
+  }
+  else {
     return {
       statusCode: HttpStatus.BAD_REQUEST,
       body: 'Incorrect request format: missing type'
     }
   }
+}
+
+function createCsvFromJson(jsonData) {
+  const fields = Object.keys(jsonData[0])
+  return json2csv(jsonData, {fields})
 }
 
 module.exports.fetchContentById = fetchContentById
