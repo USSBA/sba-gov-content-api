@@ -17,7 +17,6 @@ const {
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { runSearch } = require('./service/search.js')
 const { fetchOffices } = require('./service/office-search.js')
-const json2csv = require('json2csv').parse
 
 const fetchFunctions = {
   node: fetchFormattedNode
@@ -87,11 +86,6 @@ async function fetchContentByType(pathParams, queryStringParameters) {
     if (fetchFunction) {
       try {
         let result = await fetchFunction(queryStringParameters)
-        if (pathParams.extension) {
-          if (pathParams.extension === "csv") {
-            result = createCsvFromJson(result)
-          }
-        }
         return {
           statusCode: HttpStatus.OK,
           body: result
@@ -118,11 +112,6 @@ async function fetchContentByType(pathParams, queryStringParameters) {
       body: 'Incorrect request format: missing type'
     }
   }
-}
-
-function createCsvFromJson(jsonData) {
-  const fields = Object.keys(jsonData[0])
-  return json2csv(jsonData, {fields})
 }
 
 module.exports.fetchContentById = fetchContentById
