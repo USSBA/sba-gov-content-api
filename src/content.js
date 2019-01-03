@@ -85,13 +85,11 @@ async function fetchContentByType(pathParams, queryStringParameters) {
     const type = pathParams.type
     const fetchFunction = fetchContentTypeFunctions[type]
     if (fetchFunction) {
-      let returnType = "application/json"
       try {
         let result = await fetchFunction(queryStringParameters)
         if (pathParams.extension) {
           if (pathParams.extension === "csv") {
             result = createCsvFromJson(result)
-            returnType = "text/csv"
           }
         }
         return {
@@ -103,10 +101,7 @@ async function fetchContentByType(pathParams, queryStringParameters) {
         console.error('Error fetching data: ', e)
         return {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-          body: `Server Error, ${e}`,
-          headers: {
-            "content-type": returnType
-          }
+          body: `Server Error, ${e}`
         }
       }
     }
