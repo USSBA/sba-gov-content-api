@@ -52,6 +52,7 @@ workflows:
             - demo
             - mint
             - /int-\w+/
+            - amy
         context: sba-gov-lower
     - deploy-package:
         requires: [upload-package]
@@ -64,6 +65,7 @@ workflows:
             - demo
             - mint
             - /int-\w+/
+            - amy
         context: sba-gov-lower
     - hold:
         type: approval
