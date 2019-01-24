@@ -1,31 +1,1088 @@
 [
-	{
-		color: "red",
-		value: "#f00"
-	},
-	{
-		color: "green",
-		value: "#0f0"
-	},
-	{
-		color: "blue",
-		value: "#00f"
-	},
-	{
-		color: "cyan",
-		value: "#0ff"
-	},
-	{
-		color: "magenta",
-		value: "#f0f"
-	},
-	{
-		color: "yellow",
-		value: "#ff0"
-	},
-	{
-		color: "black",
-		value: "#000"
-	}
-]
-
+    {
+    "linkTitle": "Candace is the greatest",
+    "link": "/business-guide",
+    "children": [
+    {
+    "linkTitle": "Plan your business",
+    "link": "/business-guide/plan-your-business",
+    "children": [
+    {
+    "linkTitle": "Market research and competitive analysis",
+    "link": "/business-guide/plan-your-business/market-research-competitive-analysis",
+    "spanishTranslation": {
+    "linkTitle": "Investigación de mercado y análisis competitivo",
+    "link": "/guia-de-negocios/planifique-su-empresa/investigacion-de-mercado-y-analisis-competitivo"
+    }
+    },
+    {
+    "linkTitle": "Write your business plan",
+    "link": "/business-guide/plan-your-business/write-your-business-plan",
+    "spanishTranslation": {
+    "linkTitle": "Redacte su plan de negocios",
+    "link": "/guia-de-negocios/planifique-su-empresa/redacte-su-plan-de-negocios"
+    }
+    },
+    {
+    "linkTitle": "Calculate your startup costs",
+    "link": "/business-guide/plan-your-business/calculate-your-startup-costs",
+    "spanishTranslation": {
+    "linkTitle": "Calcule sus costos de lanzamiento",
+    "link": "/guia-de-negocios/planifique-su-empresa/calcule-sus-costos-de-lanzamiento"
+    }
+    },
+    {
+    "linkTitle": "Fund your business",
+    "link": "/business-guide/plan-your-business/fund-your-business",
+    "spanishTranslation": {
+    "linkTitle": "Financie su empresa",
+    "link": "/guia-de-negocios/planifique-su-empresa/financie-su-empresa"
+    }
+    },
+    {
+    "linkTitle": "Buy an existing business or franchise",
+    "link": "/business-guide/plan-your-business/buy-existing-business-or-franchise",
+    "spanishTranslation": {
+    "linkTitle": "Adquiera una empresa o franquicia existente",
+    "link": "/guia-de-negocios/planifique-su-empresa/compre-una-empresa-o-franquicia-establecida"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Planifique su empresa",
+    "link": "/business-guide/planifique-su-empresa"
+    }
+    },
+    {
+    "linkTitle": "Launch your business",
+    "link": "/business-guide/launch-your-business",
+    "children": [
+    {
+    "linkTitle": "Pick your business location",
+    "link": "/business-guide/launch-your-business/pick-your-business-location",
+    "spanishTranslation": {
+    "linkTitle": "Escoja la ubicación de su empresa",
+    "link": "/guia-de-negocios/lance-su-empresa/escoja-la-ubicacion-de-su-empresa"
+    }
+    },
+    {
+    "linkTitle": "Choose a business structure",
+    "link": "/business-guide/launch-your-business/choose-business-structure",
+    "spanishTranslation": {
+    "linkTitle": "Escoja una estructura empresarial",
+    "link": "/guia-de-negocios/lance-su-empresa/elija-una-estructura-comercial"
+    }
+    },
+    {
+    "linkTitle": "Choose your business name",
+    "link": "/business-guide/launch-your-business/choose-your-business-name",
+    "spanishTranslation": {
+    "linkTitle": "Elija un nombre para su empresa",
+    "link": "/guia-de-negocios/lance-su-empresa/elija-un-nombre-para-su-empresa"
+    }
+    },
+    {
+    "linkTitle": "Register your business",
+    "link": "/business-guide/launch-your-business/register-your-business",
+    "spanishTranslation": {
+    "linkTitle": "Registre su empresa",
+    "link": "/guia-de-negocios/lance-su-empresa/registre-su-empresa"
+    }
+    },
+    {
+    "linkTitle": "Get federal and state tax ID numbers",
+    "link": "/business-guide/launch-your-business/get-federal-state-tax-id-numbers",
+    "spanishTranslation": {
+    "linkTitle": "Obtenga su número de identificación del contribuyente federal y estatal",
+    "link": "/guia-de-negocios/lance-su-empresa/obtenga-su-numero-de-identificacion-tributaria-federal-y-estatal"
+    }
+    },
+    {
+    "linkTitle": "Apply for licenses and permits",
+    "link": "/business-guide/launch-your-business/apply-licenses-permits",
+    "spanishTranslation": {
+    "linkTitle": "Solicite licencias y permisos",
+    "link": "/guia-de-negocios/lance-su-empresa/solicite-licencias-y-permisos"
+    }
+    },
+    {
+    "linkTitle": "Open a business bank account",
+    "link": "/business-guide/launch-your-business/open-business-bank-account",
+    "spanishTranslation": {
+    "linkTitle": "Abra una cuenta bancaria comercial",
+    "link": "/guia-de-negocios/lance-su-empresa/abra-una-cuenta-bancaria-comercial"
+    }
+    },
+    {
+    "linkTitle": "Get business insurance",
+    "link": "/business-guide/launch-your-business/get-business-insurance",
+    "spanishTranslation": {
+    "linkTitle": "Obtenga un seguro comercial",
+    "link": "/guia-de-negocios/lance-su-empresa/obtenga-un-seguro-comercial"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Lance su empresa",
+    "link": "/business-guide/lance-su-empresa"
+    }
+    },
+    {
+    "linkTitle": "Manage your business",
+    "link": "/business-guide/manage-your-business",
+    "children": [
+    {
+    "linkTitle": "Manage your finances",
+    "link": "/business-guide/manage-your-business/manage-your-finances",
+    "spanishTranslation": {
+    "linkTitle": "Administre sus finanzas",
+    "link": "/guia-de-negocios/administre-su-empresa/administre-sus-finanzas"
+    }
+    },
+    {
+    "linkTitle": "Hire and manage employees",
+    "link": "/business-guide/manage-your-business/hire-manage-employees",
+    "spanishTranslation": {
+    "linkTitle": "Contrate y administre a los empleados",
+    "link": "/guia-de-negocios/administre-su-empresa/contrate-y-administre-los-empleados"
+    }
+    },
+    {
+    "linkTitle": "Pay taxes",
+    "link": "/business-guide/manage-your-business/pay-taxes",
+    "spanishTranslation": {
+    "linkTitle": "Pago de impuestos",
+    "link": "/guia-de-negocios/administre-su-empresa/pago-de-impuestos"
+    }
+    },
+    {
+    "linkTitle": "Stay legally compliant",
+    "link": "/business-guide/manage-your-business/stay-legally-compliant",
+    "spanishTranslation": {
+    "linkTitle": "Siga las leyes",
+    "link": "/guia-de-negocios/administre-su-empresa/siga-las-leyes"
+    }
+    },
+    {
+    "linkTitle": "Buy assets and equipment",
+    "link": "/business-guide/manage-your-business/buy-assets-equipment",
+    "spanishTranslation": {
+    "linkTitle": "Adquiera activos y equipo",
+    "link": "/guia-de-negocios/administre-su-empresa/adquiera-activos-y-equipo"
+    }
+    },
+    {
+    "linkTitle": "Marketing and sales",
+    "link": "/business-guide/manage-your-business/marketing-sales",
+    "spanishTranslation": {
+    "linkTitle": "Publicidad y ventas",
+    "link": "/guia-de-negocios/administre-su-empresa/marketing-y-ventas"
+    }
+    },
+    {
+    "linkTitle": "Prepare for emergencies",
+    "link": "/business-guide/manage-your-business/prepare-emergencies",
+    "spanishTranslation": {
+    "linkTitle": "Prepárese para emergencias",
+    "link": "/guia-de-negocios/administre-su-empresa/preparese-para-emergencias"
+    }
+    },
+    {
+    "linkTitle": "Close or sell your business",
+    "link": "/business-guide/manage-your-business/close-or-sell-your-business",
+    "spanishTranslation": {
+    "linkTitle": "Cierre o venda su empresa",
+    "link": "/guia-de-negocios/administre-su-empresa/cierre-o-venda-su-empresa"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Administre su empresa",
+    "link": "/business-guide/administre-su-empresa"
+    }
+    },
+    {
+    "linkTitle": "Grow your business",
+    "link": "/business-guide/grow-your-business",
+    "children": [
+    {
+    "linkTitle": "Get more funding",
+    "link": "/business-guide/grow-your-business/get-more-funding",
+    "spanishTranslation": {
+    "linkTitle": "Obtenga más fondos",
+    "link": "/guia-de-negocios/haga-crecer-su-empresa/obtenga-mas-fondos"
+    }
+    },
+    {
+    "linkTitle": "Expand to new locations",
+    "link": "/business-guide/grow-your-business/expand-new-locations",
+    "spanishTranslation": {
+    "linkTitle": "Extiéndase a nuevas ubicaciones",
+    "link": "/guia-de-negocios/haga-crecer-su-empresa/extiendase-nuevas-ubicaciones"
+    }
+    },
+    {
+    "linkTitle": "Merge and acquire businesses",
+    "link": "/business-guide/grow-your-business/merge-acquire-businesses",
+    "spanishTranslation": {
+    "linkTitle": "Fusione y adquiera empresas",
+    "link": "/guia-de-negocios/haga-crecer-su-empresa/fusione-y-adquiera-empresas"
+    }
+    },
+    {
+    "linkTitle": "Become a federal contractor",
+    "link": "/business-guide/grow-your-business/become-federal-contractor",
+    "spanishTranslation": {
+    "linkTitle": "Hágase contratista federal",
+    "link": "/guia-de-negocios/haga-crecer-su-empresa/hagase-contratista-federal"
+    }
+    },
+    {
+    "linkTitle": "Export products",
+    "link": "/business-guide/grow-your-business/export-products",
+    "spanishTranslation": {
+    "linkTitle": "Exporte productos",
+    "link": "/guia-de-negocios/haga-crecer-su-empresa/exporte-productos"
+    }
+    },
+    {
+    "linkTitle": "Women-owned businesses",
+    "link": "/business-guide/grow-your-business/women-owned-businesses",
+    "spanishTranslation": {
+    "linkTitle": "Empresas propiedad de mujeres",
+    "link": "/guia-de-negocios/haga-crecer-su-empresa/empresas-propiedad-de-mujeres"
+    }
+    },
+    {
+    "linkTitle": "Native American-owned businesses",
+    "link": "/business-guide/grow-your-business/native-american-owned-businesses",
+    "spanishTranslation": {
+    "linkTitle": "Empresas propiedad de indígenas norteamericanos",
+    "link": "/guia-de-negocios/haga-crecer-su-empresa/empresas-propiedad-de-indigenas-norteamericanos"
+    }
+    },
+    {
+    "linkTitle": "Veteran-owned businesses",
+    "link": "/business-guide/grow-your-business/veteran-owned-businesses",
+    "spanishTranslation": {
+    "linkTitle": "Empresas propiedad de veteranos",
+    "link": "/guia-de-negocios/haga-crecer-su-empresa/empresas-propiedad-de-veteranos"
+    }
+    },
+    {
+    "linkTitle": "LGBT-owned businesses",
+    "link": "/business-guide/grow-your-business/lgbt-owned-businesses",
+    "spanishTranslation": {
+    "linkTitle": "Empresas propiedad de LGBT",
+    "link": "/guia-de-negocios/haga-crecer-su-empresa/empresas-propiedad-de-lgbt"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Haga crecer su empresa",
+    "link": "/business-guide/haga-crecer-su-empresa"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Guía de negocios",
+    "link": "/guia-de-negocios"
+    }
+    },
+    {
+    "linkTitle": "Funding Programs",
+    "link": "/funding-programs",
+    "children": [
+    {
+    "linkTitle": "Investment capital",
+    "link": "/funding-programs/investment-capital",
+    "spanishTranslation": {
+    "linkTitle": "Capital de inversión",
+    "link": "/programas-de-financiamiento/capital-de-inversion"
+    }
+    },
+    {
+    "linkTitle": "Disaster assistance",
+    "link": "/funding-programs/disaster-assistance",
+    "spanishTranslation": {
+    "linkTitle": "Ayuda en desastres",
+    "link": "/programas-de-financiamiento/asistencia-por-desastre"
+    }
+    },
+    {
+    "linkTitle": "Surety bonds",
+    "link": "/funding-programs/surety-bonds",
+    "spanishTranslation": {
+    "linkTitle": "Bonos de garantía",
+    "link": "/programas-de-financiamiento/bonos-de-garantia"
+    }
+    },
+    {
+    "linkTitle": "Grants",
+    "link": "/funding-programs/grants",
+    "children": [
+    {
+    "linkTitle": "Grants programs and eligibility",
+    "link": "/funding-programs/grants/grants-programs-eligibility",
+    "spanishTranslation": {
+    "linkTitle": "Programas y elegibilidad para subvenciones",
+    "link": "/programas-de-financiamiento/subvenciones/programas-y-elegibilidad-para-subvenciones"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Subvenciones",
+    "link": "/programas-de-financiamiento/subvenciones"
+    }
+    },
+    {
+    "linkTitle": "Lender Match",
+    "link": "/funding-programs/loans/lender-match",
+    "spanishTranslation": {
+    "linkTitle": "Lender Match",
+    "link": "/programas-de-financiamiento/prestamos/lender-match"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Programas de financiamiento",
+    "link": "/programas-de-financiamiento"
+    }
+    },
+    {
+    "linkTitle": "Federal Contracting",
+    "link": "/federal-contracting",
+    "children": [
+    {
+    "linkTitle": "Contracting guide",
+    "link": "/federal-contracting/contracting-guide",
+    "children": [
+    {
+    "linkTitle": "Assess your business",
+    "link": "/federal-contracting/contracting-guide/assess-your-business",
+    "spanishTranslation": {
+    "linkTitle": "Evalúe su empresa",
+    "link": "/contratacion-federal/guia-sobre-contratacion/evalue-su-empresa"
+    }
+    },
+    {
+    "linkTitle": "Basic requirements",
+    "link": "/federal-contracting/contracting-guide/basic-requirements",
+    "spanishTranslation": {
+    "linkTitle": "Requisitos básicos",
+    "link": "/contratacion-federal/guia-sobre-contratacion/requisitos-basicos"
+    }
+    },
+    {
+    "linkTitle": "How to win contracts",
+    "link": "/federal-contracting/contracting-guide/how-win-contracts",
+    "spanishTranslation": {
+    "linkTitle": "Cómo ganar contratos",
+    "link": "/contratacion-federal/guia-sobre-contratacion/como-ganar-contratos"
+    }
+    },
+    {
+    "linkTitle": "Types of contracts",
+    "link": "/federal-contracting/contracting-guide/types-contracts",
+    "spanishTranslation": {
+    "linkTitle": "Tipos de contratos",
+    "link": "/contratacion-federal/guia-sobre-contratacion/tipos-de-contratos"
+    }
+    },
+    {
+    "linkTitle": "Size standards",
+    "link": "/federal-contracting/contracting-guide/size-standards",
+    "spanishTranslation": {
+    "linkTitle": "Normas sobre el tamaño",
+    "link": "/contratacion-federal/guia-sobre-contratacion/normas-sobre-el-tamano"
+    }
+    },
+    {
+    "linkTitle": "Governing rules and responsibilities",
+    "link": "/federal-contracting/contracting-guide/governing-rules-responsibilities",
+    "spanishTranslation": {
+    "linkTitle": "Reglas vigentes y responsabilidades",
+    "link": "/contratacion-federal/guia-sobre-contratacion/reglas-vigentes-y-responsabilidades"
+    }
+    },
+    {
+    "linkTitle": "Prime and subcontracting",
+    "link": "/federal-contracting/contracting-guide/prime-subcontracting",
+    "spanishTranslation": {
+    "linkTitle": "Contratación y subcontratación",
+    "link": "/contratacion-federal/guia-sobre-contratacion/contratacion-y-subcontratacion"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Guía sobre contratación",
+    "link": "/contratacion-federal/guia-sobre-contratacion"
+    }
+    },
+    {
+    "linkTitle": "Contracting assistance programs",
+    "link": "/federal-contracting/contracting-assistance-programs",
+    "children": [
+    {
+    "linkTitle": "Women-Owned Small Business Federal Contracting program",
+    "link": "/federal-contracting/contracting-assistance-programs/women-owned-small-business-federal-contracting-program",
+    "spanishTranslation": {
+    "linkTitle": "Programa para la contratación federal de pequeñas empresas propiedad de mujeres",
+    "link": "/contratacion-federal/programas-de-asistencia-para-la-contratacion/programa-para-la-contratacion-federal-de-pequenas-empresas-propiedad-de-mujeres"
+    }
+    },
+    {
+    "linkTitle": "Service-disabled Veteran-Owned Small Business program",
+    "link": "/federal-contracting/contracting-assistance-programs/service-disabled-veteran-owned-small-businesses-program",
+    "spanishTranslation": {
+    "linkTitle": "Programa para la contratación federal de pequeñas empresas propiedad de veteranos discapacitados",
+    "link": "/contratacion-federal/programas-de-asistencia-para-la-contratacion/programa-para-pequenas-empresas-propiedad-de-veteranos-discapacitados"
+    }
+    },
+    {
+    "linkTitle": "8(a) Business Development program",
+    "link": "/federal-contracting/contracting-assistance-programs/8a-business-development-program",
+    "spanishTranslation": {
+    "linkTitle": "8(a) Programa de desarrollo empresarial",
+    "link": "/contratacion-federal/programas-de-asistencia-para-la-contratacion/8a-programa-de-desarrollo-empresarial"
+    }
+    },
+    {
+    "linkTitle": "All Small Mentor-Protégé program",
+    "link": "/federal-contracting/contracting-assistance-programs/all-small-mentor-protege-program",
+    "spanishTranslation": {
+    "linkTitle": "Programa All Small Mentor-Protégé (mentores para pequeñas empresas)",
+    "link": "/contratacion-federal/programas-de-asistencia-para-la-contratacion/programa-all-small-mentor-protege-mentores-para-pequenas-empresas"
+    }
+    },
+    {
+    "linkTitle": "HUBZone program",
+    "link": "/federal-contracting/contracting-assistance-programs/hubzone-program",
+    "spanishTranslation": {
+    "linkTitle": "Programa HUBZone",
+    "link": "/contratacion-federal/programas-de-asistencia-para-la-contratacion/programa-hubzone"
+    }
+    },
+    {
+    "linkTitle": "Natural Resource Sales Assistance program",
+    "link": "/federal-contracting/contracting-assistance-programs/natural-resource-sales-assistance-program",
+    "spanishTranslation": {
+    "linkTitle": "Programa de Asistencia para la Venta de Recursos Naturales",
+    "link": "/contratacion-federal/programas-de-asistencia-para-la-contratacion/programa-de-asistencia-para-la-venta-de-recursos-naturales"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Programas de asistencia para la contratación",
+    "link": "/contratacion-federal/programas-de-asistencia-para-la-contratacion"
+    }
+    },
+    {
+    "linkTitle": "Counseling and help",
+    "link": "/federal-contracting/counseling-help",
+    "children": [
+    {
+    "linkTitle": "Commercial market representative directory",
+    "link": "/federal-contracting/counseling-help/commercial-market-representative-directory",
+    "spanishTranslation": {
+    "linkTitle": "Directorio de representantes comerciales",
+    "link": "/contratacion-federal/asesoria-y-ayuda/directorio-de-representantes-comerciales"
+    }
+    },
+    {
+    "linkTitle": "Contracting area directors",
+    "link": "/federal-contracting/counseling-help/contracting-area-directors",
+    "spanishTranslation": {
+    "linkTitle": "Contratación de directores de área",
+    "link": "/contratacion-federal/asesoria-y-ayuda/contratacion-de-directores-de-area"
+    }
+    },
+    {
+    "linkTitle": "Procurement center representative directory",
+    "link": "/federal-contracting/counseling-help/procurement-center-representative-directory",
+    "spanishTranslation": {
+    "linkTitle": "Directorio de representantes de centros de adquisiciones",
+    "link": "/contratacion-federal/asesoria-y-ayuda/directorio-de-representantes-de-centros-de-adquisiciones"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Asesoría y ayuda",
+    "link": "/contratacion-federal/asesoria-y-ayuda"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Contratación federal",
+    "link": "/contratacion-federal"
+    }
+    },
+    {
+    "linkTitle": "Learning Center",
+    "link": "/learning-center",
+    "spanishTranslation": {
+    "linkTitle": "Centro de capacitación",
+    "link": "/centro-de-capacitacion"
+    }
+    },
+    {
+    "linkTitle": "Local Assistance",
+    "link": "/tools/local-assistance",
+    "children": [
+    {
+    "linkTitle": "Links for testing",
+    "link": "/tools/local-assistance/test",
+    "children": [
+    {
+    "linkTitle": "Relative link with query param",
+    "link": "/tools/local-assistance/test/?q=district&pageNumber=1"
+    },
+    {
+    "linkTitle": "Google Link (http)",
+    "link": "https://google.com"
+    },
+    {
+    "linkTitle": "Google Link (https)",
+    "link": "https://www.google.com"
+    },
+    {
+    "linkTitle": "Google Store with path (http)",
+    "link": "https://store.google.com/product/pixel_3"
+    },
+    {
+    "linkTitle": "Google Site (https - trailing slash)",
+    "link": "https://www.google.com/ "
+    },
+    {
+    "linkTitle": "Google with query param (https)",
+    "link": "https://www.google.com/search?q=test"
+    },
+    {
+    "linkTitle": "Relative link with query param",
+    "link": "/tools/local-assistance/test/test2/?q=https:/whitehouse.gov"
+    }
+    ]
+    },
+    {
+    "linkTitle": "SBA Offices and Resource Partners",
+    "link": "https://yahoo.com/contactdd",
+    "children": [
+    {
+    "linkTitle": "SBA District Offices",
+    "link": "https:/yahoo.com/contactdd/districtoffices",
+    "spanishTranslation": {
+    "linkTitle": "Oficinas distritales",
+    "link": "https://yahoo.com/contactdd/oficinas-distritales"
+    }
+    },
+    {
+    "linkTitle": "SBA Regional Offices",
+    "link": "https:/yahoo.com/contactdd/regionaloffices",
+    "spanishTranslation": {
+    "linkTitle": "Oficinas regionales",
+    "link": "https://yahoo.com/contactdd/oficinas-regionales"
+    }
+    },
+    {
+    "linkTitle": "Disaster Field Offices",
+    "link": "https:/yahoo.com/contactdd/disasteroffices",
+    "spanishTranslation": {
+    "linkTitle": "Oficinas en zonas de desastres",
+    "link": "https://yahoo.com/contactdd/oficinas-en-zonas-de-desastres"
+    }
+    },
+    {
+    "linkTitle": "SCORE Business Mentors",
+    "link": "https:/yahoo.com/contactdd/score",
+    "spanishTranslation": {
+    "linkTitle": "Mentores empresariales de SCORE",
+    "link": "https://yahoo.com/contactdd/mentores-empresariales-de-score"
+    }
+    },
+    {
+    "linkTitle": "Small Business Development Centers",
+    "link": "https:/yahoo.com/contactdd/sbdc",
+    "spanishTranslation": {
+    "linkTitle": "Centros para el Desarrollo de Pequeñas Empresas",
+    "link": "https://yahoo.com/contactdd/centros-para-el-desarrollo-de-pequenas-empresas"
+    }
+    },
+    {
+    "linkTitle": "Women's Business Centers",
+    "link": "https:/yahoo.com/contactdd/wbc",
+    "spanishTranslation": {
+    "linkTitle": "Centros de Desarrollo Empresarial para Mujeres",
+    "link": "https://yahoo.com/contactdd/centros-de-desarrollo-empresarial-para-mujeres"
+    }
+    },
+    {
+    "linkTitle": "U.S. Export Assistance Centers",
+    "link": "https:/yahoo.com/contactdd/eac",
+    "spanishTranslation": {
+    "linkTitle": "Centros de Asistencia para la Exportación en Estados Unidos",
+    "link": "https://yahoo.com/contactdd/centros-de-asistencia-para-la-exportacion-en-estados-unidos"
+    }
+    },
+    {
+    "linkTitle": "Veteran's Business Outreach Centers",
+    "link": "https:/yahoo.com/contactdd/vboc",
+    "spanishTranslation": {
+    "linkTitle": "Centros de Promoción Empresarial para Veteranos",
+    "link": "https://yahoo.com/contactdd/centros-de-promocion-empresarial-para-veteranos"
+    }
+    },
+    {
+    "linkTitle": "Certified Development Companies",
+    "link": "https:/yahoo.com/contactdd/cdc",
+    "spanishTranslation": {
+    "linkTitle": "Empresas de Desarrollo Certificadas",
+    "link": "https://yahoo.com/contactdd/empresas-de-desarrollo-certificadas"
+    }
+    },
+    {
+    "linkTitle": "Procurement Technical Assistance Centers",
+    "link": "https:/yahoo.com/contactdd/ptac",
+    "spanishTranslation": {
+    "linkTitle": "Centros de Asistencia Técnica en Adquisiciones",
+    "link": "https://yahoo.com/contactdd/centros-de-asistencia-tecnica-en-adquisiciones"
+    }
+    }
+    ]
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Asistencia local",
+    "link": "/asistencia-local"
+    }
+    },
+    {
+    "linkTitle": "About SBA",
+    "link": "/about-sba",
+    "children": [
+    {
+    "linkTitle": "What We Do",
+    "link": "/about-sba/what-we-do",
+    "children": [
+    {
+    "linkTitle": "Mission",
+    "link": "/about-sba/what-we-do/mission",
+    "spanishTranslation": {
+    "linkTitle": "Misión",
+    "link": "/about-sba/what-we-do/mision"
+    }
+    },
+    {
+    "linkTitle": "History",
+    "link": "/about-sba/what-we-do/history",
+    "spanishTranslation": {
+    "linkTitle": "Historia",
+    "link": "/about-sba/what-we-do/historia"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Nuestro trabajo",
+    "link": "/about-sba/nuestro-trabajo"
+    }
+    },
+    {
+    "linkTitle": "SBA Performance",
+    "link": "/about-sba/sba-performance",
+    "children": [
+    {
+    "linkTitle": "Policy & Regulations",
+    "link": "/about-sba/sba-performance/policy-regulations",
+    "spanishTranslation": {
+    "linkTitle": "Política y normativa",
+    "link": "/about-sba/sba-performance/politica-y-normativa"
+    }
+    },
+    {
+    "linkTitle": "Strategic Planning",
+    "link": "/about-sba/sba-performance/strategic-planning",
+    "spanishTranslation": {
+    "linkTitle": "Planificación estratégica",
+    "link": "/about-sba/sba-performance/planificacion-estrategica"
+    }
+    },
+    {
+    "linkTitle": "Performance & Budget",
+    "link": "/about-sba/sba-performance/performance-budget-finances",
+    "spanishTranslation": {
+    "linkTitle": "Desempeño y presupuesto",
+    "link": "/about-sba/sba-performance/desempeno-y-presupuesto"
+    }
+    },
+    {
+    "linkTitle": "Open Data",
+    "link": "/about-sba/sba-performance/open-government/digital-sba/open-data",
+    "spanishTranslation": {
+    "linkTitle": "Datos abiertos",
+    "link": "/about-sba/sba-performance/datos-abiertos"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Desempeño de la SBA",
+    "link": "/about-sba/desempeno-de-la-sba"
+    }
+    },
+    {
+    "linkTitle": "Oversight & Advocacy",
+    "link": "/about-sba/oversight-advocacy",
+    "children": [
+    {
+    "linkTitle": "Advocacy",
+    "link": "/about-sba/oversight-advocacy/advocacy",
+    "spanishTranslation": {
+    "linkTitle": "Defensa",
+    "link": "/about-sba/oversight-advocacy/defensa"
+    }
+    },
+    {
+    "linkTitle": "Ombudsman",
+    "link": "/about-sba/oversight-advocacy/ombudsman",
+    "spanishTranslation": {
+    "linkTitle": "Defensor",
+    "link": "/about-sba/oversight-advocacy/defensor"
+    }
+    },
+    {
+    "linkTitle": "Inspector General",
+    "link": "/about-sba/oversight-advocacy/office-of-inspector-general",
+    "spanishTranslation": {
+    "linkTitle": "Inspector General",
+    "link": "/about-sba/oversight-advocacy/inspector-general"
+    }
+    },
+    {
+    "linkTitle": "Hearing & Appeals",
+    "link": "/about-sba/oversight-advocacy/oha",
+    "spanishTranslation": {
+    "linkTitle": "Audiencias y apelaciones",
+    "link": "/about-sba/oversight-advocacy/audiencias-y-apelaciones"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Supervisión y defensa",
+    "link": "/about-sba/supervision-y-defensa"
+    }
+    },
+    {
+    "linkTitle": "SBA Team",
+    "link": "/about-sba/sba-team",
+    "children": [
+    {
+    "linkTitle": "SBA Administrator",
+    "link": "/about-sba/sba-team/sba-administrator",
+    "spanishTranslation": {
+    "linkTitle": "Administrador de la SBA",
+    "link": "/about-sba/sba-team/administrador-de-la-sba"
+    }
+    },
+    {
+    "linkTitle": "SBA Leadership",
+    "link": "/about-sba/sba-team/sba-leadership",
+    "spanishTranslation": {
+    "linkTitle": "Liderazgo de la SBA",
+    "link": "/about-sba/sba-team/liderazgo-de-la-sba"
+    }
+    },
+    {
+    "linkTitle": "Jobs at SBA",
+    "link": "/about-sba/sba-team/jobs-sba",
+    "spanishTranslation": {
+    "linkTitle": "Trabajos en la SBA",
+    "link": "/about-sba/sba-team/trabajos-en-la-sba"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Equipo de la SBA",
+    "link": "/about-sba/equipo-de-la-sba"
+    }
+    },
+    {
+    "linkTitle": "SBA Locations",
+    "link": "/about-sba/sba-locations",
+    "children": [
+    {
+    "linkTitle": "Headquarters Offices",
+    "link": "/about-sba/sba-locations/headquarters-offices",
+    "spanishTranslation": {
+    "linkTitle": "Oficinas centrales",
+    "link": "/about-sba/sba-locations/oficinas-centrales"
+    }
+    },
+    {
+    "linkTitle": "District Offices",
+    "link": "/about-sba/sba-locations/districtoffices",
+    "spanishTranslation": {
+    "linkTitle": "Oficinas distritales",
+    "link": "/about-sba/sba-locations/oficinas-distritales"
+    }
+    },
+    {
+    "linkTitle": "Regional Offices",
+    "link": "/about-sba/sba-locations/regionaloffices",
+    "spanishTranslation": {
+    "linkTitle": "Oficinas regionales",
+    "link": "/about-sba/sba-locations/oficinas-regionales"
+    }
+    },
+    {
+    "linkTitle": "Disaster Offices",
+    "link": "/about-sba/sba-locations/disasteroffices",
+    "spanishTranslation": {
+    "linkTitle": "Oficinas en zonas de desastres",
+    "link": "/about-sba/sba-locations/oficinas-en-zonas-de-desastres"
+    }
+    },
+    {
+    "linkTitle": "Loan and Guaranty Centers",
+    "link": "/about-sba/sba-locations/loan-and-guaranty-centers",
+    "spanishTranslation": {
+    "linkTitle": "Centros de préstamos y garantías",
+    "link": "/about-sba/sba-locations/centros-de-prestamos-y-garantias"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Ubicaciones de la SBA",
+    "link": "/about-sba/ubicaciones-de-la-sba"
+    }
+    },
+    {
+    "linkTitle": "SBA Initiatives",
+    "link": "/about-sba/sba-initiatives",
+    "children": [
+    {
+    "linkTitle": "Is your business fiscally fit?",
+    "link": "/about-sba/sba-initiatives/moneysmart",
+    "spanishTranslation": {
+    "linkTitle": "Cumple su empresa con los requisitos fiscales",
+    "link": "/about-sba/sba-initiatives/cumple-su-empresa-con-los-requisitos-fiscales"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Iniciativas de la SBA",
+    "link": "/about-sba/iniciativas-de-la-sba"
+    }
+    },
+    {
+    "linkTitle": "SBA Forms",
+    "link": "/about-sba/managing-business/forms",
+    "spanishTranslation": {
+    "linkTitle": "Formularios de la SBA",
+    "link": "/about-sba/formularios-de-la-sba"
+    }
+    },
+    {
+    "linkTitle": "SBA Newsroom",
+    "link": "/about-sba/about-sba/sba-newsroom",
+    "children": [
+    {
+    "linkTitle": "Press office contacts",
+    "link": "/about-sba/about-sba/sba-newsroom/about-sba/sba-newsroom/press-office-contacts",
+    "spanishTranslation": {
+    "linkTitle": "Contratos de la oficina de prensa",
+    "link": "/about-sba/about-sba/sba-newsroom/contratos-de-la-oficina-de-prensa"
+    }
+    },
+    {
+    "linkTitle": "Regional and local media contacts",
+    "link": "/about-sba/about-sba/sba-newsroom/about-sba/sba-newsroom/regional-local-media",
+    "spanishTranslation": {
+    "linkTitle": "Contratos con los medios regionales y locales",
+    "link": "/about-sba/about-sba/sba-newsroom/contratos-con-los-medios-regionales-y-locales"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Sala de prensa de la SBA",
+    "link": "/about-sba/sala-de-prensa-de-la-sba"
+    }
+    },
+    {
+    "linkTitle": "Open government",
+    "link": "/about-sba/open-government",
+    "children": [
+    {
+    "linkTitle": "FOIA",
+    "link": "/about-sba/open-government/foia",
+    "spanishTranslation": {
+    "linkTitle": "Ley de Libertad de Información (FOIA)",
+    "link": "/acerca-de-la-sba/gobierno-abierto/ley-de-libertad-de-informacion-foia"
+    }
+    },
+    {
+    "linkTitle": "Digital SBA",
+    "link": "/about-sba/open-government/digital-sba",
+    "spanishTranslation": {
+    "linkTitle": "SBA digital",
+    "link": "/acerca-de-la-sba/gobierno-abierto/sba-digital"
+    }
+    },
+    {
+    "linkTitle": "About the SBA.gov website",
+    "link": "/about-sba/open-government/about-sbagov-website",
+    "children": [
+    {
+    "linkTitle": "Accessibility",
+    "link": "/about-sba/open-government/about-sbagov-website/accessibility"
+    },
+    {
+    "linkTitle": "Disclaimer",
+    "link": "/about-sba/open-government/about-sbagov-website/disclaimer"
+    },
+    {
+    "linkTitle": "Linking policy",
+    "link": "/about-sba/open-government/about-sbagov-website/linking-policy"
+    },
+    {
+    "linkTitle": "No Fear Act",
+    "link": "/about-sba/open-government/about-sbagov-website/no-fear-act"
+    },
+    {
+    "linkTitle": "Privacy policy",
+    "link": "/about-sba/open-government/about-sbagov-website/privacy-policy"
+    },
+    {
+    "linkTitle": "Social media",
+    "link": "/about-sba/open-government/about-sbagov-website/social-media"
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Sobre el sitio web SBA.gov",
+    "link": "/acerca-de-la-sba/gobierno-abierto/sobre-el-sitio-web-sbagov"
+    }
+    },
+    {
+    "linkTitle": "Privacy Act",
+    "link": "/about-sba/open-government/privacy-act",
+    "spanishTranslation": {
+    "linkTitle": "Ley de Privacidad",
+    "link": "/acerca-de-la-sba/gobierno-abierto/ley-de-privacidad"
+    }
+    },
+    {
+    "linkTitle": "Privacy Act request guide",
+    "link": "/about-sba/open-government/privacy-act-request-guide",
+    "spanishTranslation": {
+    "linkTitle": "Guía para petición conforme a la Ley de Privacidad",
+    "link": "/acerca-de-la-sba/gobierno-abierto/guia-para-peticion-conforme-la-ley-de-privacidad"
+    }
+    },
+    {
+    "linkTitle": "Information quality",
+    "link": "/about-sba/open-government/information-quality",
+    "children": [
+    {
+    "linkTitle": "Plain language",
+    "link": "/about-sba/open-government/information-quality/plain-language"
+    },
+    {
+    "linkTitle": "Information quality guidelines",
+    "link": "/about-sba/open-government/information-quality/information-quality-guidelines"
+    },
+    {
+    "linkTitle": "Website content inventory",
+    "link": "/about-sba/open-government/information-quality/website-content-inventory"
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Calidad de la información",
+    "link": "/acerca-de-la-sba/gobierno-abierto/calidad-de-la-informacion"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Gobierno abierto",
+    "link": "/acerca-de-la-sba/gobierno-abierto"
+    }
+    },
+    {
+    "linkTitle": "Work for the SBA",
+    "link": "/about-sba/work-sba",
+    "children": [
+    {
+    "linkTitle": "Employee life",
+    "link": "/about-sba/work-sba/employee-life",
+    "spanishTranslation": {
+    "linkTitle": "Vida del empleado",
+    "link": "/acerca-de-la-sba/trabajo-con-la-sba/vida-del-empleado"
+    }
+    },
+    {
+    "linkTitle": "Jobs at the SBA",
+    "link": "/about-sba/work-sba/jobs-sba",
+    "spanishTranslation": {
+    "linkTitle": "Empleos en la SBA",
+    "link": "/acerca-de-la-sba/trabajo-con-la-sba/empleos-en-la-sba"
+    }
+    },
+    {
+    "linkTitle": "Contracting for the SBA",
+    "link": "/about-sba/work-sba/contracting-sba",
+    "spanishTranslation": {
+    "linkTitle": "Contratación para la SBA",
+    "link": "/acerca-de-la-sba/trabajo-con-la-sba/contratacion-para-la-sba"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Trabajo con la SBA",
+    "link": "/acerca-de-la-sba/trabajo-con-la-sba"
+    }
+    },
+    {
+    "linkTitle": "Organization",
+    "link": "/about-sba/organization",
+    "children": [
+    {
+    "linkTitle": "Leadership",
+    "link": "/about-sba/organization/leadership",
+    "spanishTranslation": {
+    "linkTitle": "Liderazgo",
+    "link": "/about-sba/organization/liderazgo"
+    }
+    },
+    {
+    "linkTitle": "SBA initiatives",
+    "link": "/about-sba/organization/sba-initiatives",
+    "spanishTranslation": {
+    "linkTitle": "Iniciativas de la SBA",
+    "link": "/acerca-de-la-sba/organizacion/iniciativas-de-la-sba"
+    }
+    },
+    {
+    "linkTitle": "Forms and documents",
+    "link": "/about-sba/organization/forms-and-documents",
+    "spanishTranslation": {
+    "linkTitle": "Formularios y documentos",
+    "link": "/about-sba/organization/formularios-y-documentos"
+    }
+    },
+    {
+    "linkTitle": "Performance",
+    "link": "/about-sba/organization/performance",
+    "spanishTranslation": {
+    "linkTitle": "Desempeño",
+    "link": "/acerca-de-la-sba/organizacion/desempeno"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Organización",
+    "link": "/acerca-de-la-sba/organizacion"
+    }
+    }
+    ],
+    "spanishTranslation": {
+    "linkTitle": "Acerca de la SBA",
+    "link": "/acerca-de-la-sba"
+    }
+    }
+    ]
