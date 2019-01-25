@@ -19,7 +19,6 @@ describe('Events', () => {
   })
 
   it('gets an organization ID', async () => {
-    const PERSONAL_OAUTH_TOKEN = 'MOCK_TOKEN_ID'
     const expectedOrganizationId = '100'
     const mockResponseOrganizationId = {
       data: {
@@ -36,13 +35,11 @@ describe('Events', () => {
     }
 
     axiosGetStub.returns(mockResponseOrganizationId)
-    const organizationId = await events.getOrganizationId(PERSONAL_OAUTH_TOKEN)
+    const organizationId = await events.getOrganizationId()
     organizationId.should.eql(expectedOrganizationId)
   })
 
   it('gets a list of events for an organization', async () => {
-    const PERSONAL_OAUTH_TOKEN = 'MOCK_TOKEN_ID'
-    const expectedOrganizationId = '100'
     const expectedEvents = [
       { id: '111' },
       { id: '222' }
@@ -57,7 +54,7 @@ describe('Events', () => {
     }
 
     axiosGetStub.returns(mockResponseEvents)
-    const eventBriteEvents = await events.fetchEvents(PERSONAL_OAUTH_TOKEN, expectedOrganizationId)
+    const eventBriteEvents = await events.fetchEvents()
     eventBriteEvents.should.eql(expectedEvents)
   })
 })
