@@ -41,6 +41,7 @@ workflows:
             - demo
             - mint
             - /int-\w+/
+            - amy
     - upload-package:
         requires: [build-package]
         filters:
