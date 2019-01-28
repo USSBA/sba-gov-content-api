@@ -7,7 +7,7 @@ chai.should()
 
 var events = require('./events')
 
-describe('Events', () => {
+describe('Eventbrite client', () => {
   let axiosGetStub
 
   before(() => {
@@ -18,7 +18,11 @@ describe('Events', () => {
     axiosGetStub.reset()
   })
 
-  it('gets an organization ID', async () => {
+  after(()=>{
+    axiosGetStub.restore()
+  })
+
+  it('reads the organization ID from the config', async () => {
     const expectedOrganizationId = '100'
     const mockResponseOrganizationId = {
       data: {

@@ -5,7 +5,7 @@ async function getOrganizationId () {
   try {
     const response = await axios.get(`https://www.eventbriteapi.com/v3/users/me/organizations`, {
       params: {
-        token: config.event.eventApiToken
+        token: config.eventbriteApi.token
       }
     })
 
@@ -20,11 +20,11 @@ async function getOrganizationId () {
 }
 
 async function fetchEvents () {
-  const { eventApiToken, eventApiOrganizationId } = config.event
+  const { token, organizationId } = config.eventbriteApi
   try {
-    const response = await axios.get(`https://www.eventbriteapi.com/v3/organizations/${eventApiOrganizationId}/events`, {
+    const response = await axios.get(`https://www.eventbriteapi.com/v3/organizations/${organizationId}/events`, {
       params: {
-        token: eventApiToken
+        token: token
       }
     })
 
