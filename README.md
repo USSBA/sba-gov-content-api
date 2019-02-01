@@ -1,6 +1,6 @@
 # SBA.gov Content Api
 
-A microservice to service the Daisho-created Drupal8-sourced content
+A microservice to service the Daisho-created Drupal8-sourced content 
 
 ## Environment Setup
 See [development.md](development.md)
