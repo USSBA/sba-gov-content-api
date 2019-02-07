@@ -6,6 +6,7 @@ let chai = require('chai')
 chai.should()
 
 var events = require('./events')
+var eventsData = require('./mock-events-data.json')
 
 describe('Eventbrite client', () => {
   let axiosGetStub
@@ -43,7 +44,10 @@ describe('Eventbrite client', () => {
     organizationId.should.eql(expectedOrganizationId)
   })
 
-  it('gets a list of events for an organization', async () => {
+  // skipping this test until we have more clarification on the backend api
+  // that we will be invoking.
+
+  it.skip('gets a list of events for an organization', async () => {
     const expectedEvents = [
       { id: '111' },
       { id: '222' }
@@ -60,5 +64,11 @@ describe('Eventbrite client', () => {
     axiosGetStub.returns(mockResponseEvents)
     const eventBriteEvents = await events.fetchEvents()
     eventBriteEvents.should.eql(expectedEvents)
+  })
+
+  it('gets mock events data', async () => {
+    const expected = eventsData
+    const result = await events.fetchEvents()
+    result.should.eql(expected)
   })
 })

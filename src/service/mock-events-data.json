@@ -1,0 +1,59 @@
+[{
+    "name": "Fearless Party",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nunc sem, elementum eu turpis efficitur, ornare ultrices ex. Morbi tincidunt, metus sed volutpat fringilla, leo augue maximus lectus, ac interdum nulla arcu id velit. Phasellus vel lacus a ante porttitor faucibus. Aliquam auctor maximus tempor.",
+    "id": "55645564381",
+    "registration_url": "https://eventurl.test/",
+    "start_date": "2019-02-07T14:34:05-05:00",
+    "cost": "0.00",
+    "location": {
+        "name": "Purdue Technology Center",
+        "address1": "3200 N. Central Ave. Suite 1550",
+        "city": "Washington",
+        "state": "DC",
+        "zipcode": "20416"
+    },
+    "contact": {
+        "name": "Pam Palazzo",
+        "email": "palazzp@sunyit.edu",
+        "phone": "602-230-0945 Ext. 4762247"
+    }
+
+}, {
+    "name": "Superbowl Party",
+    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
+    "id": "55645564382",
+    "registration_url": "https://eventurl.test/",
+    "start_date": "2019-02-07T14:34:05-05:00",
+    "cost": "0.00",
+    "location": {
+        "name": "Purdue Technology Center",
+        "address1": "3200 N. Central Ave. Suite 1550",
+        "city": "Washington",
+        "state": "DC",
+        "zipcode": "20416"
+    },
+    "contact": {
+        "name": "Pam Palazzo",
+        "email": "palazzp@sunyit.edu",
+        "phone": "602-230-0945 Ext. 4762247"
+    }
+}, {
+    "name": "The EZ Way to Write a Business Plan",
+    "description": "No fee, Pre-registration Recommended The EZ Way to Write a Business Plan: A \"living\" business plan is an important management tool of every business owner. Know where you are going! Develop a realistic business plan as your roadmap to growth and financial viability. Learn step-by-step how to write a business plan that will document your vision, goals and tactics and then continue to work for you. Understand every aspect of your business and be able to monitor your progress. No business should be started or maintained without a plan. It takes time now, but avoids costly, perhaps disastrous, mistakes later.",
+    "id": "55645564383",
+    "registration_url": "https://eventurl.test/",
+    "start_date": "2019-02-07T14:34:05-05:00",
+    "cost": "0.00",
+    "location": {
+        "name": "The White House",
+        "address1": "1600 Pennsylvania Ave",
+        "city": "Washington",
+        "state": "DC",
+        "zipcode": "20000"
+    },
+    "contact": {
+        "name": "Pam Palazzo",
+        "email": "palazzp@sunyit.edu",
+        "phone": "602-230-0945 Ext. 4762247"
+    }
+}]

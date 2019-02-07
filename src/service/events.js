@@ -19,23 +19,8 @@ async function getOrganizationId () {
   }
 }
 
-async function fetchEvents () {
-  const { token, organizationId } = config.eventbriteApi
-  try {
-    const response = await axios.get(`https://www.eventbriteapi.com/v3/organizations/${organizationId}/events`, {
-      params: {
-        token: token
-      }
-    })
-
-    if (response.data.events) {
-      return response.data.events
-    } else {
-      return null
-    }
-  } catch (error) {
-    console.error(error)
-  }
+function fetchEvents () {
+  return require('./mock-events-data.json')
 }
 
 module.exports.fetchEvents = fetchEvents
