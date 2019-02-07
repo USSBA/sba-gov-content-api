@@ -20,7 +20,7 @@ async function getOrganizationId () {
 }
 
 function fetchEvents () {
-  return require('./response.json')
+  return require('./mock-events-data.json')
 }
 
 module.exports.fetchEvents = fetchEvents
