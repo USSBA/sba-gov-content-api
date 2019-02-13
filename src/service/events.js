@@ -1,5 +1,6 @@
 const axios = require('axios')
 const config = require('../config')
+const mockDataEvents = require('./mock-events-data.json')
 
 async function getOrganizationId () {
   try {
@@ -19,8 +20,19 @@ async function getOrganizationId () {
   }
 }
 
-function fetchEvents () {
-  return require('./mock-events-data.json')
+function fetchEvents (query) {
+  let result = mockDataEvents
+  const queryObj = query || {}
+  const { zipcode } = queryObj
+  // if zipcode param is available
+    // filter by zipcode
+  if (zipcode) {
+    result = result.filter( item => {
+      return item.location.zipcode === zipcode
+    })
+  }
+
+  return result
 }
 
 module.exports.fetchEvents = fetchEvents
