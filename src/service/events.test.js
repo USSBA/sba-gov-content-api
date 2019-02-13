@@ -72,7 +72,7 @@ describe('Eventbrite client', () => {
     result.should.eql(expected)
   })
 
-  it('filter retrieve 1 event by zipcode 20000', async () => {
+  it('filter event by zipcode', async () => {
     const params = {
       zipcode: '20000'
     }
