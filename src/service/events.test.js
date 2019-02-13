@@ -74,9 +74,9 @@ describe('Eventbrite client', () => {
 
   it('filter event by zipcode', async () => {
     const params = {
-      zipcode: '20000'
+      address: '20000'
     }
-    const expected = eventsData.filter( item => item.location.zipcode === params.zipcode)
+    const expected = eventsData.filter( item => item.location.zipcode === params.address)
     const result = await events.fetchEvents(params)
     expected.length.should.eql(result.length)
   })

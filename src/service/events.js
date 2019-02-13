@@ -23,12 +23,12 @@ async function getOrganizationId () {
 function fetchEvents (query) {
   let result = mockDataEvents
   const queryObj = query || {}
-  const { zipcode } = queryObj
+  const { address } = queryObj
   // if zipcode param is available
     // filter by zipcode
-  if (zipcode) {
+  if (address) {
     result = result.filter( item => {
-      return item.location.zipcode === zipcode
+      return item.location.zipcode === address
     })
   }
 
