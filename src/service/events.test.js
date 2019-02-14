@@ -71,4 +71,13 @@ describe('Eventbrite client', () => {
     const result = await events.fetchEvents()
     result.should.eql(expected)
   })
+
+  it('filter event by zipcode', async () => {
+    const params = {
+      address: '20000'
+    }
+    const expected = eventsData.filter( item => item.location.zipcode === params.address)
+    const result = await events.fetchEvents(params)
+    expected.length.should.eql(result.length)
+  })
 })
