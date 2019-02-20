@@ -33,12 +33,10 @@ workflows:
           branches:
             only:
             - master
-            - /[Ff]eature-\w+-\d+[-\w]*/
           tags:
             only:
             - production
             - staging
-            - demo
             - mint
             - /int-\w+/
             - amy
@@ -63,7 +61,6 @@ workflows:
             - /.*/
           tags:
             only:
-            - demo
             - mint
             - /int-\w+/
             - amy
@@ -171,11 +168,24 @@ jobs:
           command: |
             if [ -z "${CIRCLE_BRANCH}" ]
             then
-              export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
-              export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
-  
-              aws s3api put-object --body "workspace/sba-gov-content-api.zip" --bucket "${BUCKET_NAME}" --key "${CIRCLE_TAG}/sba-gov-content-api.zip"
+              TARGET_ENVIRONMENT=${CIRCLE_TAG}
+            else
+              TARGET_ENVIRONMENT=${CIRCLE_BRANCH}
             fi
+
+            case $TARGET_ENVIRONMENT in
+              master)
+                export ENVIRONMENT=mint
+                ;;
+              *)
+                export ENVIRONMENT=${CIRCLE_TAG}
+                ;;
+            esac
+            
+            export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+            export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
+
+            aws s3api put-object --body "workspace/sba-gov-content-api.zip" --bucket "${BUCKET_NAME}" --key "${ENVIRONMENT}/sba-gov-content-api.zip"
   deploy-package:
     docker:
       - image: ussba/cc-docker-git-aws:latest
@@ -187,15 +197,28 @@ jobs:
           command: |
             if [ -z "${CIRCLE_BRANCH}" ]
             then
-              ENVIRONMENT=${CIRCLE_TAG}
-              export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
-              export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
-  
-              export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix "${ENVIRONMENT}/sba-gov-content-api.zip" | jq '.Versions[0].VersionId')
-              export LAMBDA_NAME="${ENVIRONMENT}-ContentLambda"
-  
-              aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${ENVIRONMENT}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
+              TARGET_ENVIRONMENT=${CIRCLE_TAG}
+            else
+              TARGET_ENVIRONMENT=${CIRCLE_BRANCH}
             fi
+
+            case $TARGET_ENVIRONMENT in
+              master)
+                export ENVIRONMENT=mint
+                ;;
+              *)
+                export ENVIRONMENT=${CIRCLE_TAG}
+                ;;
+            esac
+            
+            
+            export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+            export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
+
+            export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix "${ENVIRONMENT}/sba-gov-content-api.zip" | jq '.Versions[0].VersionId')
+            export LAMBDA_NAME="${ENVIRONMENT}-ContentLambda"
+
+            aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${ENVIRONMENT}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
   upload-package-with-approval:
     docker:
       - image: ussba/cc-docker-git-aws:latest
