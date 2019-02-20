@@ -64,7 +64,7 @@ workflows:
         requires: [upload-package]
         filters:
           branches:
-            ignore:
+            only:
             - master
           tags:
             only:
