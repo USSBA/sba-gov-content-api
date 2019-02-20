@@ -44,12 +44,10 @@ workflows:
         requires: [build-package]
         filters:
           branches:
-            ignore:
-            - /.*/
+            only:
+            - master
           tags:
             only:
-            - demo
-            - mint
             - /int-\w+/
             - amy
         context: sba-gov-lower
@@ -58,10 +56,9 @@ workflows:
         filters:
           branches:
             ignore:
-            - /.*/
+            - master
           tags:
             only:
-            - master
             - /int-\w+/
             - amy
         context: sba-gov-lower
