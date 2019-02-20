@@ -61,7 +61,7 @@ workflows:
             - /.*/
           tags:
             only:
-            - mint
+            - master
             - /int-\w+/
             - amy
         context: sba-gov-lower
