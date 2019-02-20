@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
 let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
@@ -151,7 +152,7 @@ describe('# Office Search', () => {
       officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
       const kilometersToMiles = 0.621371
       const distanceInKilometers = exampleCloudSearchResponse.hits.hit[0].exprs.distance
-      expectedApproximateMiles = distanceInKilometers * kilometersToMiles
+      const expectedApproximateMiles = distanceInKilometers * kilometersToMiles
       let result = await officeSearch.fetchOffices({address: 21202})
       const actualMiles = result.hit[0].exprs.distance
       const actualAndExpectedDiference = Math.abs(expectedApproximateMiles - actualMiles)
@@ -171,7 +172,7 @@ describe('# Office Search', () => {
     it('should not return distance when no only mapCenter parameter is present', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
-      let result = await officeSearch.fetchOffices({mapCenter:'1,1'})
+      let result = await officeSearch.fetchOffices({mapCenter: '1,1'})
       result.hit[0].hasOwnProperty('exprs').should.be.false
       result.hit[1].hasOwnProperty('exprs').should.be.false
     })
@@ -179,7 +180,7 @@ describe('# Office Search', () => {
     it('should return distance when there is an address parameter present', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
-      let result = await officeSearch.fetchOffices({address:'21202'})
+      let result = await officeSearch.fetchOffices({address: '21202'})
       result.hit[0].hasOwnProperty('exprs').should.be.true
     })
 
@@ -226,7 +227,7 @@ describe('# Office Search', () => {
       let result = await officeSearch.fetchOffices({ address: '06870' })
       officeSearchRunSearchStub.callCount.should.eql(2)
       officeSearchRunSearchStub.calledWith({
-        query:`type: 'office'`,
+        query: `type: 'office'`,
         filterQuery: `office_type: 'SBA district office'`,
         sort: 'distance asc',
         return: '_all_fields,distance',
@@ -244,7 +245,7 @@ describe('# Office Search', () => {
       let result = await officeSearch.fetchOffices()
       officeSearchRunSearchStub.callCount.should.eql(2)
       officeSearchRunSearchStub.calledWith({
-        query:`type: 'office'`,
+        query: `type: 'office'`,
         filterQuery: `office_type: 'SBA district office'`,
         sort: 'distance asc',
         return: '_all_fields,distance',
@@ -257,3 +258,4 @@ describe('# Office Search', () => {
     })
   })
 })
+/* eslint-enable no-unused-expressions */

@@ -12,7 +12,7 @@ const {
   fetchNodes,
   fetchOfficesRaw,
   fetchPersons,
-  fetchTaxonomys,
+  fetchTaxonomys
 } = require('./service/drupal-eight.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { runSearch } = require('./service/search.js')
@@ -43,7 +43,7 @@ const fetchContentTypeFunctions = {
   events: fetchEvents
 }
 
-async function fetchContentById(params, headers) {
+async function fetchContentById (params, headers) {
   if (params && params.type && params.id) {
     const type = params.type
     const id = params.id
@@ -57,23 +57,20 @@ async function fetchContentById(params, headers) {
           statusCode: HttpStatus.OK,
           body: result
         }
-      }
-      catch (e) {
+      } catch (e) {
         console.error('Error fetching data: ', e)
         return {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
           body: `Server Error, ${e}`
         }
       }
-    }
-    else {
+    } else {
       return {
         statusCode: HttpStatus.NOT_FOUND,
         body: 'Unknown type ' + type
       }
     }
-  }
-  else {
+  } else {
     return {
       statusCode: HttpStatus.BAD_REQUEST,
       body: 'Incorrect request format: missing type or id'
@@ -81,7 +78,7 @@ async function fetchContentById(params, headers) {
   }
 }
 
-async function fetchContentByType(pathParams, queryStringParameters) {
+async function fetchContentByType (pathParams, queryStringParameters) {
   if (pathParams && pathParams.type) {
     const type = pathParams.type
     const fetchFunction = fetchContentTypeFunctions[type]
@@ -92,23 +89,20 @@ async function fetchContentByType(pathParams, queryStringParameters) {
           statusCode: HttpStatus.OK,
           body: result
         }
-      }
-      catch (e) {
+      } catch (e) {
         console.error('Error fetching data: ', e)
         return {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
           body: `Server Error, ${e}`
         }
       }
-    }
-    else {
+    } else {
       return {
         statusCode: HttpStatus.NOT_FOUND,
         body: 'Unknown type ' + type
       }
     }
-  }
-  else {
+  } else {
     return {
       statusCode: HttpStatus.BAD_REQUEST,
       body: 'Incorrect request format: missing type'
