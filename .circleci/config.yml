@@ -27,6 +27,15 @@ workflows:
           tags:
             only: 
             - /.*/
+    - test-lint:
+        requires: [cache-dependencies]
+        filters:
+          branches:
+            only:
+            - /.*/
+          tags:
+            only:
+            - /.*/
     - build-package:
         requires: [npm-test]
         filters:
@@ -125,6 +134,19 @@ jobs:
           name: run mocha
           command: |
             npm test
+  test-lint:
+    docker:
+    - image: circleci/node:8.10
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: run lint
+          command: |
+            npm run lint-no-fix
   build-package:
     docker:
       - image: circleci/node:8.10

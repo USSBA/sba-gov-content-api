@@ -9,10 +9,10 @@ const csd = new aws.CloudSearchDomain({
 const kilometersPerMile = 1.60934
 const defaultOfficeType = 'SBA district office'
 const defaultOfficeGeocode = {
-  latitude:38.893311,
-  longitude:-77.014647
+  latitude: 38.893311,
+  longitude: -77.014647
 }
-const dynamoDbClient = require('../clients/dynamo-db-client.js')
+let { computeLocation } = require('./location.js')
 
 // for testing purposes
 async function runSearch (params) {
@@ -90,13 +90,13 @@ function buildFilters (service, type) {
 function buildDefaultOfficeQueryParams (geo) {
   let { latitude, longitude } = geo
   const numberOfResults = 1
-  //if no search for lat and long, use dc office coordinates
+  // if no search for lat and long, use dc office coordinates
   if (!(latitude && longitude)) {
     latitude = defaultOfficeGeocode.latitude
     longitude = defaultOfficeGeocode.longitude
   }
   let params = {
-    query:`type: 'office'`,
+    query: `type: 'office'`,
     filterQuery: `office_type: '${defaultOfficeType}'`,
     sort: 'distance asc',
     return: '_all_fields,distance',
@@ -134,38 +134,6 @@ function buildParams (query, geo) {
   return params
 }
 
-async function computeLocation (address) {
-  if (!address) {
-    return {
-      latitude: null,
-      longitude: null
-    }
-  }
-
-  const params = {
-    TableName: config.zipCodeDynamoDbTable,
-    KeyConditionExpression: 'zip = :zipval',
-    ExpressionAttributeValues: {
-      ':zipval': address
-    }
-  }
-  try {
-    const result = await dynamoDbClient.queryDynamoDb(params)
-    // assumes that there is only one record in DynamoDB per zipcode
-    const item = result.Items[0]
-    if (item) {
-      return {
-        latitude: item.latitude,
-        longitude: item.longitude
-      }
-    } else {
-      return null
-    }
-  } catch (err) {
-    console.error(err)
-    throw new Error("Failed to geocode user's location")
-  }
-}
 function parseGeocodeString (geocodeString) {
   const [latitude, longitude] = decodeURI(geocodeString).split(',')
   return {
@@ -192,8 +160,8 @@ async function fetchOffices (query) {
       const newHitList = hits.hit.map(item => {
         let _item = item
         if (item && item.exprs && item.exprs.distance >= 0) {
-          if(!address) {
-            _item  = Object.assign({}, item)
+          if (!address) {
+            _item = Object.assign({}, item)
             delete _item.exprs
           } else {
             _item = Object.assign({}, item, { exprs: { distance: item.exprs.distance / kilometersPerMile } })

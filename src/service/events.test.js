@@ -19,7 +19,7 @@ describe('Eventbrite client', () => {
     axiosGetStub.reset()
   })
 
-  after(()=>{
+  after(() => {
     axiosGetStub.restore()
   })
 
@@ -76,7 +76,7 @@ describe('Eventbrite client', () => {
     const params = {
       address: '20000'
     }
-    const expected = eventsData.filter( item => item.location.zipcode === params.address)
+    const expected = eventsData.filter(item => item.location.zipcode === params.address)
     const result = await events.fetchEvents(params)
     expected.length.should.eql(result.length)
   })

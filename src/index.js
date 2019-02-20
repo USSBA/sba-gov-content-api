@@ -14,8 +14,7 @@ exports.handler = (event, context, callback) => {
     })
 }
 
-
-async function run(event) {
+async function run (event) {
   let result = null
   console.log(JSON.stringify(event))
   if (event && event.pathParameters) {
@@ -27,23 +26,22 @@ async function run(event) {
       let { first: id, second: extension } = splitAsObject(pathParams.id)
       fetchResult = await content.fetchContentById({ id, type, extension }, event.headers || {})
       foundExtension = extension
-    }
-    else {
+    } else {
       let { first: type, second: extension } = splitAsObject(pathParams.type)
       fetchResult = await content.fetchContentByType({ type, extension }, event.queryStringParameters || {})
       foundExtension = extension
     }
     let resultBody
-    let returnType = "application/json";
+    let returnType = 'application/json'
     if (foundExtension) {
-      if (foundExtension === "csv") {
+      if (foundExtension === 'csv') {
         resultBody = createCsvFromJson(fetchResult.body)
-        returnType = "text/csv"
-      }else if (foundExtension === "json") {
+        returnType = 'text/csv'
+      } else if (foundExtension === 'json') {
         resultBody = JSON.stringify(fetchResult.body)
-        returnType = "application/json"
-      }else{
-        console.log("Extension mismatch");
+        returnType = 'application/json'
+      } else {
+        console.log('Extension mismatch')
       }
     }
     result = {
@@ -53,8 +51,7 @@ async function run(event) {
         'Content-Type': returnType
       }
     }
-  }
-  else {
+  } else {
     result = {
       statusCode: 400,
       body: 'Required parameters not found'
@@ -63,12 +60,10 @@ async function run(event) {
   return result
 }
 
-
-function createCsvFromJson(jsonData) {
+function createCsvFromJson (jsonData) {
   const fields = Object.keys(jsonData[0])
   return json2csv(jsonData, {fields})
 }
-
 
 // for testing
 module.exports.run = run

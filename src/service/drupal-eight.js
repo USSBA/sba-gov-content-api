@@ -1,7 +1,7 @@
 /* eslint-disable id-length,space-infix-ops, object-property-newline */
 const moment = require('moment')
 const langParser = require('accept-language-parser')
-const { filter, includes, isEmpty, map, mapValues, maxBy, orderBy, size } = require('lodash')
+const { filter, includes, isEmpty, map, mapValues, maxBy, orderBy } = require('lodash')
 
 const config = require('../config')
 const { getKey } = require('../clients/s3-cache-reader.js')
