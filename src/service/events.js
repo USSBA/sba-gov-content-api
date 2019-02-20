@@ -23,10 +23,20 @@ async function getOrganizationId () {
   }
 }
 
+async function fetchEventById (id) {
+  let result = mockDataEvents
+  if (id) {
+    return result.find(item => item.id === id)
+  } else {
+    return null
+  }
+}
+
 async function fetchEvents (query) {
   let result = mockDataEvents
   const queryObj = query || {}
   const { address, dateRange, distance } = queryObj
+
   // if zipcode param is available
   // filter by zipcode
   if (address) {
@@ -79,3 +89,4 @@ async function fetchEvents (query) {
 
 module.exports.fetchEvents = fetchEvents
 module.exports.getOrganizationId = getOrganizationId
+module.exports.fetchEventById = fetchEventById

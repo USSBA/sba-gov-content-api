@@ -17,10 +17,11 @@ const {
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { runSearch } = require('./service/search.js')
 const { fetchOffices } = require('./service/office-search.js')
-const { fetchEvents } = require('./service/events.js')
+const { fetchEvents, fetchEventById } = require('./service/events.js')
 
 const fetchFunctions = {
-  node: fetchFormattedNode
+  node: fetchFormattedNode,
+  event: fetchEventById
 }
 
 const fetchContentTypeFunctions = {
@@ -53,9 +54,16 @@ async function fetchContentById (params, headers) {
         let result = await fetchFunction(id, {
           headers
         })
-        return {
-          statusCode: HttpStatus.OK,
-          body: result
+        if (result) {
+          return {
+            statusCode: HttpStatus.OK,
+            body: result
+          }
+        } else {
+          return {
+            statusCode: HttpStatus.NOT_FOUND,
+            body: `Unable to find ${type} with id ${id}`
+          }
         }
       } catch (e) {
         console.error('Error fetching data: ', e)
