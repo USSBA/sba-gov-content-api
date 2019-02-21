@@ -1,19 +1,16 @@
 [{
-    "id": 1,
     "name": "Fearless Party",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nunc sem, elementum eu turpis efficitur, ornare ultrices ex. Morbi tincidunt, metus sed volutpat fringilla, leo augue maximus lectus, ac interdum nulla arcu id velit. Phasellus vel lacus a ante porttitor faucibus. Aliquam auctor maximus tempor.",
     "id": "55645564381",
     "registration_url": "https://eventurl.test/",
-    "start_date": "2019-02-14T14:34:05-05:00",
+    "start_date": "2019-02-07T14:34:05-05:00",
     "cost": "0.00",
     "location": {
         "name": "Purdue Technology Center",
         "address1": "3200 N. Central Ave. Suite 1550",
         "city": "Washington",
         "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
+        "zipcode": "20416"
     },
     "contact": {
         "name": "Pam Palazzo",
@@ -22,7 +19,6 @@
     }
 
 }, {
-    "id": 2,
     "name": "Superbowl Party",
     "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
     "id": "55645564382",
@@ -34,9 +30,7 @@
         "address1": "3200 N. Central Ave. Suite 1550",
         "city": "Washington",
         "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
+        "zipcode": "20416"
     },
     "contact": {
         "name": "Pam Palazzo",
@@ -44,21 +38,18 @@
         "phone": "602-230-0945 Ext. 4762247"
     }
 }, {
-    "id": 3,
     "name": "The EZ Way to Write a Business Plan",
     "description": "No fee, Pre-registration Recommended The EZ Way to Write a Business Plan: A \"living\" business plan is an important management tool of every business owner. Know where you are going! Develop a realistic business plan as your roadmap to growth and financial viability. Learn step-by-step how to write a business plan that will document your vision, goals and tactics and then continue to work for you. Understand every aspect of your business and be able to monitor your progress. No business should be started or maintained without a plan. It takes time now, but avoids costly, perhaps disastrous, mistakes later.",
     "id": "55645564383",
     "registration_url": "https://eventurl.test/",
-    "start_date": "2019-03-15T14:34:05-05:00",
+    "start_date": "2019-02-07T14:34:05-05:00",
     "cost": "0.00",
     "location": {
         "name": "The White House",
         "address1": "1600 Pennsylvania Ave",
         "city": "Washington",
         "state": "DC",
-        "zipcode": "20000",
-        "latitude": "34.203802",
-        "longitude": "-94.497569"
+        "zipcode": "20000"
     },
     "contact": {
         "name": "Pam Palazzo",
@@ -66,245 +57,43 @@
         "phone": "602-230-0945 Ext. 4762247"
     }
 }, {
-    "id": 4,
-    "name": "Superbowl Party",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
+    "name": "Fearless Party 2",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nunc sem, elementum eu turpis efficitur, ornare ultrices ex. Morbi tincidunt, metus sed volutpat fringilla, leo augue maximus lectus, ac interdum nulla arcu id velit. Phasellus vel lacus a ante porttitor faucibus. Aliquam auctor maximus tempor.",
+    "id": "55645564381",
     "registration_url": "https://eventurl.test/",
-    "start_date": "2020-02-07T14:34:05-05:00",
+    "start_date": "2019-02-07T17:34:05-05:00",
     "cost": "0.00",
     "location": {
         "name": "Purdue Technology Center",
         "address1": "3200 N. Central Ave. Suite 1550",
         "city": "Washington",
         "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
+        "zipcode": "20416"
     },
     "contact": {
         "name": "Pam Palazzo",
         "email": "palazzp@sunyit.edu",
         "phone": "602-230-0945 Ext. 4762247"
     }
+
 }, {
-    "id": 5,
-    "name": "Superbowl Party",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
+    "name": "Jumping Jacks Barbecue",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nunc sem, elementum eu turpis efficitur, ornare ultrices ex. Morbi tincidunt, metus sed volutpat fringilla, leo augue maximus lectus, ac interdum nulla arcu id velit. Phasellus vel lacus a ante porttitor faucibus. Aliquam auctor maximus tempor.",
+    "id": "55645564381",
     "registration_url": "https://eventurl.test/",
-    "start_date": "2019-02-15T14:34:05-05:00",
+    "start_date": "2019-02-7T13:34:05-05:00",
     "cost": "0.00",
     "location": {
         "name": "Purdue Technology Center",
         "address1": "3200 N. Central Ave. Suite 1550",
         "city": "Washington",
         "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
+        "zipcode": "20416"
     },
     "contact": {
         "name": "Pam Palazzo",
         "email": "palazzp@sunyit.edu",
         "phone": "602-230-0945 Ext. 4762247"
     }
-}, {
-    "id": 6,
-    "name": "Superbowl Party",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
-    "registration_url": "https://eventurl.test/",
-    "start_date": "2019-02-16T14:34:05-05:00",
-    "cost": "0.00",
-    "location": {
-        "name": "Purdue Technology Center",
-        "address1": "3200 N. Central Ave. Suite 1550",
-        "city": "Washington",
-        "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
-    },
-    "contact": {
-        "name": "Pam Palazzo",
-        "email": "palazzp@sunyit.edu",
-        "phone": "602-230-0945 Ext. 4762247"
-    }
-}, {
-    "id": 7,
-    "name": "Superbowl Party",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
-    "registration_url": "https://eventurl.test/",
-    "start_date": "2019-03-01T14:34:05-05:00",
-    "cost": "0.00",
-    "location": {
-        "name": "Purdue Technology Center",
-        "address1": "3200 N. Central Ave. Suite 1550",
-        "city": "Washington",
-        "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
-    },
-    "contact": {
-        "name": "Pam Palazzo",
-        "email": "palazzp@sunyit.edu",
-        "phone": "602-230-0945 Ext. 4762247"
-    }
-}, {
-    "id": 8,
-    "name": "Superbowl Party",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
-    "registration_url": "https://eventurl.test/",
-    "start_date": "2019-02-01T14:34:05-05:00",
-    "cost": "0.00",
-    "location": {
-        "name": "Purdue Technology Center",
-        "address1": "3200 N. Central Ave. Suite 1550",
-        "city": "Washington",
-        "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
-    },
-    "contact": {
-        "name": "Pam Palazzo",
-        "email": "palazzp@sunyit.edu",
-        "phone": "602-230-0945 Ext. 4762247"
-    }
-}, {
-    "id": 9,
-    "name": "Superbowl Party",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
-    "registration_url": "https://eventurl.test/",
-    "start_date": "2019-04-15T14:34:05-05:00",
-    "cost": "0.00",
-    "location": {
-        "name": "Purdue Technology Center",
-        "address1": "3200 N. Central Ave. Suite 1550",
-        "city": "Washington",
-        "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
-    },
-    "contact": {
-        "name": "Pam Palazzo",
-        "email": "palazzp@sunyit.edu",
-        "phone": "602-230-0945 Ext. 4762247"
-    }
-}, {
-    "id": 10,
-    "name": "Superbowl Party",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
-    "registration_url": "https://eventurl.test/",
-    "start_date": "2019-02-07T14:34:05-05:00",
-    "cost": "0.00",
-    "location": {
-        "name": "Purdue Technology Center",
-        "address1": "3200 N. Central Ave. Suite 1550",
-        "city": "Washington",
-        "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
-    },
-    "contact": {
-        "name": "Pam Palazzo",
-        "email": "palazzp@sunyit.edu",
-        "phone": "602-230-0945 Ext. 4762247"
-    }
-}, {
-    "id": 11,
-    "name": "Super bowl Par ty",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
-    "registration_url": "https://eventurl.test/",
-    "start_date": "2019-02-07T14:34:05-05:00",
-    "cost": "0.00",
-    "location": {
-        "name": "Purdue Technology Center",
-        "address1": "3200 N. Central Ave. Suite 1550",
-        "city": "Washington",
-        "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
-    },
-    "contact": {
-        "name": "Pam Palazzo",
-        "email": "palazzp@sunyit.edu",
-        "phone": "602-230-0945 Ext. 4762247"
-    }
-}, {
-    "id": 12,
-    "name": "Superbowl Partyyyyy",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
-    "registration_url": "https://eventurl.test/",
-    "start_date": "2034-02-07T14:34:05-05:00",
-    "cost": "0.00",
-    "location": {
-        "name": "Purdue Technology Center",
-        "address1": "3200 N. Central Ave. Suite 1550",
-        "city": "Washington",
-        "state": "DC",
-        "zipcode": "20416",
-        "latitude": "38.893311",
-        "longitude": "-77.014647"
-    },
-    "contact": {
-        "name": "Pam Palazzo",
-        "email": "palazzp@sunyit.edu",
-        "phone": "602-230-0945 Ext. 4762247"
-    }
-}, {
-    "id": 13,
-    "name": "Superbowl Partyyyyy Northeast",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
-    "registration_url": "https://eventurl.test/",
-    "start_date": "2034-02-07T14:34:05-05:00",
-    "cost": "0.00",
-    "location": {
-        "name": "New Baltimore Reformed Church",
-        "address1": "52 Church St",
-        "city": "New Baltimore",
-        "state": "NY",
-        "zipcode": "12124",
-        "latitude": "42.444198",
-        "longitude": "-73.788241"
-    },
-    "contact": {
-        "name": "Pam Palazzo",
-        "email": "palazzp@sunyit.edu",
-        "phone": "602-230-0945 Ext. 4762247"
-    }
-}, {
-    "id": 14,
-    "name": "Superbowl Partyyyyy Northeast",
-    "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
-    "id": "55645564382",
-    "registration_url": "https://eventurl.test/",
-    "start_date": "2034-02-07T14:34:05-05:00",
-    "cost": "0.00",
-    "location": {
-        "name": "Sparl",
-        "address1": "8 Market Place",
-        "city": "Baltimore",
-        "state": "MD",
-        "zipcode": "21202",
-        "latitude": "39.296507",
-        "longitude": "-76.606930"
-    },
-    "contact": {
-        "name": "Pam Palazzo",
-        "email": "palazzp@sunyit.edu",
-        "phone": "602-230-0945 Ext. 4762247"
-    }
+
 }]
