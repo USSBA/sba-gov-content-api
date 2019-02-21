@@ -23,7 +23,7 @@
     "description": "Aenean erat est, rhoncus non consectetur sit amet, gravida interdum velit. Proin hendrerit tristique nunc non ultrices. Pellentesque sagittis a sem ut consequat. Cras pulvinar arcu in orci lobortis, egestas aliquam leo porttitor. Ut dignissim suscipit nunc vitae interdum. In tincidunt rutrum libero sit amet congue. Praesent vel neque at mi tristique ornare. Aliquam suscipit accumsan ornare.",
     "id": "55645564382",
     "registration_url": "https://eventurl.test/",
-    "start_date": "2019-02-07T14:34:05-05:00",
+    "start_date": "2019-02-07T14:34:05-07:00",
     "cost": "0.00",
     "location": {
         "name": "Purdue Technology Center",
@@ -61,7 +61,7 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nunc sem, elementum eu turpis efficitur, ornare ultrices ex. Morbi tincidunt, metus sed volutpat fringilla, leo augue maximus lectus, ac interdum nulla arcu id velit. Phasellus vel lacus a ante porttitor faucibus. Aliquam auctor maximus tempor.",
     "id": "55645564381",
     "registration_url": "https://eventurl.test/",
-    "start_date": "2019-02-07T17:34:05-05:00",
+    "start_date": "2019-02-07T17:34:05-02:00",
     "cost": "0.00",
     "location": {
         "name": "Purdue Technology Center",
@@ -81,7 +81,7 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nunc sem, elementum eu turpis efficitur, ornare ultrices ex. Morbi tincidunt, metus sed volutpat fringilla, leo augue maximus lectus, ac interdum nulla arcu id velit. Phasellus vel lacus a ante porttitor faucibus. Aliquam auctor maximus tempor.",
     "id": "55645564381",
     "registration_url": "https://eventurl.test/",
-    "start_date": "2019-02-07T13:34:05-05:00",
+    "start_date": "2019-02-07T13:34:05+05:00",
     "cost": "0.00",
     "location": {
         "name": "Purdue Technology Center",
