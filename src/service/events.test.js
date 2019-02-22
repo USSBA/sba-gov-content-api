@@ -1,83 +1,105 @@
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
 
-let axios = require('axios')
+let eventClient = require('../clients/event-client.js')
 let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
 
-var events = require('./events')
-var eventsData = require('./mock-events-data.json')
+// const { fn as momentPrototype } = require("moment")
+const events = require('./events')
+const mockD7Response1 = require('./events.test.json')
+const expectedEventsData1 = require('./events.output.test.json')
 
-describe('Eventbrite client', () => {
-  let axiosGetStub
+describe('Event Service', () => {
+  let eventClientStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
 
   before(() => {
-    axiosGetStub = sinon.stub(axios, 'get')
+    clock = sinon.useFakeTimers(new Date(2016, 2, 15).getTime())
+    todayDateString = '2016-03-15'
+    tomorrowDateString = '2016-03-16'
+    sevenDaysFromNowDateString = '2016-03-22'
+    thirtyDaysFromNowDateString = '2016-04-14'
+    eventClientStub = sinon.stub(eventClient, 'getEvents')
   })
 
   afterEach(() => {
-    axiosGetStub.reset()
+    eventClientStub.reset()
   })
 
   after(() => {
-    axiosGetStub.restore()
+    clock.restore()
+    eventClientStub.restore()
   })
 
-  it('reads the organization ID from the config', async () => {
-    const expectedOrganizationId = '100'
-    const mockResponseOrganizationId = {
-      data: {
-        organizations: [
-          { _type: 'organization',
-            name: 'SBA GOV',
-            vertical: 'default',
-            locale: null,
-            image_id: null,
-            id: expectedOrganizationId
-          }
-        ]
-      }
-    }
-
-    axiosGetStub.returns(mockResponseOrganizationId)
-    const organizationId = await events.getOrganizationId()
-    organizationId.should.eql(expectedOrganizationId)
+  describe('fetchEventById', () => {
+    it('should fetch and map data when no query params are presented', async() => {
+      eventClientStub.returns(mockD7Response1)
+      const eventsResults = await events.fetchEventById(mockD7Response1[0].id)
+      eventsResults.should.eql(expectedEventsData1[0])
+    })
   })
 
-  // skipping this test until we have more clarification on the backend api
-  // that we will be invoking.
-
-  it.skip('gets a list of events for an organization', async () => {
-    const expectedEvents = [
-      { id: '111' },
-      { id: '222' }
-    ]
-    const mockResponseEvents = {
-      data: {
-        events: [
-          { id: '111' },
-          { id: '222' }
-        ]
-      }
-    }
-
-    axiosGetStub.returns(mockResponseEvents)
-    const eventBriteEvents = await events.fetchEvents()
-    eventBriteEvents.should.eql(expectedEvents)
+  describe('fetchEvents', () => {
+    it('should fetch and map data when no query params are presented', async() => {
+      eventClientStub.returns(mockD7Response1)
+      const eventsResults = await events.fetchEvents(null)
+      eventsResults.should.eql(expectedEventsData1)
+    })
   })
 
-  it('gets mock events data', async () => {
-    const expected = eventsData
-    const result = await events.fetchEvents()
-    result.should.eql(expected)
-  })
+  describe('translateQueryParamsForD7', () => {
+    it('should properly translate query params for the title and body search', async() => {
+      eventClientStub.returns(mockD7Response1)
+      let searchParam = 'test'
+      await events.fetchEvents({ q: searchParam })
+      eventClientStub.calledOnceWith({ title: searchParam, body_value: searchParam }).should.be.true
+    })
 
-  it('filter event by zipcode', async () => {
-    const params = {
-      address: '20000'
-    }
-    const expected = eventsData.filter(item => item.location.zipcode === params.address)
-    const result = await events.fetchEvents(params)
-    expected.length.should.eql(result.length)
+    it('should properly translate query params for the title and body search with pagination', async() => {
+      eventClientStub.returns(mockD7Response1)
+      let searchParam = 'test'
+      await events.fetchEvents({ q: searchParam, start: 1000 })
+      eventClientStub.calledOnceWith({ title: searchParam, body_value: searchParam, offset: 1000 }).should.be.true
+    })
+
+    it('should properly translate query params for a zip code', async() => {
+      eventClientStub.returns(mockD7Response1)
+      let zip = '21113' // note: this is a string, not a number
+      await events.fetchEvents({ address: zip })
+      eventClientStub.calledOnceWith({ postal_code: zip }).should.be.true
+    })
+
+    it('should properly translate query params for a zip code and distance', async() => {
+      eventClientStub.returns(mockD7Response1)
+      let zip = '21113' // note: this is a string, not a number
+      await events.fetchEvents({ address: zip, distance: 8 })
+      eventClientStub.calledOnceWith({ 'distance[postal_code]': zip, 'distance[search_distance]': 8 }).should.be.true
+    })
+
+    it('should properly translate query params for today', async() => {
+      eventClientStub.returns(mockD7Response1)
+      await events.fetchEvents({ dateRange: 'today' })
+      eventClientStub.calledOnceWith({ 'field_event_date_value[value][date]': todayDateString, 'field_event_date_value2[value][date]': todayDateString }).should.be.true
+    })
+
+    it('should properly translate query params for tomorrow', async() => {
+      eventClientStub.returns(mockD7Response1)
+      await events.fetchEvents({ dateRange: 'tomorrow' })
+      eventClientStub.calledOnceWith({ 'field_event_date_value[value][date]': tomorrowDateString, 'field_event_date_value2[value][date]': tomorrowDateString }).should.be.true
+    })
+
+    it('should properly translate query params for 7days', async() => {
+      eventClientStub.returns(mockD7Response1)
+      await events.fetchEvents({ dateRange: '7days' })
+      eventClientStub.calledOnceWith({ 'field_event_date_value[value][date]': todayDateString, 'field_event_date_value2[value][date]': sevenDaysFromNowDateString }).should.be.true
+    })
+
+    it('should properly translate query params for 30days', async() => {
+      eventClientStub.returns(mockD7Response1)
+      await events.fetchEvents({ dateRange: '30days' })
+      eventClientStub.calledOnceWith({ 'field_event_date_value[value][date]': todayDateString, 'field_event_date_value2[value][date]': thirtyDaysFromNowDateString }).should.be.true
+    })
   })
 })
+/* eslint-enable no-unused-expressions */

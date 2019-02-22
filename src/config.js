@@ -5,8 +5,8 @@ module.exports = {
   },
   contentBucket: process.env.CONTENT_BUCKET,
   zipCodeDynamoDbTable: process.env.ZIP_CODE_DYNAMODB_TABLE,
-  eventbriteApi: {
-    token: process.env.EVENTBRITE_API_TOKEN,
-    organizationId: process.env.EVENTBRITE_API_ORGANIZATION_ID
+  eventsApi: {
+    hostname: process.env.EVENTS_HOSTNAME,
+    endpoint: process.env.EVENTS_API_ENDPOINT
   }
 }
