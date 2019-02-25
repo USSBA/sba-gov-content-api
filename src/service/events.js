@@ -116,7 +116,7 @@ function mapD7EventDataToBetterSchema (item) {
       recurring: clean(item.field_event_repeat),
       recurringType: clean(item.field_event_recur_type)
     }
-    // remove undefined properties; sometiems D7 returns properties without values as [] and sometimes as undefined
+    // remove undefined properties; sometimes D7 returns properties without values as [] and sometimes as undefined
     result = JSON.parse(JSON.stringify(result))
     return result
   } catch (e) {
