@@ -61,11 +61,11 @@ function clean (value) {
   }
 }
 
-function formatDate(dateString, timezone){
-  if(dateString){
+function formatDate (dateString, timezone) {
+  if (dateString) {
     return moment(dateString).tz(timezone).format()
-  }else{
-    return null;
+  } else {
+    return null
   }
 }
 
@@ -91,7 +91,7 @@ function mapD7EventDataToBetterSchema (item) {
       startDate: dateInformation.start,
       endDate: dateInformation.end,
       timezone: moment(dateInformation.start).tz(item.field_time_zone).format('z'),
-      cost: clean(item.field_event_fee) || "0.00",
+      cost: clean(item.field_event_fee) || '0.00',
       locationType: item.field_event_is_virtual,
       location: {
         name: item.name,
