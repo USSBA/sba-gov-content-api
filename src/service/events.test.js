@@ -35,16 +35,16 @@ describe('Event Service', () => {
   describe('fetchEventById', () => {
     it('should fetch and map data when no query params are presented', async() => {
       eventClientStub.returns(mockD7Response1)
-      const eventsResults = await events.fetchEventById(mockD7Response1[0].id)
-      eventsResults.should.eql(expectedEventsData1[0])
+      const result = await events.fetchEventById(mockD7Response1[0].id)
+      result.should.eql(expectedEventsData1[0])
     })
   })
 
   describe('fetchEvents', () => {
     it('should fetch and map data when no query params are presented', async() => {
       eventClientStub.returns(mockD7Response1)
-      const eventsResults = await events.fetchEvents(null)
-      eventsResults.should.eql(expectedEventsData1)
+      const results = await events.fetchEvents(null)
+      results.should.eql(expectedEventsData1)
     })
   })
 

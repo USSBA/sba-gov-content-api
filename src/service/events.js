@@ -61,6 +61,14 @@ function clean (value) {
   }
 }
 
+function formatDate(dateString, timezone){
+  if(dateString){
+    return moment(dateString).tz(timezone).format()
+  }else{
+    return null;
+  }
+}
+
 function mapD7EventDataToBetterSchema (item) {
   try {
     if (!item) {
@@ -69,9 +77,9 @@ function mapD7EventDataToBetterSchema (item) {
     let dateInformation = { start: null, end: null }
     let dateSplit = item.field_event_date.split(' to ')
     if (Array.isArray(dateSplit) && dateSplit.length === 2) {
-      dateInformation = Object.assign(dateInformation, { start: dateSplit[0], end: dateSplit[1] })
+      dateInformation = Object.assign(dateInformation, { start: formatDate(dateSplit[0], item.field_time_zone), end: formatDate(dateSplit[1], item.field_time_zone) })
     } else if (Array.isArray(dateSplit) && dateSplit.length === 1) {
-      dateInformation = Object.assign(dateInformation, { start: dateSplit[0] })
+      dateInformation = Object.assign(dateInformation, { start: formatDate(dateSplit[0], item.field_time_zone) })
     }
 
     let result = {
@@ -79,12 +87,12 @@ function mapD7EventDataToBetterSchema (item) {
       type: 'event',
       description: item.body,
       id: item.nid,
-      registration_url: clean(item.field_event_link),
-      start_date: dateInformation.start,
-      end_date: dateInformation.end,
+      registrationUrl: clean(item.field_event_link),
+      startDate: dateInformation.start,
+      endDate: dateInformation.end,
       timezone: moment(dateInformation.start).tz(item.field_time_zone).format('z'),
-      cost: clean(item.field_event_fee),
-      location_type: item.field_event_is_virtual,
+      cost: clean(item.field_event_fee) || "0.00",
+      locationType: item.field_event_is_virtual,
       location: {
         name: item.name,
         address: item.street,
@@ -102,11 +110,11 @@ function mapD7EventDataToBetterSchema (item) {
       },
       sponsor: {
         type: clean(item.field_event_office_type),
-        sponsor_name: clean(item.field_event_affiliation)
+        sponsorName: clean(item.field_event_affiliation)
       },
       organizer: clean(item.field_event_org),
       recurring: clean(item.field_event_repeat),
-      recurring_type: clean(item.field_event_recur_type)
+      recurringType: clean(item.field_event_recur_type)
     }
     // remove undefined properties; sometiems D7 returns properties without values as [] and sometimes as undefined
     result = JSON.parse(JSON.stringify(result))

@@ -4,12 +4,12 @@
         "type": "event",
         "description": "Take Your Food Business to the Next Level!\r\nJoin Us for a 10-Part Advanced Series with Industry Experts!\r\n\r\nThe Alameda County Community Development Agency and the Alameda County Small Business Development Center are pleased to present the AWARD WINNINGFood Entrepreneurship Academy Advanced Series for existing and launching food centric businesses. The Academy is no charge to participants.\r\n\r\nThis is an advanced 10-part business workshop series offered to a select group of food company owners (foodservice and food products) who seek higher levels of success in business. Industry experts will work with your business fundamentals, including your strategic plan and operations, and will develop practical and measurable goals and plans of action.\r\n\r\nProgram Objectives:\r\n\r\nAccelerate food entrepreneur businesses located in Alameda County\r\nHelp strengthen these businesses to grow faster, obtain capital, hire more workers and impact the community\r\nConnect entrepreneurs to experts to advise the entrepreneurs regarding best practices and resources\r\nCreate a network for these businesses to receive technical assistance and peer advice during and after the sessions\r\n \r\n \r\n\r\nDeagon Williams\r\nCulinary Business Strategy\r\n\r\nDeagon Williams was born in California, but her cultural and culinary training ground was Paris, where she moved as a teenager in order to undergo formal culinary training. Deagon earned her Grand Diplôme d’?tudes Culinaires at l’Ecole de Cusine, La Varenne, and then apprenticed with Michele Comby and La Maison du Chocolat.\r\n\r\nAs a chef, Deagon ran a 25 person kitchen staff with a daily changing menu as well as created new businesses from scratch. In order to build organizational expertise, Deagon studied systems and organizational theory, earning a BA in Sociology as well as an MBA at Mills College.\r\n\r\nDeagon was Client Services Manager at the Center for Culinary Development, where she worked on business development and food innovation marketing for multinational corporations. She is now the principal of Culinary Business Strategy, a boutique consultancy that offers understanding and bottom line results to the food business sector.",
         "id": "1629852",
-        "registration_url": "https://nc.ecenterdirect.com/events/44358",
-        "start_date": "2019-02-25 18:30:00",
-        "end_date": "2019-02-25 20:30:00",
+        "registrationUrl": "https://nc.ecenterdirect.com/events/44358",
+        "startDate": "2019-02-25T10:30:00-08:00",
+        "endDate": "2019-02-25T12:30:00-08:00",
         "timezone": "PST",
-        "cost": null,
-        "location_type": "In Person",
+        "cost": "0.00",
+        "locationType": "In Person",
         "location": {
             "name": "Alameda County Training &amp; Education Center",
             "address": " 125 12th Street #400",
@@ -27,23 +27,23 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "California (San Francisco)"
+            "sponsorName": "California (San Francisco)"
         },
         "organizer": "ACSBDC",
         "recurring": "Yes",
-        "recurring_type": "Recurs weekly"
+        "recurringType": "Recurs weekly"
     },
     {
         "title": "ADVANCED FOOD BUSINESS ENTREPRENEUR TRAINING ACADEMY - OAKLAND WINTER 2019 [recurring]",
         "type": "event",
         "description": "Take Your Food Business to the Next Level!\r\nJoin Us for a 10-Part Advanced Series with Industry Experts!\r\n\r\nThe Alameda County Community Development Agency and the Alameda County Small Business Development Center are pleased to present the AWARD WINNINGFood Entrepreneurship Academy Advanced Series for existing and launching food centric businesses. The Academy is no charge to participants.\r\n\r\nThis is an advanced 10-part business workshop series offered to a select group of food company owners (foodservice and food products) who seek higher levels of success in business. Industry experts will work with your business fundamentals, including your strategic plan and operations, and will develop practical and measurable goals and plans of action.\r\n\r\nProgram Objectives:\r\n\r\nAccelerate food entrepreneur businesses located in Alameda County\r\nHelp strengthen these businesses to grow faster, obtain capital, hire more workers and impact the community\r\nConnect entrepreneurs to experts to advise the entrepreneurs regarding best practices and resources\r\nCreate a network for these businesses to receive technical assistance and peer advice during and after the sessions\r\n \r\n \r\n\r\nDeagon Williams\r\nCulinary Business Strategy\r\n\r\nDeagon Williams was born in California, but her cultural and culinary training ground was Paris, where she moved as a teenager in order to undergo formal culinary training. Deagon earned her Grand Diplôme d’?tudes Culinaires at l’Ecole de Cusine, La Varenne, and then apprenticed with Michele Comby and La Maison du Chocolat.\r\n\r\nAs a chef, Deagon ran a 25 person kitchen staff with a daily changing menu as well as created new businesses from scratch. In order to build organizational expertise, Deagon studied systems and organizational theory, earning a BA in Sociology as well as an MBA at Mills College.\r\n\r\nDeagon was Client Services Manager at the Center for Culinary Development, where she worked on business development and food innovation marketing for multinational corporations. She is now the principal of Culinary Business Strategy, a boutique consultancy that offers understanding and bottom line results to the food business sector.",
         "id": "1629418",
-        "registration_url": "https://nc.ecenterdirect.com/events/44358",
-        "start_date": "2019-02-25 18:30:00",
-        "end_date": "2019-02-25 20:30:00",
+        "registrationUrl": "https://nc.ecenterdirect.com/events/44358",
+        "startDate": "2019-02-25T10:30:00-08:00",
+        "endDate": "2019-02-25T12:30:00-08:00",
         "timezone": "PST",
-        "cost": null,
-        "location_type": "In Person",
+        "cost": "0.00",
+        "locationType": "In Person",
         "location": {
             "name": "Alameda County Training &amp; Education Center",
             "address": " 125 12th Street #400",
@@ -61,23 +61,23 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "California (San Francisco)"
+            "sponsorName": "California (San Francisco)"
         },
         "organizer": "ACSBDC",
         "recurring": "Yes",
-        "recurring_type": "Recurs weekly"
+        "recurringType": "Recurs weekly"
     },
     {
         "title": "Roundtable for Small Business Owners ",
         "type": "event",
         "description": "Leadership can be lonely. Get a peer group to share challenges and ideas and find new opportunities for growth. Participate in SCORE's Roundtable; a free event every 2nd and 4th Tuesdays at 4pm.",
         "id": "1613706",
-        "registration_url": null,
-        "start_date": "2019-02-26 09:00:00",
-        "end_date": "2019-02-26 12:00:00",
+        "registrationUrl": null,
+        "startDate": "2019-02-26T04:00:00-05:00",
+        "endDate": "2019-02-26T07:00:00-05:00",
         "timezone": "EST",
-        "cost": null,
-        "location_type": "In Person",
+        "cost": "0.00",
+        "locationType": "In Person",
         "location": {
             "name": "Greater Elkhart Chamber of Commerce",
             "address": "418 S. Main St.",
@@ -95,23 +95,23 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "Indiana"
+            "sponsorName": "Indiana"
         },
         "organizer": "Elkhart SCORE",
         "recurring": "Yes",
-        "recurring_type": "Recurs monthly (same week &amp; same day of week)"
+        "recurringType": "Recurs monthly (same week &amp; same day of week)"
     },
     {
         "title": "Doing Business with the Federal Government ",
         "type": "event",
         "description": "Would you like to sell your products or services to the world’s largest customer – the federal government? At this workshop, participants will have the opportunity to learn about government contracting certifications as well as the many resources to help small businesses interested in selling to the . Join us, and you will learn: • Getting registered in the federal contractor registry • Understanding the federal procurement process • Knowing the realities and myths of government contracting • Learning what certifications you may qualify for and how to apply for them (HUBZone, Woman-owned, 8(a), Disadvantaged, Service-Disabled Veteran-Owned and others) • Identifying specific agencies that want what you are selling • Branding and marketing your business   ",
         "id": "1626421",
-        "registration_url": "https://www.eventbrite.com/e/doing-business-with-the-federal-government-tickets-49710991915",
-        "start_date": "2019-02-26 09:00:00",
-        "end_date": "2019-02-26 11:00:00",
+        "registrationUrl": "https://www.eventbrite.com/e/doing-business-with-the-federal-government-tickets-49710991915",
+        "startDate": "2019-02-26T02:00:00-07:00",
+        "endDate": "2019-02-26T04:00:00-07:00",
         "timezone": "MST",
-        "cost": null,
-        "location_type": "In Person",
+        "cost": "0.00",
+        "locationType": "In Person",
         "location": {
             "name": "Boise District Office",
             "address": "380 E. Parkcenter Blvd.",
@@ -129,23 +129,23 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "Idaho (Boise)"
+            "sponsorName": "Idaho (Boise)"
         },
         "organizer": "U.S. Small Business Administration",
         "recurring": "Yes",
-        "recurring_type": "Recurs monthly (same week &amp; same day of week)"
+        "recurringType": "Recurs monthly (same week &amp; same day of week)"
     },
     {
         "title": "Social Media Road Map for Small Business",
         "type": "event",
         "description": "We’ll show you how to implement the most important aspects of social media and you’ll leave feeling more intuitively in control of your company’s strategy.\r\n\r\nWhat to post and how much to post on the top three social networks for business: LinkedIn, Facebook, Twitter\r\nHow to create a weekly Social Media process that saves you time and brings in referral business\r\nHow choosing the “right” social network for your company prevents a lot of disappointment and frustration\r\nHow to make sure clients, prospects, supporters, and media interact with your posts\r\nWhat to do about ugly comments and trolls\r\nHow to use social media to get the most out of trade shows and events\r\nHow to stay in front of customers on Facebook without paying so much for ads\r\nHow much time it really takes for businesses to be successful with social media\r\nWhat really matters when it comes to ROI and social media analytics\r\n*BONUS! This class comes with a user license to take ThinkViral’s LinkedIn class online!\r\n\r\nAvailable scholarships:\r\n\r\nDo you live or own a business in Kansas City, MO? Check out the Urban Business Growth Initiative.\r\nAre you a dislocated (unemployed or laid-off) worker? Check out the Dislocated Worker Program.",
         "id": "1621333",
-        "registration_url": "https://sbtdc.umkc.edu/event/social-media-road-map-for-small-business-2/?instance_id=4286",
-        "start_date": "2019-02-26 17:30:00",
-        "end_date": "2019-02-26 20:30:00",
+        "registrationUrl": "https://sbtdc.umkc.edu/event/social-media-road-map-for-small-business-2/?instance_id=4286",
+        "startDate": "2019-02-26T11:30:00-06:00",
+        "endDate": "2019-02-26T14:30:00-06:00",
         "timezone": "CST",
         "cost": "199.00",
-        "location_type": "In Person",
+        "locationType": "In Person",
         "location": {
             "name": "SBTDC at UMKC",
             "address": "4747 Troost",
@@ -163,23 +163,23 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "Missouri (Kansas City)"
+            "sponsorName": "Missouri (Kansas City)"
         },
         "organizer": null,
         "recurring": "No",
-        "recurring_type": null
+        "recurringType": null
     },
     {
         "title": "Programa de Entrenamiento Empresarial",
         "type": "event",
         "description": "Obtenga ayuda para empezar, mejorar o establecer su propio negocio.\r\n\r\nEl Programa de Entrenamiento Empresarial de 60+ horas incluye: \r\n- Planificación del Mercadeo\r\n- Flujo de Caja\r\n- Operaciones\r\n- Asuntos Legales\r\n- Mercadeo por Redes Sociales\r\n- Planificación para el Éxito\r\n- Información sobre Acceso al Capital\r\n",
         "id": "1629428",
-        "registration_url": "https://wedcbiz.org/event/programa-de-entrenamiento-empresarial-poughkeepsie/",
-        "start_date": "2019-02-26 18:00:00",
-        "end_date": "2019-02-26 21:00:00",
+        "registrationUrl": "https://wedcbiz.org/event/programa-de-entrenamiento-empresarial-poughkeepsie/",
+        "startDate": "2019-02-26T13:00:00-05:00",
+        "endDate": "2019-02-26T16:00:00-05:00",
         "timezone": "EST",
         "cost": "50.00",
-        "location_type": "In Person",
+        "locationType": "In Person",
         "location": {
             "name": "Family Partnership Center",
             "address": "29 N. Hamilton Street",
@@ -197,23 +197,23 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "New York"
+            "sponsorName": "New York"
         },
         "organizer": "Women&#039;s Enterprise Development Center Inc.",
         "recurring": "No",
-        "recurring_type": null
+        "recurringType": null
     },
     {
         "title": "Legal Issues for Small Business - How to work with and Questions to Ask an Attorney",
         "type": "event",
         "description": "Particularly for entrepreneurs, Legal Issues and Entity Selection are important decisions one has to make.  A long time attorney will cover the following:  liability, ease of formation and operation, taxation, suitability for business, expansion and exit strategy. This class will update startup and seasoned businesses on the importance of proper legal structure, entity selection and necessary steps to protect you and your assets. The program is NO Cost. Reservations are required. Call the SBDC at 433-5570 or 433-5514 or register online:  http://floridasbdc.org/get-training/",
         "id": "1630560",
-        "registration_url": "http://floridasbdc.org/get-training/",
-        "start_date": "2019-02-27 09:00:00",
-        "end_date": "2019-02-27 11:00:00",
+        "registrationUrl": "http://floridasbdc.org/get-training/",
+        "startDate": "2019-02-27T04:00:00-05:00",
+        "endDate": "2019-02-27T06:00:00-05:00",
         "timezone": "EST",
-        "cost": null,
-        "location_type": "In Person",
+        "cost": "0.00",
+        "locationType": "In Person",
         "location": {
             "name": "FSBDC @ Eastern Florida State College",
             "address": "3865 N Wickham Road",
@@ -231,23 +231,23 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "Florida (South)"
+            "sponsorName": "Florida (South)"
         },
         "organizer": "FSBDC @ Eastern Florida State College",
         "recurring": "No",
-        "recurring_type": null
+        "recurringType": null
     },
     {
         "title": "Google Seminar: Tips for Measuring Online Success",
         "type": "event",
         "description": "How do you evaluate and measure the success of your businesses’ online presence?  By evaluating the performance of your business website, the performance of a Google My Business listing and the performance of AdWords Express Campaigns.",
         "id": "1630805",
-        "registration_url": "https://clients.sbdcmichigan.org/workshop.aspx?ekey=80380046",
-        "start_date": "2019-02-27 10:00:00",
-        "end_date": "2019-02-27 11:00:00",
+        "registrationUrl": "https://clients.sbdcmichigan.org/workshop.aspx?ekey=80380046",
+        "startDate": "2019-02-27T05:00:00-05:00",
+        "endDate": "2019-02-27T06:00:00-05:00",
         "timezone": "EST",
-        "cost": null,
-        "location_type": "In Person",
+        "cost": "0.00",
+        "locationType": "In Person",
         "location": {
             "name": "Small Business Development Center",
             "address": "309 N. Washington Sq.",
@@ -265,23 +265,23 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "Michigan"
+            "sponsorName": "Michigan"
         },
         "organizer": "Small Business Development Center",
         "recurring": "No",
-        "recurring_type": null
+        "recurringType": null
     },
     {
         "title": "Sponsorship Myths and Realities ",
         "type": "event",
         "description": "Hiring international students can bring many benefits to your organization. The process is also the same as any other internship from an employer’s point of view. You will learn about the program objectives and internship strategies. Also discussed will be: legal guidelines, optional practical training, and curricular practical training.\r\n\r\nSpace is limited to the first 18 registrations.\r\n",
         "id": "1627269",
-        "registration_url": "https://adcsd.com/event/sponsorship-myths-and-realities/",
-        "start_date": "2019-02-27 12:00:00",
-        "end_date": "2019-02-27 13:00:00",
+        "registrationUrl": "https://adcsd.com/event/sponsorship-myths-and-realities/",
+        "startDate": "2019-02-27T06:00:00-06:00",
+        "endDate": "2019-02-27T07:00:00-06:00",
         "timezone": "CST",
         "cost": "15.00",
-        "location_type": "In Person",
+        "locationType": "In Person",
         "location": {
             "name": "The Workshop",
             "address": "208 S. Main St.",
@@ -299,23 +299,23 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "South Dakota"
+            "sponsorName": "South Dakota"
         },
         "organizer": null,
         "recurring": "No",
-        "recurring_type": null
+        "recurringType": null
     },
     {
         "title": "Kent - Developing a Business Plan Class",
         "type": "event",
         "description": "This hands-on session is designed to help you create a working business plan for starting or managing your business. Through engaging writing exercises and group brainstorming, you will take your business ideas further than you thought possible. While traditional business plan formats will be discussed, the focus of this class is to help you develop and sharpen your own business ideas to give you the greatest chance of success. \r\n",
         "id": "1629378",
-        "registration_url": "https://www.campusce.net/greenriver/course/course.aspx?C=62&pc=195&mc=&sc=",
-        "start_date": "2019-02-27 18:00:00",
-        "end_date": "2019-02-27 21:00:00",
+        "registrationUrl": "https://www.campusce.net/greenriver/course/course.aspx?C=62&pc=195&mc=&sc=",
+        "startDate": "2019-02-27T10:00:00-08:00",
+        "endDate": "2019-02-27T13:00:00-08:00",
         "timezone": "PST",
         "cost": "59.00",
-        "location_type": "In Person",
+        "locationType": "In Person",
         "location": {
             "name": "Green River College, Kent Campus, Room 324",
             "address": "417 Ramsay Way, Suite 112",
@@ -333,10 +333,10 @@
         },
         "sponsor": {
             "type": "District Office",
-            "sponsor_name": "Washington (Seattle)"
+            "sponsorName": "Washington (Seattle)"
         },
         "organizer": "Green River College Small Business Center",
         "recurring": "No",
-        "recurring_type": null
+        "recurringType": null
     }
 ]
