@@ -160,7 +160,7 @@ async function fetchEvents (query) {
 
   let totalCount = await fetchTotalLength(params)
 
-  return { found: totalCount, items: mappedResults }
+  return { count: totalCount, items: mappedResults }
 }
 
 module.exports.fetchEvents = fetchEvents
