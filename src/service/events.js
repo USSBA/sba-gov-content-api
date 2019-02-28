@@ -143,7 +143,7 @@ async function fetchTotalLength (params) {
     let results = await eventClient.getEventCount(newParams)
     let length = results.length
     totalCount += length
-    if (length < 1000) {
+    if (length < 1000 || totalCount > 9999) {
       more = false
     } else {
       lastOffset += 1000
@@ -160,7 +160,7 @@ async function fetchEvents (query) {
 
   let totalCount = await fetchTotalLength(params)
 
-  return { count: totalCount, items: mappedResults }
+  return { found: totalCount, items: mappedResults }
 }
 
 module.exports.fetchEvents = fetchEvents

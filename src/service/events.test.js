@@ -11,6 +11,10 @@ const events = require('./events')
 const mockD7Response1 = require('./events.test.json')
 const expectedEventsData1 = require('./events.output.test.json')
 
+function makeArray (n) {
+  return new Array(n).fill(0)
+}
+
 describe('Event Service', () => {
   let eventClientStub, eventClientCountStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
 
@@ -22,16 +26,19 @@ describe('Event Service', () => {
     thirtyDaysFromNowDateString = '2016-04-14'
     eventClientStub = sinon.stub(eventClient, 'getEvents')
     eventClientCountStub = sinon.stub(eventClient, 'getEventCount')
+  })
+
+  beforeEach(() => {
     eventClientCountStub.returns([1, 2, 3])
   })
 
   afterEach(() => {
+    eventClientCountStub.reset()
     eventClientStub.reset()
   })
 
   after(() => {
     clock.restore()
-    eventClientCountStub.reset()
     eventClientStub.restore()
     eventClientCountStub.restore()
   })
@@ -49,6 +56,31 @@ describe('Event Service', () => {
       eventClientStub.returns(mockD7Response1)
       const results = await events.fetchEvents(null)
       results.should.eql(expectedEventsData1)
+    })
+  })
+
+  describe('fetchTotalLength', () => {
+    it('should fetch the total number of matching records (multiple pages)', async() => {
+      eventClientCountStub.reset()
+      eventClientCountStub.withArgs({q: 'test', offset: 0}).returns(makeArray(1000))
+      eventClientCountStub.withArgs({q: 'test', offset: 1000}).returns(makeArray(1000))
+      eventClientCountStub.withArgs({q: 'test', offset: 2000}).returns(makeArray(700))
+      const results = await events.fetchTotalLength({q: 'test'})
+      results.should.eql(2700)
+    })
+
+    it('should fetch the total number of matching records after only one page', async() => {
+      eventClientCountStub.reset()
+      eventClientCountStub.withArgs({q: 'test', offset: 0}).returns(makeArray(42))
+      const results = await events.fetchTotalLength({q: 'test'})
+      results.should.eql(42)
+    })
+
+    it('should return the maximum number of records if the actual total exceeds the maximum', async() => {
+      eventClientCountStub.reset()
+      eventClientCountStub.returns(makeArray(1000))
+      const results = await events.fetchTotalLength({q: 'test'})
+      results.should.eql(10000)
     })
   })
 
