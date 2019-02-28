@@ -22,7 +22,7 @@ describe('Event Service', () => {
     thirtyDaysFromNowDateString = '2016-04-14'
     eventClientStub = sinon.stub(eventClient, 'getEvents')
     eventClientCountStub = sinon.stub(eventClient, 'getEventCount')
-    eventClientCountStub.returns([1,2,3])
+    eventClientCountStub.returns([1, 2, 3])
   })
 
   afterEach(() => {
@@ -31,7 +31,7 @@ describe('Event Service', () => {
 
   after(() => {
     clock.restore()
-    eventClientCountStub.reset();
+    eventClientCountStub.reset()
     eventClientStub.restore()
     eventClientCountStub.restore()
   })
