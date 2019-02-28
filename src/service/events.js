@@ -1,7 +1,7 @@
 const eventClient = require('../clients/event-client.js')
 const moment = require('moment-timezone')
 
-function translateQueryParamsForD7 (query) {
+function translateQueryParamsForD7(query) {
   const queryObj = query || {}
   const { q, address, dateRange, distance, start } = queryObj
   let params = {}
@@ -9,7 +9,8 @@ function translateQueryParamsForD7 (query) {
     if (distance) {
       params['distance[postal_code]'] = address
       params['distance[search_distance]'] = distance
-    } else {
+    }
+    else {
       params.postal_code = address
     }
   }
@@ -53,23 +54,25 @@ function translateQueryParamsForD7 (query) {
   return params
 }
 
-function clean (value) {
+function clean(value) {
   if (Array.isArray(value) && value.length === 0) {
     return null
-  } else {
+  }
+  else {
     return value
   }
 }
 
-function formatDate (dateString, timezone) {
+function formatDate(dateString, timezone) {
   if (dateString) {
     return moment(dateString).tz(timezone).format()
-  } else {
+  }
+  else {
     return null
   }
 }
 
-function mapD7EventDataToBetterSchema (item) {
+function mapD7EventDataToBetterSchema(item) {
   try {
     if (!item) {
       return null
@@ -78,7 +81,8 @@ function mapD7EventDataToBetterSchema (item) {
     let dateSplit = item.field_event_date.split(' to ')
     if (Array.isArray(dateSplit) && dateSplit.length === 2) {
       dateInformation = Object.assign(dateInformation, { start: formatDate(dateSplit[0], item.field_time_zone), end: formatDate(dateSplit[1], item.field_time_zone) })
-    } else if (Array.isArray(dateSplit) && dateSplit.length === 1) {
+    }
+    else if (Array.isArray(dateSplit) && dateSplit.length === 1) {
       dateInformation = Object.assign(dateInformation, { start: formatDate(dateSplit[0], item.field_time_zone) })
     }
 
@@ -119,28 +123,54 @@ function mapD7EventDataToBetterSchema (item) {
     // remove undefined properties; sometimes D7 returns properties without values as [] and sometimes as undefined
     result = JSON.parse(JSON.stringify(result))
     return result
-  } catch (e) {
+  }
+  catch (e) {
     console.error('Failed to map D7 Event: ', e)
     return null
   }
 }
 
-async function fetchEventById (id) {
+async function fetchEventById(id) {
   let result = await eventClient.getEvents({ nid: id })
   if (Array.isArray(result) && result.length !== 0) {
     return mapD7EventDataToBetterSchema(result[0])
-  } else {
+  }
+  else {
     return []
   }
 }
 
-async function fetchEvents (query) {
+async function fetchTotalLength(params) {
+  let lastOffset = 0
+  let totalCount = 0;
+  let more = true;
+  while (more) {
+    let newParams = Object.assign({}, params, { offset: lastOffset })
+    let results = await eventClient.getEventCount(newParams)
+    let length = results.length;
+    totalCount += length
+    if (length < 1000) {
+      more = false
+    }else{
+      lastOffset += 1000
+    }
+
+  }
+  return totalCount;
+}
+
+async function fetchEvents(query) {
   let params = translateQueryParamsForD7(query)
   let results = await eventClient.getEvents(params)
   let mappedResults = results.map(mapD7EventDataToBetterSchema)
   mappedResults = mappedResults.filter(item => item)
-  return mappedResults
+
+  let totalCount = await fetchTotalLength(params)
+
+  return { count: totalCount, items: mappedResults }
+
 }
 
 module.exports.fetchEvents = fetchEvents
 module.exports.fetchEventById = fetchEventById
+module.exports.fetchTotalLength = fetchTotalLength

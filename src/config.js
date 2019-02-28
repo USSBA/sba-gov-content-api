@@ -7,6 +7,7 @@ module.exports = {
   zipCodeDynamoDbTable: process.env.ZIP_CODE_DYNAMODB_TABLE,
   eventsApi: {
     hostname: process.env.EVENTS_HOSTNAME,
-    endpoint: process.env.EVENTS_API_ENDPOINT
+    endpoint: process.env.EVENTS_API_ENDPOINT,
+    countEndpoint: process.env.EVENTS_API_COUNT_ENDPOINT
   }
 }

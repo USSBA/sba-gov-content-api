@@ -12,7 +12,7 @@ const mockD7Response1 = require('./events.test.json')
 const expectedEventsData1 = require('./events.output.test.json')
 
 describe('Event Service', () => {
-  let eventClientStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
+  let eventClientStub, eventClientCountStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
 
   before(() => {
     clock = sinon.useFakeTimers(new Date(2016, 2, 15).getTime())
@@ -21,6 +21,8 @@ describe('Event Service', () => {
     sevenDaysFromNowDateString = '2016-03-22'
     thirtyDaysFromNowDateString = '2016-04-14'
     eventClientStub = sinon.stub(eventClient, 'getEvents')
+    eventClientCountStub = sinon.stub(eventClient, 'getEventCount')
+    eventClientCountStub.returns([1,2,3])
   })
 
   afterEach(() => {
@@ -29,14 +31,16 @@ describe('Event Service', () => {
 
   after(() => {
     clock.restore()
+    eventClientCountStub.reset();
     eventClientStub.restore()
+    eventClientCountStub.restore()
   })
 
   describe('fetchEventById', () => {
-    it('should fetch and map data when no query params are presented', async() => {
+    it('should fetch and map data for a single event', async() => {
       eventClientStub.returns(mockD7Response1)
       const result = await events.fetchEventById(mockD7Response1[0].id)
-      result.should.eql(expectedEventsData1[0])
+      result.should.eql(expectedEventsData1.items[0])
     })
   })
 
@@ -99,6 +103,13 @@ describe('Event Service', () => {
       eventClientStub.returns(mockD7Response1)
       await events.fetchEvents({ dateRange: '30days' })
       eventClientStub.calledOnceWith({ 'field_event_date_value[value][date]': todayDateString, 'field_event_date_value2[value][date]': thirtyDaysFromNowDateString }).should.be.true
+    })
+
+    it('should properly translate a mix of query params', async() => {
+      eventClientStub.returns(mockD7Response1)
+      let searchParam = 'test'
+      await events.fetchEvents({ q: searchParam, start: 1000, dateRange: 'today' })
+      eventClientStub.calledOnceWith({ title: searchParam, body_value: searchParam, offset: 1000, 'field_event_date_value[value][date]': todayDateString, 'field_event_date_value2[value][date]': todayDateString }).should.be.true
     })
   })
 })
