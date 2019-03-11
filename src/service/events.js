@@ -130,7 +130,7 @@ async function fetchEventById (id) {
   if (Array.isArray(result) && result.length !== 0) {
     return mapD7EventDataToBetterSchema(result[0])
   } else {
-    return []
+    return null
   }
 }
 
