@@ -259,8 +259,36 @@ function fetchOfficesRaw () {
   return getKey('offices')
 }
 
-function fetchPersons () {
-  return getKey('persons')
+async function fetchPersons (params) {
+  const offices = await getKey('offices')
+  const persons = await getKey('persons')
+  const officeIdToNameMap = new Map()
+
+  offices.forEach(({ id, title }) => officeIdToNameMap.set(id, title))
+
+  const personsWithOfficeName = persons.map(person => {
+    let item
+    const officeName = officeIdToNameMap.get(person.office)
+
+    if (officeName) {
+      item = {
+        ...person,
+        officeName: officeIdToNameMap.get(person.office)
+      }
+    } else {
+      item = person
+    }
+
+    return item
+  })
+
+  const { order } = params
+
+  return personsWithOfficeName.sort((a, b) => {
+    return order === 'descending'
+      ? b.name.localeCompare(a.name)
+      : a.name.localeCompare(b.name)
+  })
 }
 
 module.exports.fetchAllCourses = fetchAllCourses
