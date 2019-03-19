@@ -1,9 +1,15 @@
 /* eslint-env mocha */
 const chai = require('chai')
+const sinon = require('sinon')
+const expect = chai.expect
 
-const { sortDocumentsByDate } = require('./drupal-eight.js')
+const { fetchPersons, sortDocumentsByDate } = require('./drupal-eight.js')
+const drupalEight = require('./drupal-eight.js')
+const s3CacheReader = require('../clients/s3-cache-reader.js')
+const persons = require('../test-data/persons.js')
+const offices = require('../test-data/officesRaw.js')
 
-let testDocs = [{
+const testDocs = [{
   files: [{
     effectiveDate: '2018-01-01'
   },
@@ -54,7 +60,7 @@ let testDocs = [{
 }
 ]
 
-let sortedDocs = [{
+const sortedDocs = [{
   files: [{
     effectiveDate: '2018-01-01'
   },
@@ -106,5 +112,33 @@ describe('Document sorting', () => {
     let docs = sortDocumentsByDate(testDocs)
     chai.expect(docs).to.deep.equal(sortedDocs)
     done()
+  })
+})
+
+describe.only('Persons', () => {
+  let getKeyStub
+
+  before(() => {
+    getKeyStub = sinon.stub(s3CacheReader, 'getKey')
+    // drupalEight = require('./drupal-eight.js')
+    // getKeyStub = sinon.stub(s3CacheReader, 'getKey')
+  })
+
+  afterEach(() => {
+    getKeyStub.reset()
+  })
+
+  after(() => {
+    getKeyStub.restore()
+  })
+
+  it('should sort and add officeName in each Person object', async (done) => {
+    // getKeyStub.reset()
+    getKeyStub.withArgs('offices').returns(offices)
+    // getKeyStub.withArgs('persons').returns(persons)
+    // getKeyStub.withArgs('persons').returns(Promise.resolve(persons))
+
+    const result = await drupalEight.fetchPersons()
+    console.log('1254', result)
   })
 })
