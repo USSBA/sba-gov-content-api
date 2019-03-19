@@ -1,10 +1,8 @@
 /* eslint-env mocha */
 const chai = require('chai')
 const sinon = require('sinon')
-const expect = chai.expect
 
 const { fetchPersons, sortDocumentsByDate } = require('./drupal-eight.js')
-const drupalEight = require('./drupal-eight.js')
 const s3CacheReader = require('../clients/s3-cache-reader.js')
 
 const persons = require('../test-data/persons.js')
