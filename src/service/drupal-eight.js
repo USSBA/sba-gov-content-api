@@ -4,7 +4,7 @@ const langParser = require('accept-language-parser')
 const { filter, includes, isEmpty, map, mapValues, maxBy, orderBy } = require('lodash')
 
 const config = require('../config')
-const { getKey } = require('../clients/s3-cache-reader.js')
+const s3CacheReader = require('../clients/s3-cache-reader.js')
 
 const langCodes = { es: 'es', en: 'en' }
 
@@ -15,7 +15,7 @@ function fetchFormattedNode (nodeId, options) {
 
   langCode = isEmpty(langCode) ? 'en' : langCode[0].code
 
-  return getKey(nodeId).then(result => {
+  return s3CacheReader.getKey(nodeId).then(result => {
     const spanishResult = result && result.spanishTranslation
 
     if (spanishResult && langCode === langCodes.es) {
@@ -27,18 +27,18 @@ function fetchFormattedNode (nodeId, options) {
 }
 
 function fetchContacts (queryParams) {
-  return getKey('contacts').then(result => {
+  return s3CacheReader.getKey('contacts').then(result => {
     return filter(result, queryParams)
   })
 }
 
 function fetchFormattedMenu () {
-  return getKey('siteMap')
+  return s3CacheReader.getKey('siteMap')
 }
 
 function fetchCounsellorCta () {
   const counsellorCtaNodeId = config.get('counsellorCta.nodeId')
-  return getKey(counsellorCtaNodeId).then(data => {
+  return s3CacheReader.getKey(counsellorCtaNodeId).then(data => {
     return Object.assign({}, data, {
       size: 'Large'
     })
@@ -46,7 +46,7 @@ function fetchCounsellorCta () {
 }
 
 function fetchDocuments (queryParams) {
-  return getKey('documents').then(data => {
+  return s3CacheReader.getKey('documents').then(data => {
     return filterAndSortDocuments(sanitizeDocumentParams(queryParams), data)
   })
 }
@@ -179,7 +179,7 @@ function sortDocumentsByDate (docs) {
 }
 
 function fetchTaxonomys (queryParams) {
-  return getKey('taxonomys').then(data => {
+  return s3CacheReader.getKey('taxonomys').then(data => {
     if (queryParams) {
       let names = map(data, 'name')
 
@@ -210,7 +210,7 @@ function fetchArticles (queryParams) {
     }
   }
 
-  return getKey('articles')
+  return s3CacheReader.getKey('articles')
     .then(result => orderBy(result, sortField, sortOrder))
     .then(result => {
       let items = result
@@ -234,34 +234,34 @@ function fetchArticles (queryParams) {
 }
 
 function fetchAnnouncements () {
-  return getKey('announcements').then(result => {
+  return s3CacheReader.getKey('announcements').then(result => {
     return result
   })
 }
 
 function fetchNodes () {
-  return getKey('nodes')
+  return s3CacheReader.getKey('nodes')
 }
 
 function fetchDisaster () {
-  return getKey('disaster')
+  return s3CacheReader.getKey('disaster')
 }
 
 function fetchMainMenu () {
-  return getKey('mainMenu')
+  return s3CacheReader.getKey('mainMenu')
 }
 
 function fetchAllCourses () {
-  return getKey('courses')
+  return s3CacheReader.getKey('courses')
 }
 
 function fetchOfficesRaw () {
-  return getKey('offices')
+  return s3CacheReader.getKey('offices')
 }
 
 async function fetchPersons (params) {
-  const offices = await getKey('offices')
-  const persons = await getKey('persons')
+  const offices = await s3CacheReader.getKey('offices')
+  const persons = await s3CacheReader.getKey('persons')
   const officeIdToNameMap = new Map()
 
   offices.forEach(({ id, title }) => officeIdToNameMap.set(id, title))
