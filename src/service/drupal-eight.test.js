@@ -117,7 +117,7 @@ describe('Document sorting', () => {
   })
 })
 
-describe.only('Persons', () => {
+describe('Persons', () => {
   let getKeyStub
 
   before(() => {
