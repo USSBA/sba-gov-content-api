@@ -6,8 +6,10 @@ const expect = chai.expect
 const { fetchPersons, sortDocumentsByDate } = require('./drupal-eight.js')
 const drupalEight = require('./drupal-eight.js')
 const s3CacheReader = require('../clients/s3-cache-reader.js')
+
 const persons = require('../test-data/persons.js')
 const offices = require('../test-data/officesRaw.js')
+const fetchPersonsResult = require('../test-data/fetchPersons-result.js')
 
 const testDocs = [{
   files: [{
@@ -120,8 +122,6 @@ describe.only('Persons', () => {
 
   before(() => {
     getKeyStub = sinon.stub(s3CacheReader, 'getKey')
-    // drupalEight = require('./drupal-eight.js')
-    // getKeyStub = sinon.stub(s3CacheReader, 'getKey')
   })
 
   afterEach(() => {
@@ -132,13 +132,19 @@ describe.only('Persons', () => {
     getKeyStub.restore()
   })
 
-  it('should sort and add officeName in each Person object', async (done) => {
-    // getKeyStub.reset()
-    getKeyStub.withArgs('offices').returns(offices)
-    // getKeyStub.withArgs('persons').returns(persons)
-    // getKeyStub.withArgs('persons').returns(Promise.resolve(persons))
+  it('should sort in ascending order and add officeName in each Person object', async () => {
+    getKeyStub.withArgs('offices').returns(Promise.resolve(offices))
+    getKeyStub.withArgs('persons').returns(Promise.resolve(persons))
 
-    const result = await drupalEight.fetchPersons()
-    console.log('1254', result)
+    const result = await fetchPersons({ order: 'ascending' })
+    result.should.eql(fetchPersonsResult.ascendingOrder)
+  })
+
+  it('should sort in descending order and add officeName in each Person object', async () => {
+    getKeyStub.withArgs('offices').returns(Promise.resolve(offices))
+    getKeyStub.withArgs('persons').returns(Promise.resolve(persons))
+
+    const result = await fetchPersons({ order: 'descending' })
+    result.should.eql(fetchPersonsResult.descendingOrder)
   })
 })
