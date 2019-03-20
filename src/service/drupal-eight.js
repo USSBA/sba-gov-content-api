@@ -268,22 +268,19 @@ async function fetchPersons ({ order }) {
 
   const personsWithOfficeName = persons.map(person => {
     const office = officeIdToNameMap.get(person.office)
-    let item = person
 
-    if (office) {
-      item = {
-        ...person,
-        office
-      }
+    return {
+      ...person,
+      ...(office && { office })
     }
-
-    return item
   })
 
   return personsWithOfficeName.sort((a, b) => {
-    return order === 'descending'
-      ? b.name.localeCompare(a.name)
-      : a.name.localeCompare(b.name)
+    if (isEmpty(a.lastName)) return 1
+    if (isEmpty(b.lastName)) return -1
+
+    const descending = b.lastName.localeCompare(a.lastName)
+    return order === 'descending' ? descending : descending * -1
   })
 }
 
