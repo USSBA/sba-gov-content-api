@@ -259,30 +259,26 @@ function fetchOfficesRaw () {
   return s3CacheReader.getKey('offices')
 }
 
-async function fetchPersons (params) {
+async function fetchPersons ({ order }) {
   const offices = await s3CacheReader.getKey('offices')
   const persons = await s3CacheReader.getKey('persons')
-  const officeIdToNameMap = new Map()
 
-  offices.forEach(({ id, title }) => officeIdToNameMap.set(id, title))
+  const officeIdToNameMap = new Map()
+  offices.forEach(({ id, officeType, title }) => officeIdToNameMap.set(id, { id, name: title, type: officeType }))
 
   const personsWithOfficeName = persons.map(person => {
-    let item
-    const officeName = officeIdToNameMap.get(person.office)
+    const office = officeIdToNameMap.get(person.office)
+    let item = person
 
-    if (officeName) {
+    if (office) {
       item = {
         ...person,
-        officeName: officeIdToNameMap.get(person.office)
+        office
       }
-    } else {
-      item = person
     }
 
     return item
   })
-
-  const { order } = params
 
   return personsWithOfficeName.sort((a, b) => {
     return order === 'descending'
