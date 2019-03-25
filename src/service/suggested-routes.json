@@ -1,5 +1,9 @@
 [{
 	"title": "Events",
 	"description": "this is the description",
-	"url": "/events/find/"
+	"url": "/events/find/",
+	"keywords": [
+		"event",
+		"events"
+	]
 }]

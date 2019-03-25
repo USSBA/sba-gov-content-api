@@ -5,7 +5,7 @@ let expect = chai.expect
 const { getSuggestedRoutes } = require('./suggested-routes.js')
 const suggestedRoutes = require('./suggested-routes.json')
 
-describe('suggestedRoutes', () => {
+describe.only('suggestedRoutes', () => {
 	it('should return json data', () => {
 		const result = getSuggestedRoutes()
 		const expected = suggestedRoutes
@@ -19,5 +19,11 @@ describe('suggestedRoutes', () => {
 	})
 	it('suggestedRoutes items should have a "url" property', () => {
 		suggestedRoutes.forEach(route => route.hasOwnProperty('url').should.be.true)
+	})
+	it('suggestedRoutes items should have a "keywords" property', () => {
+		suggestedRoutes.forEach(route => route.hasOwnProperty('keywords').should.be.true)
+	})
+	it('suggestedRoutes "keyword" should have type of Array', () => {
+		suggestedRoutes.forEach(route => Array.isArray(route.keywords).should.be.true)
 	})
 })
