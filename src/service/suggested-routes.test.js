@@ -5,7 +5,7 @@ let expect = chai.expect
 const { getSuggestedRoutes } = require('./suggested-routes.js')
 const suggestedRoutes = require('./suggested-routes.json')
 
-describe.only('suggestedRoutes', () => {
+describe('suggestedRoutes', () => {
 	it('should return json data', () => {
 		const result = getSuggestedRoutes()
 		const expected = suggestedRoutes

@@ -18,7 +18,7 @@ const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { runSearch } = require('./service/search.js')
 const { fetchOffices } = require('./service/office-search.js')
 const { fetchEvents, fetchEventById } = require('./service/events.js')
-const { getUnIndexedRoutes } = require('./service/unindexed-routes.js')
+const { getSuggestedRoutes } = require('./service/suggested-routes.js')
 
 const fetchFunctions = {
   node: fetchFormattedNode,
@@ -43,7 +43,7 @@ const fetchContentTypeFunctions = {
   siteMap: fetchFormattedMenu,
   taxonomys: fetchTaxonomys,
   events: fetchEvents,
-  unIndexedRoutes: getUnIndexedRoutes
+  suggestedRoutes: getSuggestedRoutes
 }
 
 async function fetchContentById (params, headers) {
