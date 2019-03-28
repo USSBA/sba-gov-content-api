@@ -1,5 +1,5 @@
 [{
-	"route": "/events/find/",
+	"route": "/events/find/?dateRange=all&distance=200&pageNumber=1",
 	"cardMessage": "Looking for an event in your area?",
 	"buttonLabel": "Find An Event",
 	"keywords": [
