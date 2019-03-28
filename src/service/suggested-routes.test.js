@@ -11,19 +11,45 @@ describe('suggestedRoutes', () => {
 		const expected = suggestedRoutes
 		expect(result).to.deep.equal(expected)
 	})
-	it('suggestedRoutes items should have a "title" property', () => {
-		suggestedRoutes.forEach(route => route.hasOwnProperty('title').should.be.true)
+	describe('item.route', () => {
+		it('should exist', () => {
+			suggestedRoutes.forEach(item => item.hasOwnProperty('route').should.be.true)
+		})
+		it('should have a "type" of "string"', () => {
+			const expected = 'string'
+			suggestedRoutes.forEach(item => expect(typeof item.route).to.equal(expected))
+		})
 	})
-	it('suggestedRoutes items should have a "description" property', () => {
-		suggestedRoutes.forEach(route => route.hasOwnProperty('description').should.be.true)
+	describe('item.cardMessage', () => {
+		it('should exist', () => {
+			suggestedRoutes.forEach(item => item.hasOwnProperty('cardMessage').should.be.true)
+		})
+		it('should have a "type" of "string"', () => {
+			const expected = 'string'
+			suggestedRoutes.forEach(item => expect(typeof item.cardMessage).to.equal(expected))
+		})
 	})
-	it('suggestedRoutes items should have a "url" property', () => {
-		suggestedRoutes.forEach(route => route.hasOwnProperty('url').should.be.true)
+	describe('item.buttonLabel', () => {
+		it('should exist', () => {
+			suggestedRoutes.forEach(item => item.hasOwnProperty('buttonLabel').should.be.true)
+		})
+		it('should have a "type" of "string"', () => {
+			const expected = 'string'
+			suggestedRoutes.forEach(item => expect(typeof item.buttonLabel).to.equal(expected))
+		})
 	})
-	it('suggestedRoutes items should have a "keywords" property', () => {
-		suggestedRoutes.forEach(route => route.hasOwnProperty('keywords').should.be.true)
-	})
-	it('suggestedRoutes "keyword" should have type of Array', () => {
-		suggestedRoutes.forEach(route => Array.isArray(route.keywords).should.be.true)
+	describe('item.keywords', () => {
+		it('should exist', () => {
+			suggestedRoutes.forEach(item => item.hasOwnProperty('keywords').should.be.true)
+		})
+		it('should have a "type" of "array"', () => {
+			suggestedRoutes.forEach(item => Array.isArray(item.keywords).should.be.true)
+		})
+		it('should have members that have a "type" of "string"', () => {
+			suggestedRoutes.forEach(item => {
+				const expected = 'string'
+				item.keywords.forEach(keyword => expect(typeof keyword).to.equal(expected))
+			})
+		})
 	})
 })
