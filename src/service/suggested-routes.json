@@ -1,0 +1,9 @@
+[{
+	"route": "/events/find/",
+	"cardMessage": "Looking for an event in your area?",
+	"buttonLabel": "Find An Event",
+	"keywords": [
+		"event",
+		"events"
+	]
+}]

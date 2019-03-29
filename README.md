@@ -15,3 +15,7 @@ See [config.js](src/config.js) for details
 2. CLOUDSEARCH_OFFICE_ENDPOINT
 3. CONTENT_BUCKET
 4. ZIP_CODE_DYNAMODB_TABLE
+
+## Configure Katana SuggestedRouteCard Data
+To create, update or remove a suggested route, edit the file:
+`src/service/suggested-routes.js`
