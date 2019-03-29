@@ -279,8 +279,7 @@ async function fetchPersons ({ order }) {
     if (isEmpty(a.lastName)) return 1
     if (isEmpty(b.lastName)) return -1
 
-    const descending = b.lastName.localeCompare(a.lastName)
-    return order === 'descending' ? descending : descending * -1
+    return a.lastName.localeCompare(b.lastName)
   })
 }
 

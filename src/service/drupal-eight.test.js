@@ -137,12 +137,4 @@ describe('Persons', () => {
     const result = await fetchPersons({ order: 'ascending' })
     result.should.eql(fetchPersonsResult.ascendingOrder)
   })
-
-  it('should sort in descending order and add officeName in each Person object', async () => {
-    getKeyStub.withArgs('offices').returns(Promise.resolve(offices))
-    getKeyStub.withArgs('persons').returns(Promise.resolve(persons))
-
-    const result = await fetchPersons({ order: 'descending' })
-    result.should.eql(fetchPersonsResult.descendingOrder)
-  })
 })
