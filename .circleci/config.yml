@@ -49,6 +49,7 @@ workflows:
             - mint
             - /int-\w+/
             - amy
+            - pat
     - upload-package:
         requires: [build-package]
         filters:
@@ -59,6 +60,7 @@ workflows:
             only:
             - /int-\w+/
             - amy
+            - pat
         context: sba-gov-lower
     - deploy-package:
         requires: [upload-package]
@@ -70,6 +72,7 @@ workflows:
             only:
             - /int-\w+/
             - amy
+            - pat
         context: sba-gov-lower
     - hold:
         type: approval
