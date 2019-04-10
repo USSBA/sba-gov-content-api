@@ -8,7 +8,7 @@ function getKey (key) {
   if (key) {
     const params = {
       Bucket: config.contentBucket,
-      Key: `api/content/${key}.json`
+      Key: `${key}.json`
     }
     return sthreeClient
       .getObject(params)
