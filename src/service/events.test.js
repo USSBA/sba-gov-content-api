@@ -49,12 +49,13 @@ describe('Event Service', () => {
       const result = await events.fetchEventById(mockD7Response1[0].id)
       result.should.eql(expectedEventsData1.items[0])
     })
+  })
 
+  describe('mapD7EventDataToBetterSchema', () => {
     it('should properly decode event titles with special characters', async() => {
-      eventClientStub.returns(mockD7Response1)
-      const testing = await events.fetchEventById(mockD7Response1[10])
-      console.log(mockD7Response1[10].nid)
-      testing.should.eql(expectedEventsData1.items[10].title)
+      eventClientStub.returns(mockD7Response1[10])
+      const result = events.mapD7EventDataToBetterSchema(mockD7Response1[10]).title
+      result.should.eql(expectedEventsData1.items[10].title)
     })
   })
 

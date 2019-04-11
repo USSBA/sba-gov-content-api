@@ -167,3 +167,4 @@ async function fetchEvents (query) {
 module.exports.fetchEvents = fetchEvents
 module.exports.fetchEventById = fetchEventById
 module.exports.fetchTotalLength = fetchTotalLength
+module.exports.mapD7EventDataToBetterSchema = mapD7EventDataToBetterSchema
