@@ -21,7 +21,7 @@ async function run (event) {
     let pathParams = event.pathParameters
     let fetchResult = ''
     let foundExtension
-    console.log("path params: " + pathParams)
+    console.log('path params: ' + pathParams)
     if (pathParams.id) {
       let type = pathParams.type
       let { first: id, second: extension } = splitAsObject(pathParams.id)
