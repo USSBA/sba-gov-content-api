@@ -28,12 +28,15 @@ const fetchFunctions = {
 const fetchContentTypeFunctions = {
   announcements: fetchAnnouncements,
   articles: fetchArticles,
+  blog: fetchBlog,
+  blogs: fetchBlogs,
   contacts: fetchContacts,
   counsellorCta: fetchCounsellorCta,
   course: fetchCourse,
   courses: fetchCourses,
   disaster: fetchDisaster,
   documents: fetchDocuments,
+  events: fetchEvents,
   mainMenu: fetchMainMenu,
   nodes: fetchNodes,
   offices: fetchOffices,
@@ -41,9 +44,8 @@ const fetchContentTypeFunctions = {
   persons: fetchPersons,
   search: runSearch,
   siteMap: fetchFormattedMenu,
-  taxonomys: fetchTaxonomys,
-  events: fetchEvents,
-  suggestedRoutes: getSuggestedRoutes
+  suggestedRoutes: getSuggestedRoutes,
+  taxonomys: fetchTaxonomys
 }
 
 async function fetchContentById (params, headers) {
