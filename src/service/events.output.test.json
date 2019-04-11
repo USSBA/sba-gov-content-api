@@ -330,5 +330,38 @@
         "organizer": "Green River College Small Business Center",
         "recurring": "No",
         "recurringType": null
+    }, {
+        "title": "Chester County, SC - Let's Get & Started Workshop!",
+        "type": "event",
+        "description": "Hiring international students can bring many benefits to your organization. The process is also the same as any other internship from an employer’s point of view. You will learn about the program objectives and internship strategies. Also discussed will be: legal guidelines, optional practical training, and curricular practical training.\r\n\r\nSpace is limited to the first 18 registrations.\r\n",
+        "id": "1627111",
+        "registrationUrl": "https://adcsd.com/event/sponsorship-myths-and-realities/",
+        "startDate": "2019-02-27T12:00:00+00:00",
+        "endDate": "2019-02-27T13:00:00+00:00",
+        "timezone": "CST",
+        "cost": "15.00",
+        "locationType": "In Person",
+        "location": {
+            "name": "The Workshop",
+            "address": "208 S. Main St.",
+            "address_additional": "Second Floor ",
+            "city": "Aberdeen",
+            "zipcode": "",
+            "state": "South Dakota",
+            "latitude": "0.000000",
+            "longitude": "0.000000"
+        },
+        "contact": {
+            "name": null,
+            "email": null,
+            "phone": "605-229-5335"
+        },
+        "sponsor": {
+            "type": "District Office",
+            "sponsorName": "South Dakota"
+        },
+        "organizer": null,
+        "recurring": "No",
+        "recurringType": null
     }]
 }
