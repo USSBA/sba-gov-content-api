@@ -52,7 +52,7 @@ describe('Event Service', () => {
   })
 
   describe('mapD7EventDataToBetterSchema', () => {
-    it('should properly decode event titles with special characters', async() => {
+    it('should properly decode event titles with special characters', () => {
       eventClientStub.returns(mockD7Response1[10])
       const result = events.mapD7EventDataToBetterSchema(mockD7Response1[10]).title
       result.should.eql(expectedEventsData1.items[10].title)
