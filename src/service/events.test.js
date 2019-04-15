@@ -60,7 +60,7 @@ describe('Event Service', () => {
   })
 
   describe('fetchEvents', () => {
-    it.skip('should fetch and map data when no query params are presented', async() => {
+    it('should fetch and map data when no query params are presented', async() => {
       eventClientStub.returns(mockD7Response1)
       const results = await events.fetchEvents(null)
       results.should.eql(expectedEventsData1)

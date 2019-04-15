@@ -62,8 +62,9 @@ function clean (value) {
   }
 }
 
-function formatDate (dateString) {
+function formatDate (dateString, timezone) {
   if (dateString) {
+    console.log(moment.tz(dateString, timezone).format())
     return moment(dateString).format()
   } else {
     return null

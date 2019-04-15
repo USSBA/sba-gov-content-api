@@ -333,35 +333,35 @@
     }, {
         "title": "Chester County, SC - Let's Get & Started Workshop!",
         "type": "event",
-        "description": "Hiring international students can bring many benefits to your organization. The process is also the same as any other internship from an employer’s point of view. You will learn about the program objectives and internship strategies. Also discussed will be: legal guidelines, optional practical training, and curricular practical training.\r\n\r\nSpace is limited to the first 18 registrations.\r\n",
-        "id": "1627111",
-        "registrationUrl": "https://adcsd.com/event/sponsorship-myths-and-realities/",
-        "startDate": "2019-02-27T12:00:00-05:00",
-        "endDate": "2019-02-27T13:00:00-05:00",
-        "timezone": "CST",
-        "cost": "15.00",
+        "description": "Take Your Food Business to the Next Level!\r\nJoin Us for a 10-Part Advanced Series with Industry Experts!\r\n\r\nThe Alameda County Community Development Agency and the Alameda County Small Business Development Center are pleased to present the AWARD WINNINGFood Entrepreneurship Academy Advanced Series for existing and launching food centric businesses. The Academy is no charge to participants.\r\n\r\nThis is an advanced 10-part business workshop series offered to a select group of food company owners (foodservice and food products) who seek higher levels of success in business. Industry experts will work with your business fundamentals, including your strategic plan and operations, and will develop practical and measurable goals and plans of action.\r\n\r\nProgram Objectives:\r\n\r\nAccelerate food entrepreneur businesses located in Alameda County\r\nHelp strengthen these businesses to grow faster, obtain capital, hire more workers and impact the community\r\nConnect entrepreneurs to experts to advise the entrepreneurs regarding best practices and resources\r\nCreate a network for these businesses to receive technical assistance and peer advice during and after the sessions\r\n \r\n \r\n\r\nDeagon Williams\r\nCulinary Business Strategy\r\n\r\nDeagon Williams was born in California, but her cultural and culinary training ground was Paris, where she moved as a teenager in order to undergo formal culinary training. Deagon earned her Grand Diplôme d’?tudes Culinaires at l’Ecole de Cusine, La Varenne, and then apprenticed with Michele Comby and La Maison du Chocolat.\r\n\r\nAs a chef, Deagon ran a 25 person kitchen staff with a daily changing menu as well as created new businesses from scratch. In order to build organizational expertise, Deagon studied systems and organizational theory, earning a BA in Sociology as well as an MBA at Mills College.\r\n\r\nDeagon was Client Services Manager at the Center for Culinary Development, where she worked on business development and food innovation marketing for multinational corporations. She is now the principal of Culinary Business Strategy, a boutique consultancy that offers understanding and bottom line results to the food business sector.",
+        "id": "1629111",
+        "registrationUrl": "https://nc.ecenterdirect.com/events/44358",
+        "startDate": "2019-02-25T18:30:00-05:00",
+        "endDate": "2019-02-25T20:30:00-05:00",
+        "timezone": "PST",
+        "cost": "0.00",
         "locationType": "In Person",
         "location": {
-            "name": "The Workshop",
-            "address": "208 S. Main St.",
-            "address_additional": "Second Floor ",
-            "city": "Aberdeen",
-            "zipcode": "",
-            "state": "South Dakota",
-            "latitude": "0.000000",
-            "longitude": "0.000000"
+            "name": "Alameda County Training &amp; Education Center",
+            "address": " 125 12th Street #400",
+            "address_additional": "",
+            "city": "Oakland",
+            "zipcode": "94612",
+            "state": "California",
+            "latitude": "37.809427",
+            "longitude": "-122.271720"
         },
         "contact": {
-            "name": null,
-            "email": null,
-            "phone": "605-229-5335"
+            "name": "Amanda Butler",
+            "email": "amanda@acsbdc.org",
+            "phone": "5109677181"
         },
         "sponsor": {
             "type": "District Office",
-            "sponsorName": "South Dakota"
+            "sponsorName": "California (San Francisco)"
         },
-        "organizer": null,
-        "recurring": "No",
-        "recurringType": null
+        "organizer": "ACSBDC",
+        "recurring": "Yes",
+        "recurringType": "Recurs weekly"
     }]
 }
