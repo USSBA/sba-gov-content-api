@@ -44,7 +44,7 @@ describe('Event Service', () => {
   })
 
   describe('fetchEventById', () => {
-    it.skip('should fetch and map data for a single event', async() => {
+    it('should fetch and map data for a single event', async() => {
       eventClientStub.returns(mockD7Response1)
       const result = await events.fetchEventById(mockD7Response1[0].nid)
       result.should.eql(expectedEventsData1.items[0])
