@@ -15,6 +15,7 @@ const {
   fetchTaxonomys
 } = require('./service/drupal-eight.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
+const { fetchBlogs, fetchBlog } = require('./service/blogs.js')
 const { runSearch } = require('./service/search.js')
 const { fetchOffices } = require('./service/office-search.js')
 const { fetchEvents, fetchEventById } = require('./service/events.js')
