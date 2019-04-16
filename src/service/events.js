@@ -64,8 +64,7 @@ function clean (value) {
 
 function formatDate (dateString, timezone) {
   if (dateString) {
-    console.log(moment.tz(dateString, timezone).format())
-    return moment(dateString).format()
+    return moment.utc(dateString).format()
   } else {
     return null
   }
