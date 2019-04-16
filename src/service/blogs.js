@@ -10,27 +10,27 @@ function fetchBlogs(params = []) {
 }
 
 function filterBlogs(blogs, params = []) {
-  let filterParams = params.omit(['start', 'end'])
-  if (filterParams.length === 0) {
+
+  if (params.length === 0) {
     return blogs
   }
   let filteredBlogs = blogs.filter(blog => {
-    if (blog.summary.category === filterParams.category) {
-      return true
+    if (params.category && (blog.category !== params.category)) {
+      return false
     }
-    if (blog.summary.author === filterParams.author) {
-      return true
+    if (Number(params.author) &&( blog.author !== Number(params.author))) {
+      return false
     }
-    return false
+    return true
   })
   return filteredBlogs
 }
 
 function sortBlogs(blogs, order = 'desc') {
   let sortedBlogs = blogs.sort((blogA, blogB) => {
-    if (blogA.published_date < blogB.published_date) {
+    if (blogA.created < blogB.created) {
       return 1
-    } else if (blogA.published_date > blogB.published_date) {
+    } else if (blogA.created > blogB.created) {
       return -1
     } else {
       return 0
@@ -39,15 +39,16 @@ function sortBlogs(blogs, order = 'desc') {
   if (order === 'asc') {
     return sortedBlogs.reverse()
   } else {
-    return sortBlogs
+    return sortedBlogs
   }
 }
 
 function fetchBlog(params) {
   return s3CacheReader.getKey('blog').then(blogs => {
-    const result = blogs.find((blog, index) => {
+    let result = {}
+    result = blogs.find((blog, index) => {
       let item
-      if (blog.id === params.id) {
+      if (blog.id === Number(params.id)) {
         item = blog
         item.isFound = true
       }
