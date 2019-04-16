@@ -10,44 +10,39 @@ function fetchBlogs (params = []) {
 }
 
 function filterBlogs (blogs, params = []) {
-  if (params.length === 0) {
-    return blogs
-  }
   let filteredBlogs = blogs.filter(blog => {
+    let includeBlog = true
     if (params.category && (blog.category !== params.category)) {
-      return false
+      includeBlog = false
     }
     if (Number(params.author) && (blog.author !== Number(params.author))) {
-      return false
+      includeBlog = false
     }
-    return true
+    return includeBlog
   })
   return filteredBlogs
 }
 
 function sortBlogs (blogs, order = 'desc') {
   let sortedBlogs = blogs.sort((blogA, blogB) => {
+    let sortCheck = 0
     if (blogA.created < blogB.created) {
-      return 1
+      sortCheck = 1
     } else if (blogA.created > blogB.created) {
-      return -1
-    } else {
-      return 0
+      sortCheck = -1
     }
+    return sortCheck
   })
   if (order === 'asc') {
-    return sortedBlogs.reverse()
-  } else {
-    return sortedBlogs
+    sortedBlogs = sortedBlogs.reverse()
   }
+  return sortedBlogs
 }
 
-function fetchBlog (params) {
-  if (params === undefined || params === null) {
-    return {}
-  }
+function fetchBlog (params = {}) {
   return s3CacheReader.getKey('blog').then(blogs => {
-    let result = blogs.find((blog, index) => {
+    let result = {}
+    result = blogs.find((blog, index) => {
       let item
       if (Number(params.id) && (blog.id === Number(params.id))) {
         item = blog
@@ -56,10 +51,9 @@ function fetchBlog (params) {
       return item
     })
     if (result === undefined) {
-      return {}
-    } else {
-      return result
+      result = {}
     }
+    return result
   })
 }
 
