@@ -44,7 +44,7 @@ describe('Event Service', () => {
   })
 
   describe('fetchEventById', () => {
-    it.skip('should fetch and map data for a single event', async() => {
+    it('should fetch and map data for a single event', async() => {
       eventClientStub.returns(mockD7Response1)
       const result = await events.fetchEventById(mockD7Response1[0].nid)
       result.should.eql(expectedEventsData1.items[0])
@@ -60,7 +60,7 @@ describe('Event Service', () => {
   })
 
   describe('fetchEvents', () => {
-    it.skip('should fetch and map data when no query params are presented', async() => {
+    it('should fetch and map data when no query params are presented', async() => {
       eventClientStub.returns(mockD7Response1)
       const results = await events.fetchEvents(null)
       results.should.eql(expectedEventsData1)

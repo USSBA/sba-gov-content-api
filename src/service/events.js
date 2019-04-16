@@ -62,9 +62,9 @@ function clean (value) {
   }
 }
 
-function formatDate (dateString) {
+function formatDate (dateString, timezone) {
   if (dateString) {
-    return moment(dateString).format()
+    return moment.utc(dateString).format()
   } else {
     return null
   }
