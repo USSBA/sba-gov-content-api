@@ -22,18 +22,33 @@ describe('Fetching an individual blog', () => {
     getKeyStub.restore()
   })
 
-  xit("should return a blog when given a blog ID", async () => {
+  it('should return a blog when given a blog ID', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const result = fetchBlog({ 'id': '10000' })
-    console.log(result)
+    const result = await fetchBlog({ 'id': '10000' })
+    expect(result).to.be.a('object')
     expect(result.id).to.equal(10000)
   })
-  xit("should return back an empty object if given NO parameters", async () => {
+  it('should return an empty object when NO blog matches the given ID', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
+
+    const result = await fetchBlog({ 'id': '99999' })
+    expect(result).to.be.a('object')
+    expect(result).to.be.empty
   })
-  xit("should return back an empty object if given invalid parameters", async () => {
+  it('should return back an empty object if given NO parameters', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
+
+    const result = await fetchBlog()
+    expect(result).to.be.a('object')
+    expect(result).to.be.empty
+  })
+  it('should return back an empty object if given invalid parameters', async () => {
+    getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
+
+    const result = await fetchBlog({ 'foo': 'bar' })
+    expect(result).to.be.a('object')
+    expect(result).to.be.empty
   })
 })
 
@@ -57,7 +72,7 @@ describe('Searching for blogs', () => {
 
     const results = await fetchBlogs()
     expect(results).to.be.a('array')
-    expect(results).to.have.lengthOf(blogs.length);
+    expect(results).to.have.lengthOf(blogs.length)
     expect(results[0].created > results[1].created).to.equal(true)
   })
   it("should return blogs in ascending order when given the 'ascending' parameter", async () => {
@@ -88,7 +103,7 @@ describe('Searching for blogs', () => {
     expect(results[0].category).to.equal('bar')
     expect(results[0].author).to.equal(22222)
   })
-  it("should return back all the blogs when given an invalid parameter", async () => {
+  it('should return back all the blogs when given an invalid parameter', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'foo': 'bar' })
@@ -129,7 +144,7 @@ describe('Searching for blogs', () => {
 
     const results = await fetchBlogs({ 'start': 1, 'end': 4, 'order': 'asc', 'category': 'bar' })
   })
-  it("should return NO blogs when no blogs match valid search parameters", async () => {
+  it('should return NO blogs when no blogs match valid search parameters', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'category': 'no a real category' })

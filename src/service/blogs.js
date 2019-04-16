@@ -1,7 +1,7 @@
 const s3CacheReader = require('../clients/s3-cache-reader.js')
 const searchUtils = require('./search-utils.js')
 
-function fetchBlogs(params = []) {
+function fetchBlogs (params = []) {
   return s3CacheReader.getKey('blog').then(result => {
     let blogs = filterBlogs(result, params)
     let sortedBlogs = sortBlogs(blogs, params.order)
@@ -9,8 +9,7 @@ function fetchBlogs(params = []) {
   })
 }
 
-function filterBlogs(blogs, params = []) {
-
+function filterBlogs (blogs, params = []) {
   if (params.length === 0) {
     return blogs
   }
@@ -18,7 +17,7 @@ function filterBlogs(blogs, params = []) {
     if (params.category && (blog.category !== params.category)) {
       return false
     }
-    if (Number(params.author) &&( blog.author !== Number(params.author))) {
+    if (Number(params.author) && (blog.author !== Number(params.author))) {
       return false
     }
     return true
@@ -26,7 +25,7 @@ function filterBlogs(blogs, params = []) {
   return filteredBlogs
 }
 
-function sortBlogs(blogs, order = 'desc') {
+function sortBlogs (blogs, order = 'desc') {
   let sortedBlogs = blogs.sort((blogA, blogB) => {
     if (blogA.created < blogB.created) {
       return 1
@@ -43,18 +42,24 @@ function sortBlogs(blogs, order = 'desc') {
   }
 }
 
-function fetchBlog(params) {
+function fetchBlog (params) {
+  if (params === undefined || params === null) {
+    return {}
+  }
   return s3CacheReader.getKey('blog').then(blogs => {
-    let result = {}
-    result = blogs.find((blog, index) => {
+    let result = blogs.find((blog, index) => {
       let item
-      if (blog.id === Number(params.id)) {
+      if (Number(params.id) && (blog.id === Number(params.id))) {
         item = blog
         item.isFound = true
       }
       return item
     })
-    return result
+    if (result === undefined) {
+      return {}
+    } else {
+      return result
+    }
   })
 }
 
