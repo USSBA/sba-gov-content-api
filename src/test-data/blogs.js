@@ -107,5 +107,49 @@ module.exports = [
     'created': 1554895830,
     'langCode': 'en',
     'url': '/blogs/second-url'
+  },
+  {
+    'author': 11111,
+    'blogBody': [
+      {
+        'id': 11111,
+        'type': 'blogPost',
+        'blogSectionImage': {},
+        'blogSectionText': 'Context'
+      }
+    ],
+    'blogTags': 'Franchising',
+    'category': 'bar',
+    'office': {},
+    'summary': 'How to Get Past the Fear of Buying a Franchise',
+    'type': 'blog',
+    'title': 'How to Get Past the Fear of Buying a Franchise',
+    'id': 10005,
+    'updated': 1555099825,
+    'created': 1554895840,
+    'langCode': 'en',
+    'url': '/blogs/first-url'
+  },
+  {
+    'author': 11111,
+    'blogBody': [
+      {
+        'id': 11111,
+        'type': 'blogPost',
+        'blogSectionImage': {},
+        'blogSectionText': 'Context'
+      }
+    ],
+    'blogTags': 'Franchising',
+    'category': 'bar',
+    'office': {},
+    'summary': 'How to Get Past the Fear of Buying a Franchise',
+    'type': 'blog',
+    'title': 'How to Get Past the Fear of Buying a Franchise',
+    'id': 10006,
+    'updated': 1555099825,
+    'created': 1554895850,
+    'langCode': 'en',
+    'url': '/blogs/first-url'
   }
 ]

@@ -1,8 +1,8 @@
-const chai = require('chai')
+/* eslint-env mocha */
 const sinon = require('sinon')
 var expect = require('chai').expect
 
-const {fetchBlogs, fetchBlog } = require('./blogs.js')
+const { fetchBlogs, fetchBlog } = require('./blogs.js')
 const s3CacheReader = require('../clients/s3-cache-reader.js')
 
 const blogs = require('../test-data/blogs.js')
@@ -33,22 +33,19 @@ describe('Fetching an individual blog', () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const result = await fetchBlog({ 'id': '99999' })
-    expect(result).to.be.a('object')
-    expect(result).to.be.empty
+    expect(result).to.be.a('object').that.is.empty
   })
   it('should return back an empty object if given NO parameters', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const result = await fetchBlog()
-    expect(result).to.be.a('object')
-    expect(result).to.be.empty
+    expect(result).to.be.a('object').that.is.empty
   })
   it('should return back an empty object if given invalid parameters', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const result = await fetchBlog({ 'foo': 'bar' })
-    expect(result).to.be.a('object')
-    expect(result).to.be.empty
+    expect(result).to.be.a('object').that.is.empty
   })
 })
 
@@ -134,20 +131,29 @@ describe('Searching for blogs', () => {
     expect(results[0].id).to.equal(control[2].id)
     expect(results[1].id).to.equal(control[3].id)
   })
-  xit("should return the correct blogs when given 'start', 'end', and 'category' parameters", async () => {
+  it("should return the correct blogs when given 'start', 'end', and 'category' parameters", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const results = await fetchBlogs({ 'start': 1, 'end': 4, 'category': 'bar' })
+    const results = await fetchBlogs({ 'start': 1, 'end': 3, 'category': 'bar' })
+    const control = await fetchBlogs({ 'category': 'bar' })
+    expect(results.length).to.not.equal(control.length)
+    expect(results).to.have.lengthOf(2)
+    expect(results[0]).to.not.equal(control[0])
+    expect(results[0]).to.equal(control[1])
   })
-  xit("should return the correct blogs when given 'start', 'end', 'order', and 'category' parameters", async () => {
+  it("should return the correct blogs when given 'start', 'end', 'order', and 'category' parameters", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const results = await fetchBlogs({ 'start': 1, 'end': 4, 'order': 'asc', 'category': 'bar' })
+    const results = await fetchBlogs({ 'start': 1, 'end': 3, 'order': 'asc', 'category': 'bar' })
+    const control = await fetchBlogs({ 'start': 1, 'end': 3, 'category': 'bar' })
+    expect(results.length).to.equal(control.length)
+    expect(results[0]).to.not.equal(control[0])
+    expect(results[0].id).to.equal(control[1].id)
   })
   it('should return NO blogs when no blogs match valid search parameters', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const results = await fetchBlogs({ 'category': 'no a real category' })
+    const results = await fetchBlogs({ 'category': 'not a real category' })
     expect(results).to.be.a('array')
     expect(results).to.have.lengthOf(0)
   })
