@@ -39,12 +39,12 @@ function sortBlogs (blogs, order = 'desc') {
   return sortedBlogs
 }
 
-function fetchBlog (params = {}) {
+function fetchBlog (id) {
   return s3CacheReader.getKey('blog').then(blogs => {
     let result = {}
     result = blogs.find((blog, index) => {
       let item
-      if (Number(params.id) && (blog.id === Number(params.id))) {
+      if (blog.id === Number(id)) {
         item = blog
         item.isFound = true
       }

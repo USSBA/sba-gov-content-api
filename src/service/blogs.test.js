@@ -25,14 +25,14 @@ describe('Fetching an individual blog', () => {
   it('should return a blog when given a blog ID', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const result = await fetchBlog({ 'id': '10000' })
+    const result = await fetchBlog('10000')
     expect(result).to.be.a('object')
     expect(result.id).to.equal(10000)
   })
   it('should return an empty object when NO blog matches the given ID', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const result = await fetchBlog({ 'id': '99999' })
+    const result = await fetchBlog('99999')
     expect(result).to.be.a('object')
     expect(result).to.eql({})
   })
@@ -46,7 +46,7 @@ describe('Fetching an individual blog', () => {
   it('should return back an empty object if given invalid parameters', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const result = await fetchBlog({ 'foo': 'bar' })
+    const result = await fetchBlog('bar')
     expect(result).to.be.a('object')
     expect(result).to.eql({})
   })
