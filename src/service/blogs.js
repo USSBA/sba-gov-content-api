@@ -9,7 +9,7 @@ function fetchBlogs (params = []) {
   })
 }
 
-function filterBlogs (blogs, params = []) {
+function filterBlogs (blogs = [], params = []) {
   let filteredBlogs = blogs.filter(blog => {
     let includeBlog = true
     if (params.category && (blog.category !== params.category)) {
@@ -41,6 +41,7 @@ function sortBlogs (blogs, order = 'desc') {
 
 function fetchBlog (id) {
   return s3CacheReader.getKey('blog').then(blogs => {
+    blogs = blogs || []
     let result = {}
     result = blogs.find((blog, index) => {
       let item
