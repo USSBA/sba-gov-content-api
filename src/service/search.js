@@ -10,7 +10,7 @@ async function runSearch (req, res) {
   const { term, pageSize, start } = req
   const fixedTerm = term.replace(/%20/g, ' ')
   const params = {
-    query: fixedTerm /* required */,
+    query: fixedTerm, /* required */
     // cursor: 'STRING_VALUE',
     // expr: 'STRING_VALUE',
     // facet: 'STRING_VALUE',
