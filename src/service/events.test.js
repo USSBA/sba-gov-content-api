@@ -44,15 +44,23 @@ describe('Event Service', () => {
   })
 
   describe('fetchEventById', () => {
-    it.skip('should fetch and map data for a single event', async() => {
+    it('should fetch and map data for a single event', async() => {
       eventClientStub.returns(mockD7Response1)
-      const result = await events.fetchEventById(mockD7Response1[0].id)
+      const result = await events.fetchEventById(mockD7Response1[0].nid)
       result.should.eql(expectedEventsData1.items[0])
     })
   })
 
+  describe('mapD7EventDataToBetterSchema', () => {
+    it('should properly decode event titles with special characters', () => {
+      eventClientStub.returns(mockD7Response1[10])
+      const result = events.mapD7EventDataToBetterSchema(mockD7Response1[10]).title
+      result.should.eql(expectedEventsData1.items[10].title)
+    })
+  })
+
   describe('fetchEvents', () => {
-    it.skip('should fetch and map data when no query params are presented', async() => {
+    it('should fetch and map data when no query params are presented', async() => {
       eventClientStub.returns(mockD7Response1)
       const results = await events.fetchEvents(null)
       results.should.eql(expectedEventsData1)

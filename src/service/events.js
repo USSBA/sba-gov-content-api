@@ -1,5 +1,6 @@
 const eventClient = require('../clients/event-client.js')
 const moment = require('moment-timezone')
+const he = require('he')
 
 function translateQueryParamsForD7 (query) {
   const queryObj = query || {}
@@ -61,9 +62,9 @@ function clean (value) {
   }
 }
 
-function formatDate (dateString) {
+function formatDate (dateString, timezone) {
   if (dateString) {
-    return moment(dateString).format()
+    return moment.utc(dateString).format()
   } else {
     return null
   }
@@ -83,7 +84,7 @@ function mapD7EventDataToBetterSchema (item) {
     }
 
     let result = {
-      title: item.title,
+      title: he.decode(item.title),
       type: 'event',
       description: item.body,
       id: item.nid,
@@ -166,3 +167,4 @@ async function fetchEvents (query) {
 module.exports.fetchEvents = fetchEvents
 module.exports.fetchEventById = fetchEventById
 module.exports.fetchTotalLength = fetchTotalLength
+module.exports.mapD7EventDataToBetterSchema = mapD7EventDataToBetterSchema
