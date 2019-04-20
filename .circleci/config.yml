@@ -18,6 +18,14 @@ workflows:
           tags:
             only: 
             - /.*/
+    - poirot:
+        filters:
+          branches:
+            only:
+            - /.*/
+          tags:
+            only:
+            - /.*/
     - npm-test:
         requires: [cache-dependencies]
         filters:
@@ -37,7 +45,7 @@ workflows:
             only:
             - /.*/
     - build-package:
-        requires: [npm-test]
+        requires: [npm-test, poirot, test-lint]
         filters:
           branches:
             only:
@@ -150,6 +158,17 @@ jobs:
           name: run lint
           command: |
             npm run lint-no-fix
+  poirot:
+    docker:
+    - image: circleci/python:latest
+    steps:
+    - checkout
+    - run:
+       name: Run poirot tests
+       command: |
+         sudo pip install poirot
+         poirot --patterns='https://raw.githubusercontent.com/DCgov/poirot/master/poirot/patterns/default.txt'
+         poirot --patterns='https://raw.githubusercontent.com/DCgov/poirot-patterns/master/financial.txt'
   build-package:
     docker:
       - image: circleci/node:8.10

@@ -1,7 +1,7 @@
 # Content API development guide
 
 ## How do I push to my environment?
-Use `./push-tag.sh int-(bl|kl|ls|as|rh)`
+Use `./push-tag.sh <environment name>`
 
 ## Environment Setup
 1. Install [NVM](https://github.com/creationix/nvm)
@@ -17,7 +17,7 @@ Use `./push-tag.sh int-(bl|kl|ls|as|rh)`
 1. `npm install`
 1. `npm run lint`
 1. `npm test` to execute the tests
-1. `./push-tag.sh <environment name>` to push to an environment (valid values are: production, staging, demo, mint, int-*)
+1. `./push-tag.sh <environment name>` to push to an environment
 
 ## Local Development Process 
 1. `npm install` to install the dependencies
@@ -27,4 +27,14 @@ Use `./push-tag.sh int-(bl|kl|ls|as|rh)`
 #### *TODO* replace ^^^^ with SAM LOCAL (See https://github.com/awslabs/aws-sam-cli)
 
 ## Required Environment Variables
-See the [readme](README.md)
+See [config.js](src/config.js) for details
+1. CLOUDSEARCH_SEARCH_ENDPOINT
+2. CLOUDSEARCH_OFFICE_ENDPOINT
+3. CONTENT_BUCKET
+4. ZIP_CODE_DYNAMODB_TABLE
+5. EVENTS_API_ENDPOINT
+6. EVENTS_HOSTNAME
+
+## Configure Katana SuggestedRouteCard Data
+To create, update or remove a suggested route, edit the file:
+`src/service/suggested-routes.js`
