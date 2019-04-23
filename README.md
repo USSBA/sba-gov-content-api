@@ -1,10 +1,6 @@
 # SBA.gov Content Api
 
-<<<<<<< HEAD
-A microservice to service the Daisho-created Drupal8-sourced content
-=======
 An microservice in the SBA.gov to provide an API to search SBA.gov content
->>>>>>> master
 
 ## Environment Setup
 See [development.md](development.md)
@@ -15,11 +11,6 @@ See [development.md](development.md)
 
 # Project Details
 
-<<<<<<< HEAD
-## Configure Katana SuggestedRouteCard Data
-To create, update or remove a suggested route, edit the file:
-`src/service/suggested-routes.js`
-=======
 ## License
 The SBA.gov Content API is licensed permissively under the Apache License v2.0.
 A copy of that license is distributed with this software.
@@ -42,4 +33,3 @@ Please do not submit an issue on GitHub for a security vulnerability. Please con
 Be sure to include all the pertinent information.
 
 <sub>The agency reserves the right to change this policy at any time.</sub>
->>>>>>> master
