@@ -6,7 +6,7 @@ An microservice in the SBA.gov to provide an API to search SBA.gov content
 See [development.md](development.md)
 
 ## Testing
-1. Unit Tests: `npm run test` 
+1. Unit Tests: `npm run test`
 2. Integration Tests: `npm run test-int`  (requires aws-cli installation)
 
 # Project Details

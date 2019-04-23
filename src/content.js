@@ -15,6 +15,7 @@ const {
   fetchTaxonomys
 } = require('./service/drupal-eight.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
+const { fetchBlogs, fetchBlog } = require('./service/blogs.js')
 const { runSearch } = require('./service/search.js')
 const { fetchOffices } = require('./service/office-search.js')
 const { fetchEvents, fetchEventById } = require('./service/events.js')
@@ -28,12 +29,15 @@ const fetchFunctions = {
 const fetchContentTypeFunctions = {
   announcements: fetchAnnouncements,
   articles: fetchArticles,
+  blog: fetchBlog,
+  blogs: fetchBlogs,
   contacts: fetchContacts,
   counsellorCta: fetchCounsellorCta,
   course: fetchCourse,
   courses: fetchCourses,
   disaster: fetchDisaster,
   documents: fetchDocuments,
+  events: fetchEvents,
   mainMenu: fetchMainMenu,
   nodes: fetchNodes,
   offices: fetchOffices,
@@ -41,9 +45,8 @@ const fetchContentTypeFunctions = {
   persons: fetchPersons,
   search: runSearch,
   siteMap: fetchFormattedMenu,
-  taxonomys: fetchTaxonomys,
-  events: fetchEvents,
-  suggestedRoutes: getSuggestedRoutes
+  suggestedRoutes: getSuggestedRoutes,
+  taxonomys: fetchTaxonomys
 }
 
 async function fetchContentById (params, headers) {
