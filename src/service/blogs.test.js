@@ -201,6 +201,7 @@ describe('Searching for blogs', () => {
     const controlTotal = control['total']
     const controlBlogs = control['blogs']
 
+    expect(resultsTotal).to.equal(controlTotal)
     expect(resultsBlogs.length).to.equal(controlBlogs.length)
     expect(resultsBlogs[0]).to.not.equal(controlBlogs[0])
     expect(resultsBlogs[0].id).to.equal(controlBlogs[1].id)
