@@ -5,7 +5,7 @@ function fetchBlogs (params = []) {
   return s3CacheReader.getKey('blog').then(result => {
     let blogs = filterBlogs(result, params)
     let sortedBlogs = sortBlogs(blogs, params.order)
-    return searchUtils.paginateSearch(sortedBlogs, params.start, params.end)
+    return { total: sortedBlogs.length, blogs: searchUtils.paginateSearch(sortedBlogs, params.start, params.end) }
   })
 }
 
