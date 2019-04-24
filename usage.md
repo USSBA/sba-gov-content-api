@@ -24,7 +24,7 @@ Example Response:
       }
     ],
     'blogTags': 'Franchising',
-    'category': 'foo',
+    'blogCategory': 'foo',
     'office': {},
     'summary': 'How to Get Past the Fear of Buying a Franchise',
     'type': 'blog',
@@ -46,7 +46,7 @@ Example Response:
       }
     ],
     'blogTags': 'Franchising',
-    'category': 'foo',
+    'blogCategory': 'foo',
     'office': {},
     'summary': 'How to Get Past the Fear of Buying a Franchise',
     'type': 'blog',
@@ -88,7 +88,7 @@ Example Response
     }
   ],
   'blogTags': 'Franchising',
-  'category': 'foo',
+  'blogCategory': 'foo',
   'office': {},
   'summary': 'How to Get Past the Fear of Buying a Franchise',
   'type': 'blog',

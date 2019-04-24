@@ -12,7 +12,7 @@ function fetchBlogs (params = []) {
 function filterBlogs (blogs = [], params = []) {
   let filteredBlogs = blogs.filter(blog => {
     let includeBlog = true
-    if (params.category && (blog.category !== params.category)) {
+    if (params.category && (blog.blogCategory !== params.category)) {
       includeBlog = false
     }
     if (Number(params.author) && (blog.author !== Number(params.author))) {
