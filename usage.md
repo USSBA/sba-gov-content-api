@@ -67,7 +67,7 @@ Example Response:
 |------------|------------------
 |  category  | The category of blogs to be included in the results. Excludes results that are listed as a different category
 |  author    | The ID of the `person` who wrote the blog
-|  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` ad `desc` as valid.
+|  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` and `desc` as valid.
 |  start     | The first index of the matching blogs that will be returned
 |  end       | The last index of the matching blogs that will be returned
 
