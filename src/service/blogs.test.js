@@ -86,7 +86,7 @@ describe('Searching for blogs', () => {
 
     const results = await fetchBlogs({ 'category': 'foo' })
     expect(results).to.have.lengthOf(2)
-    expect(results[0].category).to.equal('foo')
+    expect(results[0].blogCategory).to.equal('foo')
   })
   it("should only return blogs by the correct author when given a 'author' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
@@ -100,7 +100,7 @@ describe('Searching for blogs', () => {
 
     const results = await fetchBlogs({ 'category': 'bar', 'author': '22222' })
     expect(results).to.have.lengthOf(1)
-    expect(results[0].category).to.equal('bar')
+    expect(results[0].blogCategory).to.equal('bar')
     expect(results[0].author).to.equal(22222)
   })
   it('should return back all the blogs when given an invalid parameter', async () => {
