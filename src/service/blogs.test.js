@@ -71,93 +71,150 @@ describe('Searching for blogs', () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs()
-    expect(results).to.be.a('array')
-    expect(results).to.have.lengthOf(blogs.length)
-    expect(results[0].created > results[1].created).to.equal(true)
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
+
+    expect(results).to.be.a('object')
+    expect(resultsTotal).to.be.a('number')
+    expect(resultsTotal).to.equal(blogs.length)
+    expect(resultsBlogs).to.be.a('array')
+    expect(resultsBlogs).to.have.lengthOf(resultsTotal)
+    expect(resultsBlogs).to.have.lengthOf(blogs.length)
+    expect(resultsBlogs[0].created > resultsBlogs[1].created).to.equal(true)
   })
   it("should return blogs in ascending order when given the 'ascending' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'order': 'asc' })
-    expect(results[0].created > results[1].created).to.equal(false)
+    const resultsBlogs = results['blogs']
+
+    expect(resultsBlogs[0].created > resultsBlogs[1].created).to.equal(false)
   })
   it("should only return the correct blogs when given a 'category' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'category': 'foo' })
-    expect(results).to.have.lengthOf(2)
-    expect(results[0].blogCategory).to.equal('foo')
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
+
+    expect(resultsTotal).to.equal(2)
+    expect(resultsBlogs).to.have.lengthOf(2)
+    expect(resultsBlogs[0].blogCategory).to.equal('foo')
   })
   it("should only return blogs by the correct author when given a 'author' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'author': '22222' })
-    expect(results).to.have.lengthOf(2)
-    expect(results[0].author).to.equal(22222)
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
+
+    expect(resultsTotal).to.equal(2)
+    expect(resultsBlogs).to.have.lengthOf(2)
+    expect(resultsBlogs[0].author).to.equal(22222)
   })
   it("should return only the correct blogs when given a 'category' and 'author'", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'category': 'bar', 'author': '22222' })
-    expect(results).to.have.lengthOf(1)
-    expect(results[0].blogCategory).to.equal('bar')
-    expect(results[0].author).to.equal(22222)
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
+
+    expect(resultsTotal).to.equal(1)
+    expect(resultsBlogs).to.have.lengthOf(1)
+    expect(resultsBlogs[0].blogCategory).to.equal('bar')
+    expect(resultsBlogs[0].author).to.equal(22222)
   })
   it('should return back all the blogs when given an invalid parameter', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'foo': 'bar' })
-    expect(results).to.have.lengthOf(blogs.length)
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
+
+    expect(resultsTotal).to.equal(blogs.length)
+    expect(resultsBlogs).to.have.lengthOf(blogs.length)
   })
   it("should return the correct number of blogs when given an 'end' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'end': 3 })
-    expect(results).to.have.lengthOf(3)
+    const resultsBlogs = results['blogs']
+
+    expect(resultsBlogs).to.have.lengthOf(3)
   })
   it("should return the correct blogs when given an 'start' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'start': 2 })
-    expect(results).to.have.lengthOf(blogs.length - 2)
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
     const control = await fetchBlogs()
-    expect(results[0].id).to.not.equal(control[0].id)
-    expect(results[0].id).to.equal(control[2].id)
+    const controlTotal = control['total']
+    const controlBlogs = control['blogs']
+
+    expect(resultsTotal).to.equal(blogs.length)
+    expect(resultsBlogs).to.have.lengthOf(blogs.length - 2)
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsBlogs[0].id).to.not.equal(controlBlogs[0].id)
+    expect(resultsBlogs[0].id).to.equal(controlBlogs[2].id)
   })
   it("should return the correct blogs when given both a 'start' and 'end' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'start': 2, 'end': 4 })
-    expect(results).to.have.lengthOf(2)
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
     const control = await fetchBlogs()
-    expect(results[0].id).to.not.equal(control[0].id)
-    expect(results[0].id).to.equal(control[2].id)
-    expect(results[1].id).to.equal(control[3].id)
+    const controlTotal = control['total']
+    const controlBlogs = control['blogs']
+
+    expect(resultsBlogs).to.have.lengthOf(2)
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsBlogs[0].id).to.not.equal(controlBlogs[0].id)
+    expect(resultsBlogs[0].id).to.equal(controlBlogs[2].id)
+    expect(resultsBlogs[1].id).to.equal(controlBlogs[3].id)
   })
   it("should return the correct blogs when given 'start', 'end', and 'category' parameters", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'start': 1, 'end': 3, 'category': 'bar' })
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
     const control = await fetchBlogs({ 'category': 'bar' })
-    expect(results.length).to.not.equal(control.length)
-    expect(results).to.have.lengthOf(2)
-    expect(results[0]).to.not.equal(control[0])
-    expect(results[0]).to.equal(control[1])
+    const controlTotal = control['total']
+    const controlBlogs = control['blogs']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsBlogs.length).to.not.equal(controlBlogs.length)
+    expect(resultsBlogs).to.have.lengthOf(2)
+    expect(resultsBlogs[0]).to.not.equal(controlBlogs[0])
+    expect(resultsBlogs[0]).to.equal(controlBlogs[1])
   })
   it("should return the correct blogs when given 'start', 'end', 'order', and 'category' parameters", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'start': 1, 'end': 3, 'order': 'asc', 'category': 'bar' })
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
     const control = await fetchBlogs({ 'start': 1, 'end': 3, 'category': 'bar' })
-    expect(results.length).to.equal(control.length)
-    expect(results[0]).to.not.equal(control[0])
-    expect(results[0].id).to.equal(control[1].id)
+    const controlTotal = control['total']
+    const controlBlogs = control['blogs']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsBlogs.length).to.equal(controlBlogs.length)
+    expect(resultsBlogs[0]).to.not.equal(controlBlogs[0])
+    expect(resultsBlogs[0].id).to.equal(controlBlogs[1].id)
   })
   it('should return NO blogs when no blogs match valid search parameters', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'category': 'not a real category' })
-    expect(results).to.be.a('array')
-    expect(results).to.have.lengthOf(0)
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
+
+    expect(resultsTotal).to.equal(0)
+    expect(resultsBlogs).to.be.a('array')
+    expect(resultsBlogs).to.have.lengthOf(0)
   })
 })

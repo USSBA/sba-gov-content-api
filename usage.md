@@ -12,59 +12,62 @@ Example Request:
 
 Example Response:
 ```
-[
-  {
-    'author': 12345,
-    'blogBody': [
-      {
-        'id': 11111,
-        'type': 'blogPost',
-        'blogSectionImage': {},
-        'blogSectionText': 'Context'
-      }
-    ],
-    'blogTags': 'Franchising',
-    'blogCategory': 'foo',
-    'office': {},
-    'summary': 'How to Get Past the Fear of Buying a Franchise',
-    'type': 'blog',
-    'title': 'How to Get Past the Fear of Buying a Franchise',
-    'id': 10000,
-    'updated': 1555099825,
-    'created': 1554895800,
-    'langCode': 'en',
-    'url': '/blogs/first-url'
-  },
-  {
-    'author': 12345,
-    'blogBody': [
-      {
-        'id': 22222,
-        'type': 'blogPost',
-        'blogSectionImage': {},
-        'blogSectionText': 'Context'
-      }
-    ],
-    'blogTags': 'Franchising',
-    'blogCategory': 'foo',
-    'office': {},
-    'summary': 'How to Get Past the Fear of Buying a Franchise',
-    'type': 'blog',
-    'title': 'How to Get Past the Fear of Buying a Franchise',
-    'id': 10001,
-    'updated': 1555099825,
-    'created': 1554895802,
-    'langCode': 'en',
-    'url': '/blogs/second-url'
-  }
-]
+{
+  total: 2,
+  blogs: [
+    {
+      'author': 12345,
+      'blogBody': [
+        {
+          'id': 11111,
+          'type': 'blogPost',
+          'blogSectionImage': {},
+          'blogSectionText': 'Context'
+        }
+      ],
+      'blogTags': 'Franchising',
+      'blogCategory': 'foo',
+      'office': {},
+      'summary': 'How to Get Past the Fear of Buying a Franchise',
+      'type': 'blog',
+      'title': 'How to Get Past the Fear of Buying a Franchise',
+      'id': 10000,
+      'updated': 1555099825,
+      'created': 1554895800,
+      'langCode': 'en',
+      'url': '/blogs/first-url'
+    },
+    {
+      'author': 12345,
+      'blogBody': [
+        {
+          'id': 22222,
+          'type': 'blogPost',
+          'blogSectionImage': {},
+          'blogSectionText': 'Context'
+        }
+      ],
+      'blogTags': 'Franchising',
+      'blogCategory': 'foo',
+      'office': {},
+      'summary': 'How to Get Past the Fear of Buying a Franchise',
+      'type': 'blog',
+      'title': 'How to Get Past the Fear of Buying a Franchise',
+      'id': 10001,
+      'updated': 1555099825,
+      'created': 1554895802,
+      'langCode': 'en',
+      'url': '/blogs/second-url'
+    }
+  ]
+}
 ```
 
 | Parameters | Description
 |------------|------------------
 |  category  | The category of blogs to be included in the results. Excludes results that are listed as a different category
 |  author    | The ID of the `person` who wrote the blog
-|  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` ad `desc` as valid.
+|  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` and `desc` as valid.
 |  start     | The first index of the matching blogs that will be returned
 |  end       | The last index of the matching blogs that will be returned
 
