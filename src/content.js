@@ -20,6 +20,7 @@ const { runSearch } = require('./service/search.js')
 const { fetchOffices } = require('./service/office-search.js')
 const { fetchEvents, fetchEventById } = require('./service/events.js')
 const { getSuggestedRoutes } = require('./service/suggested-routes.js')
+const { getAuthors } = require('./service/authors.js')
 
 const fetchFunctions = {
   node: fetchFormattedNode,
@@ -46,7 +47,8 @@ const fetchContentTypeFunctions = {
   search: runSearch,
   siteMap: fetchFormattedMenu,
   suggestedRoutes: getSuggestedRoutes,
-  taxonomys: fetchTaxonomys
+  taxonomys: fetchTaxonomys,
+  authors: getAuthors
 }
 
 async function fetchContentById (params, headers) {
