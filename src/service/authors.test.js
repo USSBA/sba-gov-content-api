@@ -8,16 +8,16 @@ const authors = require('./authors.json')
 describe('authors', () => {
   it('should return json data', () => {
     const result = getAuthors()
-    	const expected = authors
-    	expect(result).to.deep.equal(expected)
+    const expected = authors
+    expect(result).to.deep.equal(expected)
   })
   it('should contain an array', () => {
-    const result = getAuthors()
-    expect(Array.isArray(result)).to.be.true
+    const expected = true
+    const result = Array.isArray(getAuthors())
+    expect(result).to.equal(expected)
   })
   it('array should contain only numbers', () => {
     const expected = 'number'
-    const result = getAuthors()
     authors.forEach(author => expect(typeof author).to.equal(expected))
   })
 })
