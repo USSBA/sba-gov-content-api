@@ -1,5 +1,4 @@
 /* eslint-env mocha */
-const chai = require('chai')
 const sinon = require('sinon')
 
 const { fetchPersons } = require('./drupal-eight.js')

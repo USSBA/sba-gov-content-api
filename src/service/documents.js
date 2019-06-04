@@ -1,7 +1,7 @@
 const s3CacheReader = require('../clients/s3-cache-reader.js')
 const searchUtils = require('./search-utils.js')
 
-const { filter, isEmpty, maxBy, orderBy } = require('lodash')
+const { filter, isEmpty, mapValues, maxBy, orderBy } = require('lodash')
 const moment = require('moment')
 
 function fetchDocuments (queryParams) {

@@ -1,5 +1,4 @@
 /* eslint-disable id-length,space-infix-ops, object-property-newline */
-const moment = require('moment')
 const langParser = require('accept-language-parser')
 const { filter, includes, isEmpty, map } = require('lodash')
 
