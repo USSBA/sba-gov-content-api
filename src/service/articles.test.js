@@ -54,7 +54,7 @@ describe('Searching for articles', () => {
     getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
 
     const program = 'FAKE PROGRAM'
-    const results = await fetchArticles({ program: program})
+    const results = await fetchArticles({ program: program })
     const resultsTotal = results['count']
     const resultsArticles = results['items']
 
@@ -68,7 +68,7 @@ describe('Searching for articles', () => {
     getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
 
     const keyword = 'fancy'
-    const results = await fetchArticles({ searchTerm: keyword})
+    const results = await fetchArticles({ searchTerm: keyword })
     const resultsTotal = results['count']
     const resultsArticles = results['items']
 
