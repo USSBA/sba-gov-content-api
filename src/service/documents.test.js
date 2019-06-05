@@ -32,7 +32,7 @@ describe('Searching for documents', () => {
     getKeyStub.restore()
   })
 
-  it('should return all documents when not given any parameters', async () => {
+  it('should return all documents when NOT given any parameters', async () => {
     getKeyStub.withArgs('documents').returns(Promise.resolve(documents))
 
     const results = await fetchDocuments()
