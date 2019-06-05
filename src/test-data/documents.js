@@ -96,5 +96,117 @@ const sortedDocs = [{
 }
 ]
 
+const documents = [
+  {
+    'activitys': [
+      'activity'
+    ],
+    'documentIdNumber': '5000-4021',
+    'documentIdType': 'example document type',
+    'files': [
+      {
+        'id': 1111,
+        'type': 'docFile',
+        'effectiveDate': '2017-08-28',
+        'expirationDate': null,
+        'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf',
+        'version': '1'
+      }
+    ],
+    'officeLink': {
+      'url': '/offices/headquarters/oca',
+      'title': 'Office of Capital Access'
+    },
+    'ombNumber': {},
+    'programs': [
+      '7(a)',
+      'CDC/504',
+      'Microlending',
+      'Community Advantage',
+      'Disaster'
+    ],
+    'summary': 'SBA is providing deferments for SBA 7(a) and 504 Business Loans, Microloans, and Disaster Loans for businesses adversely affected by Hurricane Harvey.',
+    'type': 'document',
+    'title': 'SBA Provides Loan Deferments in Hurricane Harvey Affected Areas',
+    'id': 1111,
+    'updated': 1512075693,
+    'created': 1504815259,
+    'langCode': 'en',
+    'url': '/document/policy-notice-5000-4021-sba-provides-loan-deferments-hurricane-harvey-affected-areas'
+  },
+  {
+    'activitys': [
+      'contracting stuff'
+    ],
+    'documentIdNumber': '5000-4021',
+    'documentIdType': 'Policy notice',
+    'files': [
+      {
+        'id': 1112,
+        'type': 'docFile',
+        'effectiveDate': '2017-08-28',
+        'expirationDate': null,
+        'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf',
+        'version': '1'
+      }
+    ],
+    'officeLink': {
+      'url': '/offices/headquarters/oca',
+      'title': 'Office of Capital Access'
+    },
+    'ombNumber': {},
+    'programs': [
+      '7(a)',
+      'CDC/504',
+      'Microlending',
+      'Community Advantage',
+      'Disaster',
+      'Test program'
+    ],
+    'summary': 'SBA is providing deferments for SBA 7(a) and 504 Business Loans, Microloans, and Disaster Loans for businesses adversely affected by Hurricane Harvey.',
+    'type': 'document',
+    'title': 'SBA Provides Loan Deferments in Hurricane Harvey Affected Areas',
+    'id': 1112,
+    'updated': 1512075693,
+    'created': 1504815259,
+    'langCode': 'en',
+    'url': '/document/policy-notice-5000-4021-sba-provides-loan-deferments-hurricane-harvey-affected-areas'
+  },
+  {
+    'activitys': [
+      'contracting stuff'
+    ],
+    'documentIdNumber': '5000-4021',
+    'documentIdType': 'Policy notice',
+    'files': [
+      {
+        'id': 1113,
+        'type': 'docFile',
+        'effectiveDate': '2017-08-28',
+        'expirationDate': null,
+        'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf',
+        'version': '1'
+      }
+    ],
+    'officeLink': {
+      'url': '/offices/headquarters/oca',
+      'title': 'Office of Capital Access'
+    },
+    'ombNumber': {},
+    'programs': [
+      'Test program'
+    ],
+    'summary': 'A summary',
+    'type': 'document',
+    'title': 'Some SBA Document',
+    'id': 1113,
+    'updated': 1512075693,
+    'created': 1504815259,
+    'langCode': 'en',
+    'url': '/document/some-doc'
+  }
+]
+
 module.exports.testDocs = testDocs
 module.exports.sortedDocs = sortedDocs
+module.exports.documents = documents

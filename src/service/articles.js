@@ -13,7 +13,6 @@ function fetchArticles (queryParams) {
     if (sortBy === 'Title') {
       sortField = 'title'
       sortOrder = 'asc'
-    // } else if (sortBy == 'Last Updated') {
     } else if (sortBy === 'Authored on Date') {
       sortField = 'created'
     }
@@ -30,9 +29,6 @@ function fetchArticles (queryParams) {
         count = items.length
 
         const { end, start } = queryParams
-        // if (!(start === 'all' || end === 'all')) {
-        //   items = items.slice(start, end)
-        // }
         items = searchUtils.paginateSearch(items, start, end)
       }
 
