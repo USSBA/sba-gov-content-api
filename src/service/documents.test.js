@@ -109,6 +109,52 @@ describe('Searching for documents', () => {
     expect(resultsTotal).to.equal(1)
     expect(resultsDocuments).to.have.lengthOf(resultsTotal)
   })
+  it("should start at a specified index when given the 'start' parameter", async () => {
+    getKeyStub.withArgs('documents').returns(Promise.resolve(documents))
+
+    const control = await fetchDocuments()
+    const controlTotal = control['count']
+    const controlDocuments = control['items']
+    const results = await fetchDocuments({ start: 1 })
+    const resultsTotal = results['count']
+    const resultsDocuments = results['items']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsTotal).to.equal(documents.length)
+    expect(resultsDocuments[0].id).to.not.equal(controlDocuments[0].id)
+    expect(resultsDocuments[0].id).to.equal(controlDocuments[1].id)
+    expect(resultsDocuments[1].id).to.equal(controlDocuments[2].id)
+  })
+  it("should stop at a specified index when given the 'end' parameter", async () => {
+    getKeyStub.withArgs('documents').returns(Promise.resolve(documents))
+
+    const control = await fetchDocuments()
+    const controlTotal = control['count']
+    const controlDocuments = control['items']
+    const results = await fetchDocuments({ end: 2 })
+    const resultsTotal = results['count']
+    const resultsDocuments = results['items']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsTotal).to.equal(documents.length)
+    expect(resultsDocuments).to.have.lengthOf(2)
+    expect(resultsDocuments[0].id).to.equal(controlDocuments[0].id)
+  })
+  it("should return the correct results when given both a 'start' and 'end' parameter", async () => {
+    getKeyStub.withArgs('documents').returns(Promise.resolve(documents))
+
+    const control = await fetchDocuments()
+    const controlTotal = control['count']
+    const controlDocuments = control['items']
+    const results = await fetchDocuments({ start: 1, end: 2 })
+    const resultsTotal = results['count']
+    const resultsDocuments = results['items']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsTotal).to.equal(documents.length)
+    expect(resultsDocuments).to.have.lengthOf(1)
+    expect(resultsDocuments[0].id).to.equal(controlDocuments[1].id)
+  })
   it('should return all documents when provided with invalid parameters', async () => {
     getKeyStub.withArgs('documents').returns(Promise.resolve(documents))
 

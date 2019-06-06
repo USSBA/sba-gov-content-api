@@ -94,6 +94,52 @@ describe('Searching for articles', () => {
       expect(article.programs).to.include(program)
     })
   })
+  it("should start at a specified index when given the 'start' parameter", async () => {
+    getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
+
+    const control = await fetchArticles()
+    const controlTotal = control['count']
+    const controlArticles = control['items']
+    const results = await fetchArticles({ start: 2 })
+    const resultsTotal = results['count']
+    const resultsArticles = results['items']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsTotal).to.equal(articles.length)
+    expect(resultsArticles[0].id).to.not.equal(controlArticles[0].id)
+    expect(resultsArticles[0].id).to.equal(controlArticles[2].id)
+    expect(resultsArticles[1].id).to.equal(controlArticles[3].id)
+  })
+  it("should stop at a specified index when given the 'end' parameter", async () => {
+    getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
+
+    const control = await fetchArticles()
+    const controlTotal = control['count']
+    const controlArticles = control['items']
+    const results = await fetchArticles({ end: 2 })
+    const resultsTotal = results['count']
+    const resultsArticles = results['items']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsTotal).to.equal(articles.length)
+    expect(resultsArticles).to.have.lengthOf(2)
+    expect(resultsArticles[0].id).to.equal(controlArticles[0].id)
+  })
+  it("should return the correct results when given both a 'start' and 'end' parameter", async () => {
+    getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
+
+    const control = await fetchArticles()
+    const controlTotal = control['count']
+    const controlArticles = control['items']
+    const results = await fetchArticles({ start: 1, end: 2 })
+    const resultsTotal = results['count']
+    const resultsArticles = results['items']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsTotal).to.equal(articles.length)
+    expect(resultsArticles).to.have.lengthOf(1)
+    expect(resultsArticles[0].id).to.equal(controlArticles[1].id)
+  })
   it('should return all articles when given an INVALID parameter', async () => {
     getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
 
