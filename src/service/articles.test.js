@@ -171,4 +171,27 @@ describe('Searching for articles', () => {
       expect(article.id).to.equal(controlArticles[index].id)
     })
   })
+  it('should return the correct matching articles with correct pagination when given ALL valid parmeters', async () => {
+    getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
+
+    const keyword = 'paging'
+    const program = 'PAGINATED PROGRAM'
+    const category = 'pagination test'
+    const control = await fetchArticles({ searchTerm: keyword, program: program, articleCategory: category })
+    const controlTotal = control['count']
+    const controlArticles = control['items']
+    const results = await fetchArticles({ searchTerm: keyword, program: program, articleCategory: category, start: 1, end: 3 })
+    const resultsTotal = results['count']
+    const resultsArticles = results['items']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsArticles).to.have.lengthOf(2)
+    expect(resultsArticles[0].id).to.not.equal(controlArticles[0].id)
+    resultsArticles.forEach(function (article, index) {
+      expect(article.id).to.equal(controlArticles[index + 1].id)
+      expect(article.title.toLowerCase()).to.include(keyword)
+      expect(article.category).to.include(category)
+      expect(article.programs).to.include(program)
+    })
+  })
 })

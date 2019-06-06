@@ -186,4 +186,37 @@ describe('Searching for documents', () => {
       expect(document.id).to.equal(controlDocuments[index].id)
     })
   })
+  it('should return correctly paginated documents when provided with ALL valid parameters', async () => {
+    getKeyStub.withArgs('documents').returns(Promise.resolve(documents))
+
+    const keyword = 'page'
+    const documentType = 'full type'
+    const activity = 'paging activity'
+    const program = 'paging program'
+    const control = await fetchDocuments({ searchTerm: keyword,
+      documentActivity: activity,
+      documentType: documentType,
+      program: program })
+    const controlTotal = control['count']
+    const controlDocuments = control['items']
+    const results = await fetchDocuments({ searchTerm: keyword,
+      documentActivity: activity,
+      documentType: documentType,
+      program: program,
+      start: 1,
+      end: 3 })
+    const resultsTotal = results['count']
+    const resultsDocuments = results['items']
+
+    expect(resultsTotal).to.equal(controlTotal)
+    expect(resultsDocuments).to.have.lengthOf(2)
+    expect(resultsDocuments[0].id).to.not.equal(controlDocuments[0].id)
+    resultsDocuments.forEach(function (document, index) {
+      expect(document.id).to.equal(controlDocuments[index + 1].id)
+      expect(document.title.toLowerCase()).to.include(keyword)
+      expect(document.documentIdType).to.equal(documentType)
+      expect(document.activitys).to.include(activity)
+      expect(document.programs).to.include(program)
+    })
+  })
 })
