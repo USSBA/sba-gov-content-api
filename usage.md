@@ -1,13 +1,96 @@
 # Usage
 
-## Blog API
+The content API allows for searching of different resources used in the _SBA.gov_ site. To utilize the search hit the relevant endpoint for the AWS Lambda that is running the content API. The endpoint will accept URL parameters and will return any of the relevant resources that match the search parameters. Any invalid parameters will be ignored and not affect the results.
 
-#### Search Blogs
-To search for  blogs using the content API you must hit the `*/blogs` endpoint for the lambda that is running the content API. The API accepts URL query parameters and will return and array of blogs that match the search parameters. Invalid parameters will be ignored.
+_Note:_ This API only is for `GET` actions. It does not support any create or update actions. Those actions are handled by other services
+
+## Article API
+Hit the articles endpoint at `*/articles.json`
+
+| Parameters       | Description
+|------------------|------------------
+|  searchTerm      | A keyword search for the title and summary fields of the article
+|  articleCategory | The category of the article. Articles can be associated with multiple categories
+|  program         | The program that artcle is associated with. Articles can be assoicated with multiple programs
+|  type            | The type of resource being accessed.
+|  sortBy          | The order of articles that are returned by the search. Valid inputs are `Title` and `Authored on Date`. Will defualt to sort on the `updated` field.
+|  start           | The first index of the matching articles that will be returned
+|  end             | The last index of the matching articles that will be returned 
 
 Example Request:
 ```
-  https://example.com/blogs?category=foo&author=12345
+  https://example.com/articles.json?searchTerm=foo&category=bar
+```
+
+Example Response
+```
+{
+  count: 2,
+  items: [
+      {
+      'articleId': {},
+      'category': [
+        'example category'
+      ],
+      'mediaContact': {},
+      'office': 7428,
+      'officeLink': {
+        'url': '/offices/headquarters/oit',
+        'title': 'Office of International Trade'
+      },
+      'file': {},
+      'programs': [],
+      'summary': 'A basic article summary',
+      'type': 'article',
+      'title': 'Basic SBA article',
+      'id': 1,
+      'updated': 1558716617,
+      'created': 1509566328,
+      'langCode': 'en',
+      'url': '/article/2017/nov/01/list-useacs-sba-staff'
+    },
+    {
+      'articleId': {},
+      'category': [
+        'example category'
+      ],
+      'mediaContact': {},
+      'office': 7428,
+      'officeLink': {
+        'url': '/offices/headquarters/oit',
+        'title': 'Office of International Trade'
+      },
+      'file': {},
+      'programs': [],
+      'summary': 'A basic article summary',
+      'type': 'article',
+      'title': 'Basic SBA article',
+      'id': 2,
+      'updated': 1558716617,
+      'created': 1509566328,
+      'langCode': 'en',
+      'url': '/article/2017/nov/01/list-useacs-sba-staff'
+    }
+  ]
+}
+```
+
+## Blog API
+
+#### Search Blogs
+Hit the blogs endpoint at `*/blogs.json`
+
+| Parameters | Description
+|------------|------------------
+|  category  | The category of blogs to be included in the results. Excludes results that are listed as a different category
+|  author    | The ID of the `person` who wrote the blog
+|  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` and `desc` as valid.
+|  start     | The first index of the matching blogs that will be returned
+|  end       | The last index of the matching blogs that will be returned
+
+Example Request:
+```
+  https://example.com/blogs.json?category=foo&author=12345
 ```
 
 Example Response:
@@ -101,5 +184,109 @@ Example Response
   'created': 1554895800,
   'langCode': 'en',
   'url': '/blogs/first-url'
+}
+```
+
+## Documents API
+
+Hit the documents endpoint at `*/documents.json`
+
+| Parameters    | Description
+|---------------|------------------
+|  url          | The url associated with the particular document
+|  activity     | The activity that is associated with the document. Documents can have more then one activity.
+|  program      | The program that the document is assoicated with. Documents can be associated with more then one program
+|  documentType | The type of the document. This is an exact string match
+|  searchTerm   | A keyword search on the document title and document ID number fields.
+|  sortBy       | Determines the order of the documents that are returned. Valid inputs are `Title`, `Number`, `documentIdNumber`, `Last Updated`, and `Effectve Date`. Will not do any sorting if no valid `sortBy` parameter is provided.
+|  start        | The first index of the matching documents that will be returned
+|  end          | The last index of the matching documents that will be returned
+
+Example Request
+```
+https://example.com/documents.json?searchTerm=foo&activity=bar
+```
+
+Example Response
+```
+{
+  count: 2,
+  items: [
+    {
+      'activitys': [
+        'activity'
+      ],
+      'documentIdNumber': '5000-4021',
+      'documentIdType': 'example document type',
+      'files': [
+        {
+          'id': 1111,
+          'type': 'docFile',
+          'effectiveDate': '2017-08-28',
+          'expirationDate': null,
+          'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf',
+          'version': '1'
+        }
+      ],
+      'officeLink': {
+        'url': '/offices/headquarters/oca',
+        'title': 'Office of Capital Access'
+      },
+      'ombNumber': {},
+      'programs': [
+        '7(a)',
+        'CDC/504',
+        'Microlending',
+        'Community Advantage',
+        'Disaster'
+      ],
+      'summary': 'SBA is providing deferments for SBA 7(a) and 504 Business Loans, Microloans, and Disaster Loans for businesses adversely affected by Hurricane Harvey.',
+      'type': 'document',
+      'title': 'SBA Provides Loan Deferments in Hurricane Harvey Affected Areas',
+      'id': 1111,
+      'updated': 1512075693,
+      'created': 1504815259,
+      'langCode': 'en',
+      'url': '/document/policy-notice-5000-4021-sba-provides-loan-deferments-hurricane-harvey-affected-areas'
+    },
+    {
+      'activitys': [
+        'contracting stuff'
+      ],
+      'documentIdNumber': '5000-4021',
+      'documentIdType': 'Policy notice',
+      'files': [
+        {
+          'id': 1112,
+          'type': 'docFile',
+          'effectiveDate': '2017-08-28',
+          'expirationDate': null,
+          'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf',
+          'version': '1'
+        }
+      ],
+      'officeLink': {
+        'url': '/offices/headquarters/oca',
+        'title': 'Office of Capital Access'
+      },
+      'ombNumber': {},
+      'programs': [
+        '7(a)',
+        'CDC/504',
+        'Microlending',
+        'Community Advantage',
+        'Disaster',
+        'Test program'
+      ],
+      'summary': 'SBA is providing deferments for SBA 7(a) and 504 Business Loans, Microloans, and Disaster Loans for businesses adversely affected by Hurricane Harvey.',
+      'type': 'document',
+      'title': 'SBA Provides Loan Deferments in Hurricane Harvey Affected Areas',
+      'id': 1112,
+      'updated': 1512075693,
+      'created': 1504815259,
+      'langCode': 'en',
+      'url': '/document/policy-notice-5000-4021-sba-provides-loan-deferments-hurricane-harvey-affected-areas'
+    }
+  ]
 }
 ```
