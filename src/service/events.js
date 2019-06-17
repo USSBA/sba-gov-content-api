@@ -1,7 +1,12 @@
 const eventClient = require('../clients/event-client.js')
 const moment = require('moment-timezone')
 const he = require('he')
+const config = require('../config')
 
+// TODO: remove code tagged with #featureflag when new events backend is ready to be enabled
+// will also need to remove functions related to obtaining events from D7
+
+// #featureFlag: this function should be removed
 function translateQueryParamsForD7 (query) {
   const queryObj = query || {}
   const { q, address, dateRange, distance, start } = queryObj
@@ -54,6 +59,7 @@ function translateQueryParamsForD7 (query) {
   return params
 }
 
+// #featureFlag: this function should be removed
 function clean (value) {
   if (Array.isArray(value) && value.length === 0) {
     return null
@@ -62,6 +68,7 @@ function clean (value) {
   }
 }
 
+// #featureFlag: this function should be removed
 function formatDate (dateString, timezone) {
   if (dateString) {
     return moment.utc(dateString).format()
@@ -70,6 +77,7 @@ function formatDate (dateString, timezone) {
   }
 }
 
+// #featureFlag: this function should be removed
 function mapD7EventDataToBetterSchema (item) {
   try {
     if (!item) {
@@ -127,12 +135,20 @@ function mapD7EventDataToBetterSchema (item) {
 }
 
 async function fetchEventById (id) {
-  let result = await eventClient.getEvents({ nid: id })
-  if (Array.isArray(result) && result.length !== 0) {
-    return mapD7EventDataToBetterSchema(result[0])
+  let result = {}
+  if (config.eventsApi.backendSourceToggle){
+    // let result = await eventClient.getEvents({ nid: id })
+    const results = [{ id: 0000, name: 'Mock Event found by fetchEventById function' }]
+    if (Array.isArray(results) && results.length !== 0) {
+      result = results[0]
+    }
   } else {
-    return {}
+    const results = await eventClient.getEvents({ nid: id })
+    if (Array.isArray(results) && results.length !== 0) {
+      result = mapD7EventDataToBetterSchema(results[0])
+    }
   }
+  return result
 }
 
 async function fetchTotalLength (params) {
@@ -154,14 +170,26 @@ async function fetchTotalLength (params) {
 }
 
 async function fetchEvents (query) {
-  let params = translateQueryParamsForD7(query)
-  let results = await eventClient.getEvents(params)
-  let mappedResults = results.map(mapD7EventDataToBetterSchema)
-  mappedResults = mappedResults.filter(item => item)
+  let result
+  if (config.eventsApi.backendSourceToggle){
+    // let results = await eventClient.getEvents(query)
+    let results = [{ id: 0000, name: 'Mock Event found by fetchEvents function' }]
+    results = results.filter(item => item)
 
-  let totalCount = await fetchTotalLength(params)
+    const totalCount = await fetchTotalLength(query)
 
-  return { count: totalCount, items: mappedResults }
+    result = { count: totalCount, items: results }
+  } else {
+    let params = translateQueryParamsForD7(query)
+    let results = await eventClient.getEvents(params)
+    let mappedResults = results.map(mapD7EventDataToBetterSchema)
+    mappedResults = mappedResults.filter(item => item)
+
+    let totalCount = await fetchTotalLength(params)
+
+    result = { count: totalCount, items: mappedResults }
+  }
+  return result
 }
 
 module.exports.fetchEvents = fetchEvents

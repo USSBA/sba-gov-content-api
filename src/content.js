@@ -76,7 +76,7 @@ async function fetchContentById (params, headers) {
         console.error('Error fetching data: ', e)
         return {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-          body: `Server Error, ${e}`
+          body: `B---- Server Error, ${e}`
         }
       }
     } else {
@@ -108,7 +108,7 @@ async function fetchContentByType (pathParams, queryStringParameters) {
         console.error('Error fetching data: ', e)
         return {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-          body: `Server Error, ${e}`
+          body: `A---- Server Error, ${e}`
         }
       }
     } else {
