@@ -10,13 +10,14 @@ chai.should()
 const events = require('./events')
 const mockD7Response1 = require('./events.test.json')
 const expectedEventsData1 = require('./events.output.test.json')
+const config = require('../config.js')
 
 function makeArray (n) {
   return new Array(n).fill(0)
 }
 
 describe('Event Service', () => {
-  let eventClientStub, eventClientCountStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
+  let eventClientStub, eventClientCountStub, getBackendSourceToggleStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
 
   before(() => {
     clock = sinon.useFakeTimers(new Date(2016, 2, 15).getTime())
@@ -26,21 +27,25 @@ describe('Event Service', () => {
     thirtyDaysFromNowDateString = '2016-04-14'
     eventClientStub = sinon.stub(eventClient, 'getEvents')
     eventClientCountStub = sinon.stub(eventClient, 'getEventCount')
+    getBackendSourceToggleStub = sinon.stub(config.eventsApi, 'getBackendSourceToggle')
   })
 
   beforeEach(() => {
     eventClientCountStub.returns([1, 2, 3])
+    getBackendSourceToggleStub.returns(false)
   })
 
   afterEach(() => {
     eventClientCountStub.reset()
     eventClientStub.reset()
+    getBackendSourceToggleStub.reset()
   })
 
   after(() => {
     clock.restore()
     eventClientStub.restore()
     eventClientCountStub.restore()
+    getBackendSourceToggleStub.restore()
   })
 
   describe('fetchEventById', () => {
