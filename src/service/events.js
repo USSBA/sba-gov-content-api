@@ -136,9 +136,9 @@ function mapD7EventDataToBetterSchema (item) {
 
 async function fetchEventById (id) {
   let result = {}
-  if (config.eventsApi.getBackendSourceToggle()){
+  if (config.eventsApi.getBackendSourceToggle()) {
     // let result = await eventClient.getEvents({ nid: id })
-    const results = [{ id: 0000, name: 'Mock Event found by fetchEventById function' }]
+    const results = [{ id: 1234, name: 'Mock Event found by fetchEventById function' }]
     if (Array.isArray(results) && results.length !== 0) {
       result = results[0]
     }
@@ -171,9 +171,9 @@ async function fetchTotalLength (params) {
 
 async function fetchEvents (query) {
   let result
-  if (config.eventsApi.getBackendSourceToggle()){
+  if (config.eventsApi.getBackendSourceToggle()) {
     // let results = await eventClient.getEvents(query)
-    let results = [{ id: 0000, name: 'Mock Event found by fetchEvents function' }]
+    let results = [{ id: 1234, name: 'Mock Event found by fetchEvents function' }]
     results = results.filter(item => item)
 
     const totalCount = await fetchTotalLength(query)
