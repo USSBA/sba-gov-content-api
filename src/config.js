@@ -11,6 +11,6 @@ module.exports = {
     countEndpoint: process.env.EVENTS_API_COUNT_ENDPOINT,
 
     // TODO: remove this feature flag function when new events backend is ready to be enabled
-    getBackendSourceToggle: () => true // process.env.EVENTS_BACKEND_SOURCE_TOGGLE
+    getBackendSourceToggle: () => process.env.EVENTS_BACKEND_SOURCE_TOGGLE
   }
 }

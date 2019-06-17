@@ -3,10 +3,6 @@ const moment = require('moment-timezone')
 const he = require('he')
 const config = require('../config')
 
-// TODO: remove code tagged with #featureflag when new events backend is ready to be enabled
-// will also need to remove functions related to obtaining events from D7
-
-// #featureFlag: this function should be removed
 function translateQueryParamsForD7 (query) {
   const queryObj = query || {}
   const { q, address, dateRange, distance, start } = queryObj
@@ -59,7 +55,6 @@ function translateQueryParamsForD7 (query) {
   return params
 }
 
-// #featureFlag: this function should be removed
 function clean (value) {
   if (Array.isArray(value) && value.length === 0) {
     return null
@@ -68,7 +63,6 @@ function clean (value) {
   }
 }
 
-// #featureFlag: this function should be removed
 function formatDate (dateString, timezone) {
   if (dateString) {
     return moment.utc(dateString).format()
@@ -77,7 +71,6 @@ function formatDate (dateString, timezone) {
   }
 }
 
-// #featureFlag: this function should be removed
 function mapD7EventDataToBetterSchema (item) {
   try {
     if (!item) {

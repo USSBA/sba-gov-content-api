@@ -6,7 +6,6 @@ let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
 
-// const { fn as momentPrototype } = require("moment")
 const events = require('./events')
 const mockD7Response1 = require('./events.test.json')
 const expectedEventsData1 = require('./events.output.test.json')
