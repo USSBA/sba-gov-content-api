@@ -1,4 +1,5 @@
 const HttpStatus = require('http-status-codes')
+const config = require('./config.js')
 const {
   fetchAnnouncements,
   fetchContacts,
@@ -23,8 +24,11 @@ const { runSearch } = require('./service/search.js')
 const { getSuggestedRoutes } = require('./service/suggested-routes.js')
 
 const fetchFunctions = {
-  node: fetchFormattedNode,
-  event: fetchEventById
+  node: fetchFormattedNode
+}
+
+if (!config.eventsApi.getBackendSourceToggle()) {
+  fetchFunctions.event = fetchEventById
 }
 
 const fetchContentTypeFunctions = {

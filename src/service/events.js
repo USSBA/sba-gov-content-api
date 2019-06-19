@@ -128,20 +128,12 @@ function mapD7EventDataToBetterSchema (item) {
 }
 
 async function fetchEventById (id) {
-  let result = {}
-  if (config.eventsApi.getBackendSourceToggle()) {
-    // let result = await eventClient.getEvents({ nid: id })
-    const results = [{ id: 1234, name: 'Mock Event found by fetchEventById function' }]
-    if (Array.isArray(results) && results.length !== 0) {
-      result = results[0]
-    }
+  let result = await eventClient.getEvents({ nid: id })
+  if (Array.isArray(result) && result.length !== 0) {
+    return mapD7EventDataToBetterSchema(result[0])
   } else {
-    const results = await eventClient.getEvents({ nid: id })
-    if (Array.isArray(results) && results.length !== 0) {
-      result = mapD7EventDataToBetterSchema(results[0])
-    }
+    return {}
   }
-  return result
 }
 
 async function fetchTotalLength (params) {
@@ -162,14 +154,15 @@ async function fetchTotalLength (params) {
   return totalCount
 }
 
+// TODO: feature flag used here for events via getBackendSourceToggle
+// all other functions in this file can also be removed when feature flag is removed
 async function fetchEvents (query) {
   let result
   if (config.eventsApi.getBackendSourceToggle()) {
-    // let results = await eventClient.getEvents(query)
     let results = [{ id: 1234, name: 'Mock Event found by fetchEvents function' }]
     results = results.filter(item => item)
 
-    const totalCount = await fetchTotalLength(query)
+    const totalCount = results.length
 
     result = { count: totalCount, items: results }
   } else {
