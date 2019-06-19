@@ -200,6 +200,7 @@ const documents = [
     'type': 'document',
     'title': 'Some SBA Document',
     'id': 1113,
+    'office': 54321,
     'updated': 1512075693,
     'created': 1504815259,
     'langCode': 'en',
@@ -332,6 +333,7 @@ const documents = [
     'type': 'document',
     'title': 'Page of a Document',
     'id': 1117,
+    'office': 12345,
     'updated': 1512075693,
     'created': 1504815259,
     'langCode': 'en',
@@ -365,6 +367,41 @@ const documents = [
     'type': 'document',
     'title': 'Page of a Document',
     'id': 1118,
+    'office': 12345,
+    'updated': 1512075693,
+    'created': 1504815259,
+    'langCode': 'en',
+    'url': '/document/some-doc'
+  },
+  {
+    'activitys': [
+      'paging activity'
+    ],
+    'documentIdNumber': '5000-4021',
+    'documentIdType': 'full type',
+    'files': [
+      {
+        'id': 1118,
+        'type': 'docFile',
+        'effectiveDate': '2017-08-28',
+        'expirationDate': null,
+        'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf',
+        'version': '1'
+      }
+    ],
+    'officeLink': {
+      'url': '/offices/headquarters/oca',
+      'title': 'Office of Capital Access'
+    },
+    'ombNumber': {},
+    'programs': [
+      'paging program'
+    ],
+    'summary': 'A summary',
+    'type': 'document',
+    'title': 'Page of a Document',
+    'id': 1119,
+    'office': 12345,
     'updated': 1512075693,
     'created': 1504815259,
     'langCode': 'en',

@@ -87,16 +87,30 @@ describe('Searching for documents', () => {
   })
   it("should return only the matching documents when provided with a 'documentActivity' parameter", async () => {
     getKeyStub.withArgs('documents').returns(Promise.resolve(documents))
-
+    
     const activity = 'contracting stuff'
     const results = await fetchDocuments({ documentActivity: activity })
     const resultsTotal = results['count']
     const resultsDocuments = results['items']
-
+    
     expect(resultsTotal).to.equal(2)
     expect(resultsDocuments).to.have.lengthOf(resultsTotal)
     resultsDocuments.forEach(function (document) {
       expect(document.activitys).to.include(activity)
+    })
+  })
+  it("should return only the matching documents when provided with a 'office' parameter", async () => {
+    getKeyStub.withArgs('documents').returns(Promise.resolve(documents))
+
+    const documentOffice = 12345
+    const results = await fetchDocuments({ office: documentOffice })
+    const resultsTotal = results['count']
+    const resultsDocuments = results['items']
+
+    expect(resultsTotal).to.equal(3)
+    expect(resultsDocuments).to.have.lengthOf(resultsTotal)
+    resultsDocuments.forEach(function (document) {
+      expect(document.office).to.equal(documentOffice)
     })
   })
   it('should return only the matching documents when provided with multiple valid parameters', async () => {
@@ -193,16 +207,19 @@ describe('Searching for documents', () => {
     const documentType = 'full type'
     const activity = 'paging activity'
     const program = 'paging program'
+    const office = 12345
     const control = await fetchDocuments({ searchTerm: keyword,
       documentActivity: activity,
       documentType: documentType,
-      program: program })
+      program: program,
+      office: office })
     const controlTotal = control['count']
     const controlDocuments = control['items']
     const results = await fetchDocuments({ searchTerm: keyword,
       documentActivity: activity,
       documentType: documentType,
       program: program,
+      office: office,
       start: 1,
       end: 3 })
     const resultsTotal = results['count']
@@ -217,6 +234,7 @@ describe('Searching for documents', () => {
       expect(document.documentIdType).to.equal(documentType)
       expect(document.activitys).to.include(activity)
       expect(document.programs).to.include(program)
+      expect(document.office).to.equal(office)
     })
   })
 })
