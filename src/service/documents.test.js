@@ -87,12 +87,12 @@ describe('Searching for documents', () => {
   })
   it("should return only the matching documents when provided with a 'documentActivity' parameter", async () => {
     getKeyStub.withArgs('documents').returns(Promise.resolve(documents))
-    
+
     const activity = 'contracting stuff'
     const results = await fetchDocuments({ documentActivity: activity })
     const resultsTotal = results['count']
     const resultsDocuments = results['items']
-    
+
     expect(resultsTotal).to.equal(2)
     expect(resultsDocuments).to.have.lengthOf(resultsTotal)
     resultsDocuments.forEach(function (document) {
