@@ -27,12 +27,14 @@ function filterDocuments (params, docs) {
       (!isEmpty(doc.programs) && doc.programs.includes(params.program))
     const matchesType = !params.type || params.type === 'all' || doc.documentIdType === params.type
     const matchesDocumentType = !params.documentType || params.documentType === 'all' || doc.documentIdType === params.documentType
+    const matchesOffice = !params.office || params.office === 'all' || doc.office === Number(params.office)
     return (
       matchesType &&
       matchesDocumentType &&
       matchesProgram &&
       matchesActivitys &&
       matchesActivity &&
+      matchesOffice &&
       matchesUrl &&
       (!params.searchTerm ||
         params.searchTerm === 'all' ||
