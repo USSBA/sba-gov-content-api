@@ -199,7 +199,7 @@ Hit the documents endpoint at `*/documents.json`
 |  documentType | The type of the document. This is an exact string match
 |  searchTerm   | A keyword search on the document title and document ID number fields.
 |  sortBy       | Determines the order of the documents that are returned. Valid inputs are `Title`, `Number`, `documentIdNumber`, `Last Updated`, and `Effectve Date`. Will not do any sorting if no valid `sortBy` parameter is provided.
-| office        | The ID for the office that authored the document. Not all document will be associated with an office and documents may only be associated with one offices
+| office        | The ID for the office that authored the document. Not all documents will be associated with an office and documents may only be associated with one offices
 |  start        | The first index of the matching documents that will be returned
 |  end          | The last index of the matching documents that will be returned
 
