@@ -55,10 +55,11 @@ describe('# Content Handler', () => {
     })
 
     it('should display invalid endpoint message for event data with getBackendSourceToggle set to true', async () => {
+      const id = 1
       getBackendSourceToggleStub.returns(true)
 
       let expected = { statusCode: HttpStatus.NOT_FOUND, body: 'Unknown type event' }
-      let result = await contentHandler.fetchContentById({ type: 'event', id: 1 })
+      let result = await contentHandler.fetchContentById({ type: 'event', id })
 
       expect(result).to.deep.equal(expected)
     })
@@ -70,10 +71,11 @@ describe('# Content Handler', () => {
     })
 
     it('should display invalid endpoint message for unknown data type', async () => {
-      const dataType = 'fake data type'
+      const invalidType = 'fake data type'
+      const id = 1
 
-      let expected = { statusCode: HttpStatus.NOT_FOUND, body: `Unknown type ${dataType}` }
-      let result = await contentHandler.fetchContentById({ type: dataType, id: 1 })
+      let expected = { statusCode: HttpStatus.NOT_FOUND, body: `Unknown type ${invalidType}` }
+      let result = await contentHandler.fetchContentById({ type: invalidType, id })
 
       expect(result).to.deep.equal(expected)
     })
@@ -89,13 +91,6 @@ describe('# Content Handler', () => {
   describe('fetchContentByType', () => {
     beforeEach(() => {
       getBackendSourceToggleStub.returns(true)
-    })
-
-    it('should respond with status code OK when valid data type is given in the path', async () => {
-      let expected = { statusCode: HttpStatus.OK }
-      let result = await contentHandler.fetchContentByType({ type: 'nodes' })
-
-      expect(result.statusCode).to.deep.equal(expected.statusCode)
     })
 
     it('should display invalid endpoint message for unknown data type', async () => {

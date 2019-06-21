@@ -159,7 +159,7 @@ async function fetchTotalLength (params) {
 async function fetchEvents (query) {
   let result
   if (config.eventsApi.getBackendSourceToggle()) {
-    let results = [{ id: 1234, name: 'Mock Event found by fetchEvents function' }]
+    let results = [{ id: 1234, title: 'Mock Event found by fetchEvents function' }]
     results = results.filter(item => item)
 
     const totalCount = results.length

@@ -15,7 +15,8 @@ function makeArray (n) {
   return new Array(n).fill(0)
 }
 
-describe('Event Service', () => {
+// TODO: remove this describe block when feature flag, getBackendSourceToggle, for events backend is removed
+describe('Event Service for D7', () => {
   let eventClientStub, eventClientCountStub, getBackendSourceToggleStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
 
   before(() => {
@@ -157,4 +158,19 @@ describe('Event Service', () => {
     })
   })
 })
+
+describe('Event Service', () => {
+  describe('fetchEvents', () => {
+    it('should return response in the desired format', async() => {
+      const getBackendSourceToggleStub = sinon.stub(config.eventsApi, 'getBackendSourceToggle')
+      getBackendSourceToggleStub.returns(true)
+
+      const results = await events.fetchEvents()
+      results.should.be.an('object')
+      results.should.have.property('count').be.a('number')
+      results.should.have.property('items').be.an('array')
+    })
+  })
+})
+
 /* eslint-enable no-unused-expressions */
