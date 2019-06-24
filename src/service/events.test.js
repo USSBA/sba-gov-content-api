@@ -6,17 +6,18 @@ let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
 
-// const { fn as momentPrototype } = require("moment")
 const events = require('./events')
 const mockD7Response1 = require('./events.test.json')
 const expectedEventsData1 = require('./events.output.test.json')
+const config = require('../config.js')
 
 function makeArray (n) {
   return new Array(n).fill(0)
 }
 
-describe('Event Service', () => {
-  let eventClientStub, eventClientCountStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
+// TODO: remove this describe block when feature flag, getBackendSourceToggle, for events backend is removed
+describe('Event Service for D7', () => {
+  let eventClientStub, eventClientCountStub, getBackendSourceToggleStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
 
   before(() => {
     clock = sinon.useFakeTimers(new Date(2016, 2, 15).getTime())
@@ -26,21 +27,25 @@ describe('Event Service', () => {
     thirtyDaysFromNowDateString = '2016-04-14'
     eventClientStub = sinon.stub(eventClient, 'getEvents')
     eventClientCountStub = sinon.stub(eventClient, 'getEventCount')
+    getBackendSourceToggleStub = sinon.stub(config.eventsApi, 'getBackendSourceToggle')
   })
 
   beforeEach(() => {
     eventClientCountStub.returns([1, 2, 3])
+    getBackendSourceToggleStub.returns(false)
   })
 
   afterEach(() => {
     eventClientCountStub.reset()
     eventClientStub.reset()
+    getBackendSourceToggleStub.reset()
   })
 
   after(() => {
     clock.restore()
     eventClientStub.restore()
     eventClientCountStub.restore()
+    getBackendSourceToggleStub.restore()
   })
 
   describe('fetchEventById', () => {
@@ -153,4 +158,19 @@ describe('Event Service', () => {
     })
   })
 })
+
+describe('Event Service', () => {
+  describe('fetchEvents', () => {
+    it('should return response in the desired format', async() => {
+      const getBackendSourceToggleStub = sinon.stub(config.eventsApi, 'getBackendSourceToggle')
+      getBackendSourceToggleStub.returns(true)
+
+      const results = await events.fetchEvents()
+      results.should.be.an('object')
+      results.should.have.property('count').be.a('number')
+      results.should.have.property('items').be.an('array')
+    })
+  })
+})
+
 /* eslint-enable no-unused-expressions */

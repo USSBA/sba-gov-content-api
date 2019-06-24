@@ -1,4 +1,5 @@
 const HttpStatus = require('http-status-codes')
+const config = require('./config.js')
 const {
   fetchAnnouncements,
   fetchContacts,
@@ -22,40 +23,20 @@ const { fetchOffices } = require('./service/office-search.js')
 const { runSearch } = require('./service/search.js')
 const { getSuggestedRoutes } = require('./service/suggested-routes.js')
 
-const fetchFunctions = {
-  node: fetchFormattedNode,
-  event: fetchEventById
-}
-
-const fetchContentTypeFunctions = {
-  announcements: fetchAnnouncements,
-  articles: fetchArticles,
-  blog: fetchBlog,
-  blogs: fetchBlogs,
-  contacts: fetchContacts,
-  counsellorCta: fetchCounsellorCta,
-  course: fetchCourse,
-  courses: fetchCourses,
-  disaster: fetchDisaster,
-  documents: fetchDocuments,
-  events: fetchEvents,
-  mainMenu: fetchMainMenu,
-  nodes: fetchNodes,
-  offices: fetchOffices,
-  officesRaw: fetchOfficesRaw,
-  persons: fetchPersons,
-  search: runSearch,
-  siteMap: fetchFormattedMenu,
-  suggestedRoutes: getSuggestedRoutes,
-  taxonomys: fetchTaxonomys,
-  authors: getAuthors
-}
-
 async function fetchContentById (params, headers) {
+  const fetchFunctionsMap = {
+    node: fetchFormattedNode
+  }
+
+  if (!config.eventsApi.getBackendSourceToggle()) {
+    fetchFunctionsMap.event = fetchEventById
+  }
+
   if (params && params.type && params.id) {
     const type = params.type
     const id = params.id
-    const fetchFunction = fetchFunctions[type]
+    const fetchFunction = fetchFunctionsMap[type]
+
     if (fetchFunction) {
       try {
         let result = await fetchFunction(id, {
@@ -94,9 +75,34 @@ async function fetchContentById (params, headers) {
 }
 
 async function fetchContentByType (pathParams, queryStringParameters) {
+  const typeFunctionsMap = {
+    announcements: fetchAnnouncements,
+    articles: fetchArticles,
+    blog: fetchBlog,
+    blogs: fetchBlogs,
+    contacts: fetchContacts,
+    counsellorCta: fetchCounsellorCta,
+    course: fetchCourse,
+    courses: fetchCourses,
+    disaster: fetchDisaster,
+    documents: fetchDocuments,
+    events: fetchEvents,
+    mainMenu: fetchMainMenu,
+    nodes: fetchNodes,
+    offices: fetchOffices,
+    officesRaw: fetchOfficesRaw,
+    persons: fetchPersons,
+    search: runSearch,
+    siteMap: fetchFormattedMenu,
+    suggestedRoutes: getSuggestedRoutes,
+    taxonomys: fetchTaxonomys,
+    authors: getAuthors
+  }
+
   if (pathParams && pathParams.type) {
     const type = pathParams.type
-    const fetchFunction = fetchContentTypeFunctions[type]
+    const fetchFunction = typeFunctionsMap[type]
+
     if (fetchFunction) {
       try {
         let result = await fetchFunction(queryStringParameters)

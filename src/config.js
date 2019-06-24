@@ -8,6 +8,9 @@ module.exports = {
   eventsApi: {
     hostname: process.env.EVENTS_HOSTNAME,
     endpoint: process.env.EVENTS_API_ENDPOINT,
-    countEndpoint: process.env.EVENTS_API_COUNT_ENDPOINT
+    countEndpoint: process.env.EVENTS_API_COUNT_ENDPOINT,
+
+    // TODO: remove this feature flag function when new events backend is ready to be enabled
+    getBackendSourceToggle: () => process.env.EVENTS_BACKEND_SOURCE_DRUPAL_8_TOGGLE
   }
 }
