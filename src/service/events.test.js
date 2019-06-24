@@ -32,7 +32,7 @@ describe('Event Service for D7', () => {
 
   beforeEach(() => {
     eventClientCountStub.returns([1, 2, 3])
-    getBackendSourceToggleStub.returns(false)
+    getBackendSourceToggleStub.returns('false')
   })
 
   afterEach(() => {
@@ -163,7 +163,7 @@ describe('Event Service', () => {
   describe('fetchEvents', () => {
     it('should return response in the desired format', async() => {
       const getBackendSourceToggleStub = sinon.stub(config.eventsApi, 'getBackendSourceToggle')
-      getBackendSourceToggleStub.returns(true)
+      getBackendSourceToggleStub.returns('true')
 
       const results = await events.fetchEvents()
       results.should.be.an('object')

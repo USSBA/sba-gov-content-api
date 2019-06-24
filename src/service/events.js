@@ -158,7 +158,7 @@ async function fetchTotalLength (params) {
 // all other functions in this file can also be removed when feature flag is removed
 async function fetchEvents (query) {
   let result
-  if (config.eventsApi.getBackendSourceToggle()) {
+  if (config.eventsApi.getBackendSourceToggle() === 'true') {
     let results = [{ id: 1234, title: 'Mock Event found by fetchEvents function' }]
     results = results.filter(item => item)
 

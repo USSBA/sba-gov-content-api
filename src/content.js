@@ -28,7 +28,7 @@ async function fetchContentById (params, headers) {
     node: fetchFormattedNode
   }
 
-  if (!config.eventsApi.getBackendSourceToggle()) {
+  if (config.eventsApi.getBackendSourceToggle() !== 'true') {
     fetchFunctionsMap.event = fetchEventById
   }
 
