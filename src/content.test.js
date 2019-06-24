@@ -35,7 +35,7 @@ describe('# Content Handler', () => {
     it('should respond with event data when a valid id is given in the path', async () => {
       let data = { title: 'thisisatitle' }
 
-      getBackendSourceToggleStub.returns(false)
+      getBackendSourceToggleStub.returns('false')
       eventStub.withArgs(1).returns(data)
 
       let expected = { statusCode: HttpStatus.OK, body: data }
@@ -45,7 +45,7 @@ describe('# Content Handler', () => {
     })
 
     it('should respond with a 404 when an invalid id is given in the path', async () => {
-      getBackendSourceToggleStub.returns(false)
+      getBackendSourceToggleStub.returns('false')
       eventStub.returns(null)
 
       let expected = { statusCode: HttpStatus.NOT_FOUND, body: 'Unable to find event with id 1' }
@@ -56,7 +56,7 @@ describe('# Content Handler', () => {
 
     it('should display invalid endpoint message for event data with getBackendSourceToggle set to true', async () => {
       const id = 1
-      getBackendSourceToggleStub.returns(true)
+      getBackendSourceToggleStub.returns('true')
 
       let expected = { statusCode: HttpStatus.NOT_FOUND, body: 'Unknown type event' }
       let result = await contentHandler.fetchContentById({ type: 'event', id })
@@ -67,7 +67,7 @@ describe('# Content Handler', () => {
 
   describe('fetchContentById', () => {
     beforeEach(() => {
-      getBackendSourceToggleStub.returns(true)
+      getBackendSourceToggleStub.returns('true')
     })
 
     it('should display invalid endpoint message for unknown data type', async () => {
@@ -90,7 +90,7 @@ describe('# Content Handler', () => {
 
   describe('fetchContentByType', () => {
     beforeEach(() => {
-      getBackendSourceToggleStub.returns(true)
+      getBackendSourceToggleStub.returns('true')
     })
 
     it('should display invalid endpoint message for unknown data type', async () => {
