@@ -8,7 +8,9 @@
     "test": "CLOUDSEARCH_OFFICE_ENDPOINT=csoffice.test CLOUDSEARCH_SEARCH_ENDPOINT=cs.test CONTENT_BUCKET=my-bucket ZIP_CODE_DYNAMODB_TABLE=zipcodetable NODE_ENV=test mocha \"src/**/*.test.js\"",
     "test-int": "CLOUDSEARCH_OFFICE_ENDPOINT=doc-automated-testing-offices-xjifz4ykng45x326ysoly4eygi.us-east-1.cloudsearch.amazonaws.com CLOUDSEARCH_SEARCH_ENDPOINT=cs.test CONTENT_BUCKET=my-bucket ZIP_CODE_DYNAMODB_TABLE=ZipCodesLower NODE_ENV=test mocha \"src/**/*.integration-test.js\"",
     "lint-no-fix": "standard",
-    "lint": "standard --fix  || true"
+    "lint": "standard --fix  || true",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -37,6 +39,8 @@
     "json2csv": "^4.3.2",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
-    "moment-timezone": "^0.5.23"
-  }
+    "moment-timezone": "^0.5.23",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
