@@ -19,7 +19,8 @@ const { fetchBlogs, fetchBlog } = require('./service/blogs.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { fetchDocuments } = require('./service/documents.js')
 const { fetchOffices } = require('./service/office-search.js')
-const { fetchEvents } = config.eventsApi.getBackendSourceToggle() !== 'true' ? require('./service/events.js') : require('./service/events-search.js')
+const events = config.eventsApi.getBackendSourceToggle() !== 'true' ? require('./service/events.js') : require('./service/events-search.js')
+const { fetchEvents } = events
 const { runSearch } = require('./service/search.js')
 const { getSuggestedRoutes } = require('./service/suggested-routes.js')
 
