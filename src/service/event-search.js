@@ -18,7 +18,7 @@ async function runSearch (params) {
     region: 'us-east-1',
     apiVersions: '2013-01-01'
   })
-  console.log('BB')
+  console.log('BB--', params)
   const result = await csd.search(params).promise()
   console.log('BC')
   return result
