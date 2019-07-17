@@ -12,12 +12,15 @@ function formatString (string) {
 
 // for testing purposes
 async function runSearch (params) {
+  console.log('BA')
   csd = csd || new aws.CloudSearchDomain({
     endpoint: config.cloudSearch.eventEndpoint,
     region: 'us-east-1',
     apiVersions: '2013-01-01'
   })
+  console.log('BB')
   const result = await csd.search(params).promise()
+  console.log('BC')
   return result
 }
 
