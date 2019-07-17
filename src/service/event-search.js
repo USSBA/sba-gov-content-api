@@ -11,14 +11,14 @@ function formatString (string) {
 }
 
 // for testing purposes
-async function runSearch(params) {
-    csd = csd || new aws.CloudSearchDomain({
-        endpoint: config.get('cloudSearch').eventEndpoint,
-        region: 'us-east-1',
-        apiVersions: '2013-01-01'
-    })
-    const result = await csd.search(params).promise()
-    return result
+async function runSearch (params) {
+  csd = csd || new aws.CloudSearchDomain({
+    endpoint: config.get('cloudSearch').eventEndpoint,
+    region: 'us-east-1',
+    apiVersions: '2013-01-01'
+  })
+  const result = await csd.search(params).promise()
+  return result
 }
 
 function buildQuery (query) {
@@ -61,55 +61,55 @@ function buildParams (query, geo) {
   return params
 }
 
-async function fetchEvents(query) {
-	console.log('A--')
-    const queryObj = query || {}
-    const {
+async function fetchEvents (query) {
+  console.log('A--')
+  const queryObj = query || {}
+  const {
         address
     } = queryObj
-    let geo
+  let geo
     // if (address) {
     //     geo = await computeLocation(address)
     // } else {
     //     geo = parseGeocodeString(mapCenter)
     // }
 
-    //const params = buildParams(queryObj, geo)
-    const params = buildParams(queryObj, {})
-    try {
+    // const params = buildParams(queryObj, geo)
+  const params = buildParams(queryObj, {})
+  try {
     	console.log('B--')
-        const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
-        const hits = result.hits
-        const newHitList = hits.hit.map(item => {
-            let _item = item
-            if (item && item.exprs && item.exprs.distance >= 0) {
-                if (!address) {
-                    _item = Object.assign({}, item)
-                    delete _item.exprs
-                } else {
-                    _item = Object.assign({}, item, {
-                        exprs: {
-                            distance: item.exprs.distance / kilometersPerMile
-                        }
-                    })
-                }
+    const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
+    const hits = result.hits
+    const newHitList = hits.hit.map(item => {
+      let _item = item
+      if (item && item.exprs && item.exprs.distance >= 0) {
+        if (!address) {
+          _item = Object.assign({}, item)
+          delete _item.exprs
+        } else {
+          _item = Object.assign({}, item, {
+            exprs: {
+              distance: item.exprs.distance / kilometersPerMile
             }
-            return _item
-        })
-        console.log('C--')
-        return Object.assign({}, hits, {
-            hit: newHitList
-        })
-    } catch (err) {
+          })
+        }
+      }
+      return _item
+    })
+    console.log('C--')
+    return Object.assign({}, hits, {
+      hit: newHitList
+    })
+  } catch (err) {
     	console.log('D--')
-        console.error(err, err.stack)
-        throw new Error('Failed to search cloudsearch for events')
-    }
+    console.error(err, err.stack)
+    throw new Error('Failed to search cloudsearch for events')
+  }
 }
 
 module.exports = {
-    runSearch,
-    buildQuery,
-    buildParams,
-    fetchEvents
+  runSearch,
+  buildQuery,
+  buildParams,
+  fetchEvents
 }
