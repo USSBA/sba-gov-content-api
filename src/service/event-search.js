@@ -65,7 +65,7 @@ function buildParams (query, geo) {
 }
 
 async function fetchEvents (query) {
-  console.log('A--')
+  console.log('A--', query)
   const queryObj = query || {}
   const {
         address
