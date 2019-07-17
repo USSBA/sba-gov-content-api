@@ -26,7 +26,7 @@ describe('eventSearch', () => {
   })
   describe('buildQuery', () => {
     it('should format the query to search the fields, description, name and summary', () => {
-      const expected = "description: 'test' name: 'test' summary: 'test'"
+      const expected = "(or description: 'test' name: 'test' summary: 'test')"
       const result = eventSearch.buildQuery('test')
       result.should.equal(expected)
     })

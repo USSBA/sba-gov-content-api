@@ -26,7 +26,7 @@ async function runSearch (params) {
 
 function buildQuery (query) {
   const queryStatements = []
-  let queryString
+  let queryString = "type: 'event'"
 
   if (query) {
     const fieldsToSearch = ['description', 'name', 'summary']
@@ -35,7 +35,7 @@ function buildQuery (query) {
     }
   }
   if (queryStatements.length > 1) {
-    queryString = queryStatements.join(' ')
+    queryString = `(or ${queryStatements.join(' ')})`
   }
   return queryString
 }
