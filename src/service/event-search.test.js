@@ -33,19 +33,19 @@ describe('eventSearch', () => {
   })
   describe('buildParams', () => {
     it('should build a parameters object', () => {
-      const params = {
-        q: 'test'
-      }
-      const expected = {
-        query: 'description: \'test\' name: \'test\' summary: \'test\'',
-        return: '_all_fields',
-        sort: 'title asc',
-        queryParser: 'structured',
-        size: 20,
-        start: 0
-      }
-      //const result = eventSearch.buildParams(params, {})
-      //result.should.equal(expected)
+      // const params = {
+      //   q: 'test'
+      // }
+      // const expected = {
+      //   query: 'description: \'test\' name: \'test\' summary: \'test\'',
+      //   return: '_all_fields',
+      //   sort: 'title asc',
+      //   queryParser: 'structured',
+      //   size: 20,
+      //   start: 0
+      // }
+      // const result = eventSearch.buildParams(params, {})
+      // result.should.equal(expected)
     })
   })
   describe('fetchEvents', () => {
