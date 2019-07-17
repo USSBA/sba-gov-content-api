@@ -48,6 +48,7 @@ function buildParams (query, geo) {
   const defaultStart = 0
   let params = {
     query: queryString,
+    filterQuery: null,
     return: '_all_fields',
     sort: 'title asc',
     queryParser: 'structured',
