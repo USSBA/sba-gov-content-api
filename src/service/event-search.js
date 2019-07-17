@@ -67,7 +67,7 @@ async function fetchEvents (query) {
   const {
         address
     } = queryObj
-  let geo
+  // let geo
     // if (address) {
     //     geo = await computeLocation(address)
     // } else {
@@ -77,7 +77,7 @@ async function fetchEvents (query) {
     // const params = buildParams(queryObj, geo)
   const params = buildParams(queryObj, {})
   try {
-    	console.log('B--')
+    console.log('B--')
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
     const hits = result.hits
     const newHitList = hits.hit.map(item => {
@@ -89,7 +89,7 @@ async function fetchEvents (query) {
         } else {
           _item = Object.assign({}, item, {
             exprs: {
-              distance: item.exprs.distance / kilometersPerMile
+              distance: 0// item.exprs.distance / kilometersPerMile
             }
           })
         }
@@ -101,7 +101,7 @@ async function fetchEvents (query) {
       hit: newHitList
     })
   } catch (err) {
-    	console.log('D--')
+    console.log('D--')
     console.error(err, err.stack)
     throw new Error('Failed to search cloudsearch for events')
   }

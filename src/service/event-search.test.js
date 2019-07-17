@@ -3,7 +3,7 @@
 let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
-let expect = chai.expect
+// let expect = chai.expect
 
 let eventSearch = require('./event-search.js')
 
@@ -13,7 +13,7 @@ let exampleCloudSearchEmptyResponse = {
 }
 
 describe('eventSearch', () => {
-  let stubGet
+  // let stubGet
   let stubRunSearch
   before(() => {
     stubRunSearch = sinon.stub(eventSearch, 'runSearch')
@@ -45,6 +45,7 @@ describe('eventSearch', () => {
         start: 0
       }
       const result = eventSearch.buildParams(params, {})
+      result.should.equal(expected)
     })
   })
   describe('fetchEvents', () => {
