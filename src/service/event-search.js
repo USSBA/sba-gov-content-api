@@ -13,7 +13,7 @@ function formatString (string) {
 // for testing purposes
 async function runSearch (params) {
   csd = csd || new aws.CloudSearchDomain({
-    endpoint: config.get('cloudSearch').eventEndpoint,
+    endpoint: config.cloudSearch.eventEndpoint,
     region: 'us-east-1',
     apiVersions: '2013-01-01'
   })
