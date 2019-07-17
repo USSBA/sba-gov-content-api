@@ -79,7 +79,9 @@ async function fetchEvents (query) {
   try {
     console.log('B--')
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
+    console.log('B2--')
     const hits = result.hits
+    console.log('B3--', hits.length)
     const newHitList = hits.hit.map(item => {
       let _item = item
       if (item && item.exprs && item.exprs.distance >= 0) {
