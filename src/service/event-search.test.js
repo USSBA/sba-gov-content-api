@@ -3,13 +3,40 @@
 let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
-// let expect = chai.expect
+let expect = chai.expect
 
 let eventSearch = require('./event-search.js')
-
-let exampleCloudSearchEmptyResponse = {
-  status: { timems: 31, rid: '//mU9b4s+C0KlCOm' },
-  hits: { found: 0, start: 0, hit: [] }
+let mockCloudSearchResponseWithEvents = {
+    status: {
+        timems: 31,
+        rid: '//mU9b4s+C0KlCOm'
+    },
+    hits: {
+        "found": 1,
+        "start": 0,
+        "hit": [{
+            "id": "19164",
+            "fields": {
+                "location_city": ["Baltimore"],
+                "location_state": ["MD"],
+                "location_zipcode": ["21202"],
+                "location_name": ["Spark Baltimore"],
+                "organizer_email": ["organizingolivia@email.com"],
+                "language": ["en"],
+                "description": ["There will be an event. That is all."],
+                "enddatetime": ["2019-08-31T22:00:00Z"],
+                "summary": ["This is the event summary section."],
+                "recurring_enddatetime": ["2019-07-20T00:00:00Z"],
+                "startdatetime": ["2019-08-31T16:00:00Z"],
+                "event_type": ["Online"],
+                "timezone": ["Eastern time zone"],
+                "organizer_phone_number": ["100-200-3000"],
+                "organizer_name": ["Organizing Olivia"],
+                "location_street_address": ["8 Market Place"],
+                "name": ["Test Event (non-recurring)"]
+            }
+        }]
+    }
 }
 
 describe('eventSearch', () => {
@@ -31,21 +58,27 @@ describe('eventSearch', () => {
       result.should.equal(expected)
     })
   })
-  describe.only('buildParams', () => {
+  describe('buildParams', () => {
     it('should build a parameters object with a query', () => {
       const params = {
         q: 'test'
       }
-      const expected = {
-        query: 'description: \'test\' name: \'test\' summary: \'test\'',
+      const expected = JSON.stringify({
+        query: '(or description: \'test\' name: \'test\' summary: \'test\')',
         return: '_all_fields',
-        sort: 'title asc',
+        sort: 'startdatetime asc',
         queryParser: 'structured',
         size: 20,
         start: 0
-      }
-      const result = eventSearch.buildParams(params, {})
+      })
+      const result = JSON.stringify(eventSearch.buildParams(params, {}))
       result.should.equal(expected)
+    })
+    it('should build a parameters object with a date', () => {
+      const paramsWithNoQuery = {}
+      const { query } = eventSearch.buildParams(paramsWithNoQuery, {})
+      const result = query.indexOf('startdatetime') !== -1
+      result.should.equal(true)
     })
   })
   describe('fetchEvents', () => {
@@ -53,8 +86,10 @@ describe('eventSearch', () => {
       const params = {
         q: 'test'
       }
-      stubRunSearch.returns(exampleCloudSearchEmptyResponse)
-      console.log('A--', await eventSearch.fetchEvents(params))
+      const expected = JSON.stringify(mockCloudSearchResponseWithEvents.hits)
+      stubRunSearch.returns(mockCloudSearchResponseWithEvents)
+      const result = JSON.stringify(await eventSearch.fetchEvents(params))
+      result.should.equal(expected)
     })
   })
 })
