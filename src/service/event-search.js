@@ -27,7 +27,7 @@ async function runSearch (params) {
 
 function buildQuery (query) {
   const queryStatements = []
-  let queryString = `startdatetime: ['${moment.utc().format()}',]`
+  let queryString = `startdatetime: ['${moment.utc().format()}',}`
 
   console.log('C---', queryString)
 
