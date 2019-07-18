@@ -11,25 +11,19 @@ function formatString (string) {
   return result
 }
 
-// for testing purposes
 async function runSearch (params) {
-  console.log('BA')
   csd = csd || new aws.CloudSearchDomain({
     endpoint: config.cloudSearch.eventEndpoint,
     region: 'us-east-1',
     apiVersions: '2013-01-01'
   })
-  console.log('BB--', params)
   const result = await csd.search(params).promise()
-  console.log('BC')
   return result
 }
 
 function buildQuery (query) {
   const queryStatements = []
   let queryString = `startdatetime: ['${moment.utc().format()}',}`
-
-  console.log('C---', queryString)
 
   if (query) {
     const fieldsToSearch = ['description', 'name', 'summary']
@@ -51,7 +45,6 @@ function buildParams (query, geo) {
   const defaultStart = 0
   let params = {
     query: queryString,
-    filterQuery: null,
     return: '_all_fields',
     sort: 'startdatetime asc',
     queryParser: 'structured',
@@ -69,12 +62,8 @@ function buildParams (query, geo) {
 }
 
 async function fetchEvents (query) {
-  console.log('A--', query)
   const queryObj = query || {}
-  const {
-        address
-    } = queryObj
-  // let geo
+  	// let geo
     // if (address) {
     //     geo = await computeLocation(address)
     // } else {
@@ -84,11 +73,8 @@ async function fetchEvents (query) {
     // const params = buildParams(queryObj, geo)
   const params = buildParams(queryObj, {})
   try {
-    console.log('B--')
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
-    console.log('B2--')
     const hits = result.hits
-    console.log('B3--', hits.length)
     const newHitList = hits.hit.map(item => {
       let _item = item
       if (item && item.exprs && item.exprs.distance >= 0) {
@@ -98,6 +84,8 @@ async function fetchEvents (query) {
         } else {
           _item = Object.assign({}, item, {
             exprs: {
+             // for now put a 0 but later this will have to add in the distance in order
+             // to filter by geolocation
               distance: 0// item.exprs.distance / kilometersPerMile
             }
           })
@@ -105,12 +93,10 @@ async function fetchEvents (query) {
       }
       return _item
     })
-    console.log('C--')
     return Object.assign({}, hits, {
       hit: newHitList
     })
   } catch (err) {
-    console.log('D--')
     console.error(err, err.stack)
     throw new Error('Failed to search cloudsearch for events')
   }
