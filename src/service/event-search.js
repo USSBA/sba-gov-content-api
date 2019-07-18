@@ -1,5 +1,6 @@
 const config = require('../config')
 const aws = require('aws-sdk')
+const moment = require('moment-timezone')
 let csd
 
 function formatString (string) {
@@ -26,7 +27,9 @@ async function runSearch (params) {
 
 function buildQuery (query) {
   const queryStatements = []
-  let queryString = ''
+  let queryString = `startdatetime: ['${moment.utc().format()}',]`
+
+  console.log('C---', queryString)
 
   if (query) {
     const fieldsToSearch = ['description', 'name', 'summary']
