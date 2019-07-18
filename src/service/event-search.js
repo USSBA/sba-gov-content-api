@@ -26,7 +26,7 @@ async function runSearch (params) {
 
 function buildQuery (query) {
   const queryStatements = []
-  let queryString = "type: 'event'"
+  let queryString = ''
 
   if (query) {
     const fieldsToSearch = ['description', 'name', 'summary']
