@@ -50,7 +50,7 @@ function buildParams (query, geo) {
     query: queryString,
     filterQuery: null,
     return: '_all_fields',
-    sort: 'title asc',
+    sort: 'startdatetime asc',
     queryParser: 'structured',
     size: pageSize || defaultPageSize,
     start: start || defaultStart
