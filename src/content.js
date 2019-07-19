@@ -18,8 +18,11 @@ const { getAuthors } = require('./service/authors.js')
 const { fetchBlogs, fetchBlog } = require('./service/blogs.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { fetchDocuments } = require('./service/documents.js')
-const { fetchEvents, fetchEventById } = require('./service/events.js')
 const { fetchOffices } = require('./service/office-search.js')
+const d7Events = require('./service/events.js')
+const d8Events = require('./service/event-search.js')
+const events = config.eventsApi.getBackendSourceToggle() !== 'true' ? d7Events : d8Events
+const { fetchEvents } = events
 const { runSearch } = require('./service/search.js')
 const { getSuggestedRoutes } = require('./service/suggested-routes.js')
 
@@ -29,7 +32,7 @@ async function fetchContentById (params, headers) {
   }
 
   if (config.eventsApi.getBackendSourceToggle() !== 'true') {
-    fetchFunctionsMap.event = fetchEventById
+    fetchFunctionsMap.event = events.fetchEventById
   }
 
   if (params && params.type && params.id) {
