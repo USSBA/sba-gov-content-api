@@ -39,7 +39,7 @@ function buildQuery (query) {
 
 function buildParams (query, geo) {
   const { pageSize, start, q } = query // eslint-disable-line id-length
-  //const { latitude, longitude } = geo
+  // const { latitude, longitude } = geo
   const queryString = buildQuery(q)
   const defaultPageSize = 20
   const defaultStart = 0

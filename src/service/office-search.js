@@ -16,7 +16,6 @@ let { computeLocation } = require('./location.js')
 
 // for testing purposes
 async function runSearch (params) {
-  console.log('EE--', params)
   const result = await csd.search(params).promise()
   return result
 }
