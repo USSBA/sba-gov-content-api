@@ -39,8 +39,8 @@ function buildQuery (query) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, q } = query // eslint-disable-line id-length
-  // const { latitude, longitude } = geo
+  const { pageSize, start, distance, q } = query // eslint-disable-line id-length
+  const { latitude, longitude } = geo
   const queryString = buildQuery(q)
   const defaultPageSize = 20
   const defaultStart = 0
@@ -52,6 +52,7 @@ function buildParams (query, geo) {
     size: pageSize || defaultPageSize,
     start: start || defaultStart
   }
+
   /*
   The event-search.js file is a fork of the office-search.js file.
 
@@ -59,13 +60,15 @@ function buildParams (query, geo) {
 
   I decided to keep in pieces that reference geolocation, such as this line, so as to make future tickets that reference distance functionality easier to implement.
   */
-  // if (latitude && longitude) {
-  //   params = Object.assign({}, params, {
-  //     sort: 'distance asc',
-  //     return: '_all_fields,distance',
-  //     expr: `{"distance":"haversin(${latitude},${longitude},geolocation.latitude,geolocation.longitude)"}`
-  //   })
-  // }
+  if (latitude && longitude) {
+    const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
+    params = Object.assign({}, params, {
+      // sort: 'distance asc',
+      return: '_all_fields,distance',
+      // expr: `{"distance":"haversin(${latitude},${longitude},geolocation.latitude,geolocation.longitude)"}`
+      expr: `{"fq"="location:['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
+    })
+  }
   return params
 }
 
