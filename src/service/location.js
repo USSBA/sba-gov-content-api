@@ -1,3 +1,5 @@
+const { getBoundsOfDistance } = require('geolib')
+
 const config = require('../config')
 const dynamoDbClient = require('../clients/dynamo-db-client.js')
 
@@ -33,4 +35,15 @@ async function computeLocation (address) {
     throw new Error("Failed to geocode user's location")
   }
 }
+
+function computeBoundingBoxWithMiles (centerLat, centerLong, distance) {
+  const metersPerMile = 1609.344
+  const distanceInMiles = distance * metersPerMile
+  const bounds = getBoundsOfDistance({ latitude: centerLat, longitude: centerLong }, distanceInMiles)
+
+  return {northeast: bounds[1],
+    southwest: bounds[0]}
+}
+
+module.exports.computeBoundingBoxWithMiles = computeBoundingBoxWithMiles
 module.exports.computeLocation = computeLocation

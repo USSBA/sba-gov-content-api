@@ -1,6 +1,7 @@
 const config = require('../config')
 const aws = require('aws-sdk')
 const moment = require('moment-timezone')
+const location = require('./location.js')
 let csd
 
 function formatString (string) {
