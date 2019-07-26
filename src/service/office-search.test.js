@@ -3,10 +3,8 @@
 let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
-let expect = chai.expect
 
 let officeSearch = require('./office-search.js')
-let location = require('./location.js')
 let dynamoDbClient = require('../clients/dynamo-db-client.js')
 
 let exampleDynamoDBResponse = {
@@ -109,24 +107,6 @@ describe('# Office Search', () => {
   afterEach(() => {
     dynamoDbClientQueryStub.reset()
     officeSearchRunSearchStub.reset()
-  })
-
-  describe('computeLocation', () => {
-    it('should return the lat and long from the first item that DynamoDB returns', async () => {
-      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
-      let result = await location.computeLocation('11111')
-      result.should.eql({ latitude: '41.033347', longitude: '-73.568040' })
-    })
-
-    it('should return null if the zip code is invalid', async () => {
-      dynamoDbClientQueryStub.returns({
-        Items: [],
-        Count: 0,
-        ScannedCount: 1
-      })
-      let result = await location.computeLocation('00000')
-      expect(result).to.eql(null)
-    })
   })
 
   describe('officeSearch', () => {

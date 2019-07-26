@@ -146,12 +146,13 @@ function buildParams (query, geo) {
 async function fetchOffices (query) {
   const queryObj = query || {}
   const { address, mapCenter } = queryObj
-  let geo
-  if (address) {
-    geo = await location.computeLocation(address)
-  } else {
-    geo = location.parseGeocodeString(mapCenter)
-  }
+  // let geo
+  // if (address) {
+  //   geo = await location.computeLocation(address)
+  // } else {
+  //   geo = location.parseGeocodeString(mapCenter)
+  // }
+  let geo = await location.generateGeocode(address, mapCenter)
   const params = buildParams(queryObj, geo)
   try {
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing

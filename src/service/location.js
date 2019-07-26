@@ -6,6 +6,16 @@ const dynamoDbClient = require('../clients/dynamo-db-client.js')
 const metersPerMile = 1609.344
 const kilometersPerMile = metersPerMile / 1000
 
+async function generateGeocode (address, mapCenter) {
+  let geo
+  if (address) {
+    geo = await computeLocation(address)
+  } else {
+    geo = parseGeocodeString(mapCenter)
+  }
+  return geo
+}
+
 async function computeLocation (address) {
   if (!address) {
     return {
@@ -60,6 +70,7 @@ function parseGeocodeString (geocodeString) {
 }
 
 module.exports.kilometersPerMile = kilometersPerMile
+module.exports.generateGeocode = generateGeocode
 module.exports.computeBoundingBoxWithMiles = computeBoundingBoxWithMiles
 module.exports.computeLocation = computeLocation
 module.exports.parseGeocodeString = parseGeocodeString

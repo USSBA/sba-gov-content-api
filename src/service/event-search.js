@@ -73,13 +73,14 @@ function buildParams (query, geo) {
 
 async function fetchEvents (query) {
   const queryObj = query || {}
-  let geo
+  // let geo
   const { address, mapCenter } = queryObj
-  if (address) {
-    geo = await location.computeLocation(address)
-  } else {
-    geo = location.parseGeocodeString(mapCenter)
-  }
+  let geo = await location.generateGeocode(address, mapCenter)
+  // if (address) {
+  //   geo = await location.computeLocation(address)
+  // } else {
+  //   geo = location.parseGeocodeString(mapCenter)
+  // }
 
   const params = buildParams(queryObj, geo)
   // const params = buildParams(queryObj, {})
