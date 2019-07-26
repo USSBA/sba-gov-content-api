@@ -6,13 +6,13 @@ const csd = new aws.CloudSearchDomain({
   apiVersions: '2013-01-01'
 })
 
-const kilometersPerMile = 1.60934
+// const kilometersPerMile = 1.60934
 const defaultOfficeType = 'SBA district office'
 const defaultOfficeGeocode = {
   latitude: 38.893311,
   longitude: -77.014647
 }
-let { computeLocation } = require('./location.js')
+let location = require('./location.js')
 
 // for testing purposes
 async function runSearch (params) {
@@ -134,13 +134,13 @@ function buildParams (query, geo) {
   return params
 }
 
-function parseGeocodeString (geocodeString) {
-  const [latitude, longitude] = decodeURI(geocodeString).split(',')
-  return {
-    latitude: latitude,
-    longitude: longitude
-  }
-}
+// function parseGeocodeString (geocodeString) {
+//   const [latitude, longitude] = decodeURI(geocodeString).split(',')
+//   return {
+//     latitude: latitude,
+//     longitude: longitude
+//   }
+// }
 
 /* This is separate from search because it will need to have custom search to handle searching by specific indecies */
 async function fetchOffices (query) {
@@ -148,9 +148,9 @@ async function fetchOffices (query) {
   const { address, mapCenter } = queryObj
   let geo
   if (address) {
-    geo = await computeLocation(address)
+    geo = await location.computeLocation(address)
   } else {
-    geo = parseGeocodeString(mapCenter)
+    geo = location.parseGeocodeString(mapCenter)
   }
   const params = buildParams(queryObj, geo)
   try {
@@ -164,7 +164,7 @@ async function fetchOffices (query) {
             _item = Object.assign({}, item)
             delete _item.exprs
           } else {
-            _item = Object.assign({}, item, { exprs: { distance: item.exprs.distance / kilometersPerMile } })
+            _item = Object.assign({}, item, { exprs: { distance: item.exprs.distance / location.kilometersPerMile } })
           }
         }
         return _item
@@ -182,7 +182,7 @@ async function fetchOffices (query) {
 }
 
 module.exports.fetchOffices = fetchOffices
-module.exports.computeLocation = computeLocation
+// module.exports.computeLocation = computeLocation
 
 // for testing purposes
 module.exports.runSearch = runSearch

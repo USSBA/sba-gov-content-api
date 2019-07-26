@@ -65,7 +65,6 @@ function buildParams (query, geo) {
     params = Object.assign({}, params, {
       // sort: 'distance asc',
       return: '_all_fields,distance',
-      // expr: `{"distance":"haversin(${latitude},${longitude},geolocation.latitude,geolocation.longitude)"}`
       expr: `{"fq"="location:['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
     })
   }
@@ -74,34 +73,35 @@ function buildParams (query, geo) {
 
 async function fetchEvents (query) {
   const queryObj = query || {}
-  // let geo
-  // if (address) {
-  //     geo = await computeLocation(address)
-  // } else {
-  //     geo = parseGeocodeString(mapCenter)
-  // }
+  let geo
+  const { address, mapCenter } = queryObj
+  if (address) {
+    geo = await location.computeLocation(address)
+  } else {
+    geo = location.parseGeocodeString(mapCenter)
+  }
 
-  // const params = buildParams(queryObj, geo)
-  const params = buildParams(queryObj, {})
+  const params = buildParams(queryObj, geo)
+  // const params = buildParams(queryObj, {})
   try {
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
     const hits = result.hits
     const newHitList = hits.hit.map(item => {
       let _item = item
       if (item && item.exprs && item.exprs.distance >= 0) {
-        _item = Object.assign({}, item)
-        // if (!address) {
-        //   _item = Object.assign({}, item)
-        //   delete _item.exprs
-        // } else {
-        //   _item = Object.assign({}, item, {
-        //     exprs: {
-        //      // for now put a 0 but later this will have to add in the distance in order
-        //      // to filter by geolocation
-        //       distance: 0// item.exprs.distance / kilometersPerMile
-        //     }
-        //   })
-        // }
+        // _item = Object.assign({}, item)
+        if (!address) {
+          _item = Object.assign({}, item)
+          delete _item.exprs
+        } else {
+          _item = Object.assign({}, item, {
+            exprs: {
+             // for now put a 0 but later this will have to add in the distance in order
+             // to filter by geolocation
+              distance: 0// item.exprs.distance / kilometersPerMile
+            }
+          })
+        }
       }
       return _item
     })

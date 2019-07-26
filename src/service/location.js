@@ -3,6 +3,9 @@ const { getBoundsOfDistance } = require('geolib')
 const config = require('../config')
 const dynamoDbClient = require('../clients/dynamo-db-client.js')
 
+const metersPerMile = 1609.344
+const kilometersPerMile = metersPerMile / 1000
+
 async function computeLocation (address) {
   if (!address) {
     return {
@@ -21,6 +24,9 @@ async function computeLocation (address) {
   try {
     const result = await dynamoDbClient.queryDynamoDb(params)
     // assumes that there is only one record in DynamoDB per zipcode
+    if (result.Items.length > 1) {
+      console.error('DynmoDB has more then 1 record per zipcode', result)
+    }
     const item = result.Items[0]
     if (item) {
       return {
@@ -37,7 +43,6 @@ async function computeLocation (address) {
 }
 
 function computeBoundingBoxWithMiles (centerLat, centerLong, distance) {
-  const metersPerMile = 1609.344
   const distanceInMiles = distance * metersPerMile
   const bounds = getBoundsOfDistance({ latitude: centerLat, longitude: centerLong }, distanceInMiles)
 
@@ -45,5 +50,16 @@ function computeBoundingBoxWithMiles (centerLat, centerLong, distance) {
     southwest: bounds[0]}
 }
 
+// from office-search.js
+function parseGeocodeString (geocodeString) {
+  const [latitude, longitude] = decodeURI(geocodeString).split(',')
+  return {
+    latitude: latitude,
+    longitude: longitude
+  }
+}
+
+module.exports.kilometersPerMile = kilometersPerMile
 module.exports.computeBoundingBoxWithMiles = computeBoundingBoxWithMiles
 module.exports.computeLocation = computeLocation
+module.exports.parseGeocodeString = parseGeocodeString
