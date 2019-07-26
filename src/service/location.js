@@ -34,9 +34,6 @@ async function computeLocation (address) {
   try {
     const result = await dynamoDbClient.queryDynamoDb(params)
     // assumes that there is only one record in DynamoDB per zipcode
-    if (result.Items.length > 1) {
-      console.error('DynmoDB has more then 1 record per zipcode', result)
-    }
     const item = result.Items[0]
     if (item) {
       return {
