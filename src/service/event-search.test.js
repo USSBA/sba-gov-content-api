@@ -126,7 +126,7 @@ describe('eventSearch', () => {
       const distance = Math.floor((Math.random() * 200) + 1)
       let result = await eventSearch.fetchEvents({ address: '06870', distance: distance })
       const { latitude, longitude } = exampleDynamoDBResponse['Items'][0]
-      const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
+      // const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
       // const searchParamsString = `{"fq":"location=['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
       // stubRunSearch.calledWith({
       //   query: `startdatetime: ['${moment.utc().format()}',}`,
