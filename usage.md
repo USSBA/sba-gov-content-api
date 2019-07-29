@@ -291,3 +291,10 @@ Example Response
   ]
 }
 ```
+## Events API
+
+Access the events endpoint at `*/events.json`. Will search against AWS Cloudsearch.
+
+| Parameters    | Description
+|---------------|------------------
+| 
