@@ -21,8 +21,7 @@ const { fetchDocuments } = require('./service/documents.js')
 const { fetchOffices } = require('./service/office-search.js')
 const d7Events = require('./service/events.js')
 const d8Events = require('./service/event-search.js')
-// const events = config.eventsApi.getBackendSourceToggle() !== 'true' ? d7Events : d8Events
-const events = d8Events
+const events = config.eventsApi.getBackendSourceToggle() !== 'true' ? d7Events : d8Events
 const { fetchEvents } = events
 const { runSearch } = require('./service/search.js')
 const { getSuggestedRoutes } = require('./service/suggested-routes.js')
