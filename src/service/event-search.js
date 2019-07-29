@@ -64,9 +64,9 @@ function buildParams (query, geo) {
     const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
     params = Object.assign({}, params, {
       // sort: 'distance asc',
-      return: '_all_fields',
+      // return: '_all_fields',
       // expr: `{"fq":"location=[${northeast.latitude},${northeast.longitude},${southwest.latitude},${southwest.longitude}]"}`
-      fq: `{"location:['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
+      fq: `{"location":"['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
     })
   }
   return params
