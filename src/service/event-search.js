@@ -65,7 +65,7 @@ function buildParams (query, geo) {
     params = Object.assign({}, params, {
       // sort: 'distance asc',
       return: '_all_fields,distance',
-      expr: `{"fq":"location=[${northeast.latitude},${northeast.longitude},${southwest.latitude},${southwest.longitude}]"}`
+      expr: `{"fq":"location=['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
     })
   }
   return params
