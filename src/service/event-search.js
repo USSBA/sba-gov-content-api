@@ -66,7 +66,7 @@ function buildParams (query, geo) {
       // sort: 'distance asc',
       return: '_all_fields,distance',
       // expr: `{"fq":"location=[${northeast.latitude},${northeast.longitude},${southwest.latitude},${southwest.longitude}]"}`
-      fq: `{"location:['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
+      filterQuery: `{"location:['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
     })
   }
   return params
