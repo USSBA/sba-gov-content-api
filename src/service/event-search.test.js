@@ -123,8 +123,10 @@ describe('eventSearch', () => {
     it('should enter the lat and long into the params for cloudsearch query', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       stubRunSearch.returns(exampleCloudSearchEmptyResponse)
-      let result = await eventSearch.fetchEvents({ address: '06870', distance: 1 })
-      const { northeast, southwest } = location.computeBoundingBoxWithMiles(41.033347, -73.568040, 1)
+      const distance = Math.floor((Math.random() * 200) + 1)
+      let result = await eventSearch.fetchEvents({ address: '06870', distance: distance })
+      const { latitude, longitude } = exampleDynamoDBResponse['Items'][0]
+      const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
       const searchParamsString = `{"fq"="location:['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
       stubRunSearch.calledWith({
         query: `startdatetime: ['${moment.utc().format()}',}`,
