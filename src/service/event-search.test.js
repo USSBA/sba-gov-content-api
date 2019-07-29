@@ -3,7 +3,7 @@
 let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
-const moment = require('moment-timezone')
+// const moment = require('moment-timezone')
 
 const location = require('./location.js')
 const eventSearch = require('./event-search.js')
@@ -127,7 +127,7 @@ describe('eventSearch', () => {
       let result = await eventSearch.fetchEvents({ address: '06870', distance: distance })
       const { latitude, longitude } = exampleDynamoDBResponse['Items'][0]
       const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
-      const searchParamsString = `{"fq":"location=['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
+      // const searchParamsString = `{"fq":"location=['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
       // stubRunSearch.calledWith({
       //   query: `startdatetime: ['${moment.utc().format()}',}`,
       //   queryParser: 'structured',
