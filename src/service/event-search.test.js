@@ -3,9 +3,9 @@
 let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
-// const moment = require('moment-timezone')
+const moment = require('moment-timezone')
 
-// const location = require('./location.js')
+const location = require('./location.js')
 const eventSearch = require('./event-search.js')
 const dynamoDbClient = require('../clients/dynamo-db-client.js')
 
@@ -125,18 +125,18 @@ describe('eventSearch', () => {
       stubRunSearch.returns(exampleCloudSearchEmptyResponse)
       const distance = Math.floor((Math.random() * 200) + 1)
       let result = await eventSearch.fetchEvents({ address: '06870', distance: distance })
-      // const { latitude, longitude } = exampleDynamoDBResponse['Items'][0]
-      // const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
-      // const searchParamsString = `{"fq":"location=['${northeast.latitude},${northeast.longitude}','${southwest.latitude},${southwest.longitude}']"}`
-      // stubRunSearch.calledWith({
-      //   query: `startdatetime: ['${moment.utc().format()}',}`,
-      //   queryParser: 'structured',
-      //   return: '_all_fields,distance',
-      //   sort: 'startdatetime asc',
-      //   size: 20,
-      //   start: 0,
-      //   expr: searchParamsString
-      // }).should.be.true
+      const { latitude, longitude } = exampleDynamoDBResponse['Items'][0]
+      const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
+      const filterQueryParamsString = `geolocation:['${northeast.latitude},${southwest.longitude}','${southwest.latitude},${northeast.longitude}']`
+      stubRunSearch.calledWith({
+        query: `startdatetime: ['${moment.utc().format()}',}`,
+        queryParser: 'structured',
+        return: '_all_fields',
+        sort: 'startdatetime asc',
+        size: 20,
+        start: 0,
+        filterQuery: filterQueryParamsString
+      }).should.be.true
       result.hit.should.eql(exampleCloudSearchEmptyResponse.hits.hit)
       result.found.should.eql(exampleCloudSearchEmptyResponse.hits.found)
       result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)

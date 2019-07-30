@@ -53,19 +53,9 @@ function buildParams (query, geo) {
     start: start || defaultStart
   }
 
-  /*
-  The event-search.js file is a fork of the office-search.js file.
-
-  Anything that references distance or geolocation stuff purposely does not work.
-
-  I decided to keep in pieces that reference geolocation, such as this line, so as to make future tickets that reference distance functionality easier to implement.
-  */
   if (latitude && longitude) {
     const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
     params = Object.assign({}, params, {
-      // sort: 'distance asc',
-      // return: '_all_fields',
-      // expr: `{"fq":"location=[${northeast.latitude},${northeast.longitude},${southwest.latitude},${southwest.longitude}]"}`
       filterQuery: `geolocation:['${northeast.latitude},${southwest.longitude}','${southwest.latitude},${northeast.longitude}']`
     })
   }
@@ -74,24 +64,16 @@ function buildParams (query, geo) {
 
 async function fetchEvents (query) {
   const queryObj = query || {}
-  // let geo
   const { address, mapCenter } = queryObj
   let geo = await location.generateGeocode(address, mapCenter)
-  // if (address) {
-  //   geo = await location.computeLocation(address)
-  // } else {
-  //   geo = location.parseGeocodeString(mapCenter)
-  // }
 
   const params = buildParams(queryObj, geo)
-  // const params = buildParams(queryObj, {})
   try {
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
     const hits = result.hits
     const newHitList = hits.hit.map(item => {
       let _item = item
       if (item && item.exprs && item.exprs.distance >= 0) {
-        // _item = Object.assign({}, item)
         if (!address) {
           _item = Object.assign({}, item)
           delete _item.exprs
