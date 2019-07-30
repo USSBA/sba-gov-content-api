@@ -56,6 +56,7 @@ function buildParams (query, geo) {
   if (latitude && longitude) {
     const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
     params = Object.assign({}, params, {
+      // geolib and cloudsearch use different corners for the bounding box which needs to be accounted for
       filterQuery: `geolocation:['${northeast.latitude},${southwest.longitude}','${southwest.latitude},${northeast.longitude}']`
     })
   }
