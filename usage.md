@@ -297,4 +297,9 @@ Access the events endpoint at `*/events.json`. Will search against AWS Cloudsear
 
 | Parameters    | Description
 |---------------|------------------
-| 
+|  q            | The search query being used to filter events bases on name, summary, or description
+|  address      | The zip code being used in conjuction with the `distance` parameter to find events in a specific area. This is the zip code in the center of the area
+|  distance     | The size of the area to look for events in. Filters for events within a bounding box based on distance and centered on the `address` parameter
+|  pageSize     | The number of events to return in the response
+|  start        | The first index of the matching documents that will be returned
+|  end          | The last index of the matching documents that will be returned
