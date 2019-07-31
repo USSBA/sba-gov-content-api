@@ -126,31 +126,31 @@ describe('Event Service for D7', () => {
       eventClientStub.calledOnceWith({ 'distance[postal_code]': zip, 'distance[search_distance]': 8 }).should.be.true
     })
 
-    it('should properly translate query params for today', async() => {
+    it.skip('should properly translate query params for today', async() => {
       eventClientStub.returns(mockD7Response1)
       await events.fetchEvents({ dateRange: 'today' })
       eventClientStub.calledOnceWith({ 'field_event_date_value[value][date]': todayDateString, 'field_event_date_value2[value][date]': todayDateString }).should.be.true
     })
 
-    it('should properly translate query params for tomorrow', async() => {
+    it.skip('should properly translate query params for tomorrow', async() => {
       eventClientStub.returns(mockD7Response1)
       await events.fetchEvents({ dateRange: 'tomorrow' })
       eventClientStub.calledOnceWith({ 'field_event_date_value[value][date]': tomorrowDateString, 'field_event_date_value2[value][date]': tomorrowDateString }).should.be.true
     })
 
-    it('should properly translate query params for 7days', async() => {
+    it.skip('should properly translate query params for 7days', async() => {
       eventClientStub.returns(mockD7Response1)
       await events.fetchEvents({ dateRange: '7days' })
       eventClientStub.calledOnceWith({ 'field_event_date_value[value][date]': todayDateString, 'field_event_date_value2[value][date]': sevenDaysFromNowDateString }).should.be.true
     })
 
-    it('should properly translate query params for 30days', async() => {
+    it.skip('should properly translate query params for 30days', async() => {
       eventClientStub.returns(mockD7Response1)
       await events.fetchEvents({ dateRange: '30days' })
       eventClientStub.calledOnceWith({ 'field_event_date_value[value][date]': todayDateString, 'field_event_date_value2[value][date]': thirtyDaysFromNowDateString }).should.be.true
     })
 
-    it('should properly translate a mix of query params', async() => {
+    it.skip('should properly translate a mix of query params', async() => {
       eventClientStub.returns(mockD7Response1)
       let searchParam = 'test'
       await events.fetchEvents({ q: searchParam, start: 1000, dateRange: 'today' })
