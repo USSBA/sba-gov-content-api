@@ -25,7 +25,6 @@ function translateQueryParamsForD7 (query) {
     let range = dateRange.split(',')
     params['field_event_date_value[value][date]'] = range[0]
     params['field_event_date_value2[value][date]'] = range[1]
-  
   }
 
   if (start) {
