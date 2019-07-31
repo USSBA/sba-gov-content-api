@@ -22,30 +22,10 @@ function translateQueryParamsForD7 (query) {
   }
 
   if (dateRange) {
-    let today = moment().format('YYYY-MM-DD')
-
-    switch (dateRange) {
-      case 'today':
-        params['field_event_date_value[value][date]'] = today
-        params['field_event_date_value2[value][date]'] = today
-        break
-      case 'tomorrow':
-        let tomorrow = moment().add(1, 'd').format('YYYY-MM-DD')
-        params['field_event_date_value[value][date]'] = tomorrow
-        params['field_event_date_value2[value][date]'] = tomorrow
-        break
-      case '7days':
-        let sevenDaysFromNow = moment().add(7, 'd').format('YYYY-MM-DD')
-        params['field_event_date_value[value][date]'] = today
-        params['field_event_date_value2[value][date]'] = sevenDaysFromNow
-        break
-      case '30days':
-        let thirtyDaysFromNow = moment().add(30, 'd').format('YYYY-MM-DD')
-        params['field_event_date_value[value][date]'] = today
-        params['field_event_date_value2[value][date]'] = thirtyDaysFromNow
-        break
-      default:
-    }
+    let range = dateRange.split(',')
+    params['field_event_date_value[value][date]'] = range[0]
+    params['field_event_date_value2[value][date]'] = range[1]
+  
   }
 
   if (start) {
