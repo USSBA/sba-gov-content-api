@@ -1,7 +1,6 @@
 const eventClient = require('../clients/event-client.js')
 const moment = require('moment-timezone')
 const he = require('he')
-const config = require('../config')
 
 function translateQueryParamsForD7 (query) {
   const queryObj = query || {}
@@ -158,23 +157,14 @@ async function fetchTotalLength (params) {
 // all other functions in this file can also be removed when feature flag is removed
 async function fetchEvents (query) {
   let result
-  if (config.eventsApi.getBackendSourceToggle() === 'true') {
-    let results = [{ id: 1234, title: 'Mock Event found by fetchEvents function' }]
-    results = results.filter(item => item)
+  let params = translateQueryParamsForD7(query)
+  let results = await eventClient.getEvents(params)
+  let mappedResults = results.map(mapD7EventDataToBetterSchema)
+  mappedResults = mappedResults.filter(item => item)
 
-    const totalCount = results.length
+  let totalCount = await fetchTotalLength(params)
 
-    result = { count: totalCount, items: results }
-  } else {
-    let params = translateQueryParamsForD7(query)
-    let results = await eventClient.getEvents(params)
-    let mappedResults = results.map(mapD7EventDataToBetterSchema)
-    mappedResults = mappedResults.filter(item => item)
-
-    let totalCount = await fetchTotalLength(params)
-
-    result = { count: totalCount, items: mappedResults }
-  }
+  result = { count: totalCount, items: mappedResults }
   return result
 }
 
