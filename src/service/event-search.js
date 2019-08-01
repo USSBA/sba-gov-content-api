@@ -1,6 +1,7 @@
 const config = require('../config')
 const aws = require('aws-sdk')
 const moment = require('moment-timezone')
+const location = require('./location.js')
 let csd
 
 function formatString (string) {
@@ -38,8 +39,8 @@ function buildQuery (query) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, q } = query // eslint-disable-line id-length
-  // const { latitude, longitude } = geo
+  const { pageSize, start, distance, q } = query // eslint-disable-line id-length
+  const { latitude, longitude } = geo
   const queryString = buildQuery(q)
   const defaultPageSize = 20
   const defaultStart = 0
@@ -51,53 +52,41 @@ function buildParams (query, geo) {
     size: pageSize || defaultPageSize,
     start: start || defaultStart
   }
-  /*
-  The event-search.js file is a fork of the office-search.js file.
 
-  Anything that references distance or geolocation stuff purposely does not work.
-
-  I decided to keep in pieces that reference geolocation, such as this line, so as to make future tickets that reference distance functionality easier to implement.
-  */
-  // if (latitude && longitude) {
-  //   params = Object.assign({}, params, {
-  //     sort: 'distance asc',
-  //     return: '_all_fields,distance',
-  //     expr: `{"distance":"haversin(${latitude},${longitude},geolocation.latitude,geolocation.longitude)"}`
-  //   })
-  // }
+  if (latitude && longitude) {
+    const { northeast, southwest } = location.computeBoundingBoxWithMiles(latitude, longitude, distance)
+    params = Object.assign({}, params, {
+      // geolib and cloudsearch use different corners for the bounding box which needs to be accounted for
+      filterQuery: `geolocation:['${northeast.latitude},${southwest.longitude}','${southwest.latitude},${northeast.longitude}']`
+    })
+  }
   return params
 }
 
 async function fetchEvents (query) {
   const queryObj = query || {}
-  // let geo
-  // if (address) {
-  //     geo = await computeLocation(address)
-  // } else {
-  //     geo = parseGeocodeString(mapCenter)
-  // }
+  const { address, mapCenter } = queryObj
+  let geo = await location.generateGeocode(address, mapCenter)
 
-  // const params = buildParams(queryObj, geo)
-  const params = buildParams(queryObj, {})
+  const params = buildParams(queryObj, geo)
   try {
     const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
     const hits = result.hits
     const newHitList = hits.hit.map(item => {
       let _item = item
       if (item && item.exprs && item.exprs.distance >= 0) {
-        _item = Object.assign({}, item)
-        // if (!address) {
-        //   _item = Object.assign({}, item)
-        //   delete _item.exprs
-        // } else {
-        //   _item = Object.assign({}, item, {
-        //     exprs: {
-        //      // for now put a 0 but later this will have to add in the distance in order
-        //      // to filter by geolocation
-        //       distance: 0// item.exprs.distance / kilometersPerMile
-        //     }
-        //   })
-        // }
+        if (!address) {
+          _item = Object.assign({}, item)
+          delete _item.exprs
+        } else {
+          _item = Object.assign({}, item, {
+            exprs: {
+             // for now put a 0 but later this will have to add in the distance in order
+             // to filter by geolocation
+              distance: 0// item.exprs.distance / kilometersPerMile
+            }
+          })
+        }
       }
       return _item
     })

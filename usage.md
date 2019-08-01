@@ -291,3 +291,98 @@ Example Response
   ]
 }
 ```
+## Events API
+
+Access the events endpoint at `*search/events.json`. Will search against events saved in an AWS Cloudsearch instance.
+
+| Parameters    | Description
+|---------------|------------------
+|  q            | The search query being used to filter events bases on name, summary, or description
+|  address      | The zip code being used in conjuction with the `distance` parameter to find events in a specific area. This is the zip code in the center of the area
+|  distance     | The size of the area to look for events in. Filters for events within a bounding box based on distance in miles and centered on the `address` parameter
+|  pageSize     | The number of events to return in the response
+|  start        | The first index of the matching documents that will be returned
+|  end          | The last index of the matching documents that will be returned
+
+Example Request
+```
+http://example.com/search/events.json?q=foo&address=12345&distance=20
+```
+
+Example Response
+```
+{
+  "found": 1,
+  "start": 0,
+  "hit": [
+    {
+      "id": "19164",
+      "fields": {
+        "geolocation": [
+          "44.262804,-88.409144"
+        ],
+        "event_type": [
+          "Online"
+        ],
+        "timezone": [
+          "Eastern time zone"
+        ],
+        "hostoffice": [
+          "15865"
+        ],
+        "organizer_email": [
+          "organizingolivia@email.com"
+        ],
+        "location_city": [
+          "Baltimore"
+        ],
+        "location_name": [
+          "Spark Baltimore"
+        ],
+        "startdatetime": [
+          "2019-08-31T16:00:00Z"
+        ],
+        "location_street_address": [
+          "8 Market Place"
+        ],
+        "description": [
+          "There will be an event. That is all."
+        ],
+        "is_free": [
+          "0"
+        ],
+        "organizer_phone_number": [
+          "100-200-3000"
+        ],
+        "location_state": [
+          "MD"
+        ],
+        "location_zipcode": [
+          "21202"
+        ],
+        "is_recurring": [
+          "0"
+        ],
+        "name": [
+          "V5 Test Event (non-recurring)"
+        ],
+        "language": [
+          "en"
+        ],
+        "enddatetime": [
+          "2019-08-31T22:00:00Z"
+        ],
+        "summary": [
+          "This is the event summary section."
+        ],
+        "registration_website": [
+          "http://registerhere.com"
+        ],
+        "organizer_name": [
+          "Organizing Olivia"
+        ]
+      }
+    }
+  ]
+}
+```
