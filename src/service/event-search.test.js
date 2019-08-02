@@ -95,16 +95,18 @@ describe('eventSearch', () => {
     it('should format the query to search the fields, description, name and summary', () => {
       const expected = "(or description: 'test' name: 'test' summary: 'test')"
       const result = eventSearch.buildQuery('test')
-      result.should.equal(expected)
+      result.should.contain(expected)
     })
   })
   describe('buildParams', () => {
     it('should build a parameters object with a query', () => {
+      const defaultDateRange = '2020-01-01T00:00:00Z'
       const params = {
-        q: 'test'
+        q: 'test',
+        dateRange: defaultDateRange
       }
       const expected = JSON.stringify({
-        query: '(or description: \'test\' name: \'test\' summary: \'test\')',
+        query: `(and (range field=startdatetime ['${defaultDateRange}',}) (or description: 'test' name: 'test' summary: 'test'))`,
         return: '_all_fields',
         sort: 'startdatetime asc',
         queryParser: 'structured',
