@@ -42,9 +42,7 @@ function buildQuery (query, dateRange) {
       keywordQueryStatements.push(`${field}: '${formatString(query)}'`)
     }
   }
-  if (keywordQueryStatements.length === 1) {
-    keywordQueryString = `(${keywordQueryStatements[0]})`
-  } else if (keywordQueryStatements.length > 1) {
+  if (keywordQueryStatements.length > 1) {
     keywordQueryString = `(or ${keywordQueryStatements.join(' ')})`
   }
 

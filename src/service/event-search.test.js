@@ -3,7 +3,7 @@
 let sinon = require('sinon')
 let chai = require('chai')
 chai.should()
-const moment = require('moment-timezone')
+const moment = require('moment')
 
 const location = require('./location.js')
 const eventSearch = require('./event-search.js')
@@ -75,7 +75,6 @@ let exampleCloudSearchEmptyResponse = {
 }
 
 describe('eventSearch', () => {
-  // let stubGet
   let dynamoDbClientQueryStub
 
   let stubRunSearch
@@ -91,13 +90,55 @@ describe('eventSearch', () => {
     stubRunSearch.restore()
     dynamoDbClientQueryStub.restore()
   })
+
   describe('buildQuery', () => {
+    it('should create the startdatetime parameter and generate date if not given a date range', () => {
+      const builtQuery = eventSearch.buildQuery(null, null)
+      const expectedParameter = 'startdatetime'
+      builtQuery.should.contain(expectedParameter)
+
+      const regexForDateCapture = /'(.*)'/
+      const generatedDate = regexForDateCapture.exec(builtQuery)[1]
+      moment(generatedDate).isValid().should.equal(true)
+    })
+
+    it('should format the startdatetime parameter given only a starting date', () => {
+      const dateRangeOnlyWithStartDate = '2020-01-01T00:00:00Z'
+      const expectedFormat = `startdatetime: ['${dateRangeOnlyWithStartDate}',}`
+      const result = eventSearch.buildQuery(null, dateRangeOnlyWithStartDate)
+      result.should.contain(expectedFormat)
+    })
+
+    it('should format the startdatetime parameter given a date range', () => {
+      const startingDate = '2020-01-01T00:00:00Z'
+      const endingDate = '2020-12-01T00:00:00Z'
+      const dateRange = `${startingDate},${endingDate}`
+      const expectedFormat = `startdatetime: ['${startingDate}','${endingDate}']`
+      const result = eventSearch.buildQuery(null, dateRange)
+      result.should.contain(expectedFormat)
+    })
+
     it('should format the query to search the fields, description, name and summary', () => {
       const expected = "(or description: 'test' name: 'test' summary: 'test')"
       const result = eventSearch.buildQuery('test')
       result.should.contain(expected)
     })
+
+    it('should format the compound query given both a date range and keyword', () => {
+      const startingDate = '2020-01-01T00:00:00Z'
+      const endingDate = '2020-12-01T00:00:00Z'
+      const dateRangeString = `${startingDate},${endingDate}`
+      const dateRangeQueryString = `(range field=startdatetime ['${startingDate}','${endingDate}'])`
+
+      const keyword = 'test'
+      const keywordQueryString = `(or description: '${keyword}' name: '${keyword}' summary: '${keyword}')`
+
+      const expectedFormat = `(and ${dateRangeQueryString} ${keywordQueryString})`
+      const result = eventSearch.buildQuery('test', dateRangeString)
+      result.should.contain(expectedFormat)
+    })
   })
+
   describe('buildParams', () => {
     it('should build a parameters object with a query', () => {
       const defaultDateRange = '2020-01-01T00:00:00Z'
@@ -116,12 +157,7 @@ describe('eventSearch', () => {
       const result = JSON.stringify(eventSearch.buildParams(params, {}))
       result.should.equal(expected)
     })
-    it('should build a parameters object with a date', () => {
-      const paramsWithNoQuery = {}
-      const { query } = eventSearch.buildParams(paramsWithNoQuery, {})
-      const result = query.indexOf('startdatetime') !== -1
-      result.should.equal(true)
-    })
+
     it('should enter the lat and long into the params for cloudsearch query', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       stubRunSearch.returns(exampleCloudSearchEmptyResponse)
@@ -144,6 +180,7 @@ describe('eventSearch', () => {
       result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
     })
   })
+
   describe('fetchEvents', () => {
     it('should fetch an event', async () => {
       const params = {
