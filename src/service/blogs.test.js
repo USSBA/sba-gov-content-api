@@ -112,10 +112,21 @@ describe('Searching for blogs', () => {
     expect(resultsBlogs).to.have.lengthOf(2)
     expect(resultsBlogs[0].author).to.equal(22222)
   })
-  it("should return only the correct blogs when given a 'category' and 'author'", async () => {
+  it("should only return blogs by the correct office when given an 'office' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const results = await fetchBlogs({ 'category': 'bar', 'author': '22222' })
+    const results = await fetchBlogs({ 'office': '00001' })
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
+
+    expect(resultsTotal).to.equal(3)
+    expect(resultsBlogs).to.have.lengthOf(3)
+    expect(resultsBlogs[0].office).to.equal(00001)
+  })
+  it("should return only the correct blogs when given a 'category', 'author', and 'office'", async () => {
+    getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
+
+    const results = await fetchBlogs({ 'category': 'bar', 'author': '22222', 'office': '00002' })
     const resultsTotal = results['total']
     const resultsBlogs = results['blogs']
 
@@ -123,6 +134,7 @@ describe('Searching for blogs', () => {
     expect(resultsBlogs).to.have.lengthOf(1)
     expect(resultsBlogs[0].blogCategory).to.equal('bar')
     expect(resultsBlogs[0].author).to.equal(22222)
+    expect(resultsBlogs[0].office).to.equal(00002)
   })
   it('should return back all the blogs when given an invalid parameter', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
@@ -142,7 +154,7 @@ describe('Searching for blogs', () => {
 
     expect(resultsBlogs).to.have.lengthOf(3)
   })
-  it("should return the correct blogs when given an 'start' parameter", async () => {
+  it("should return the correct blogs when given a 'start' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'start': 2 })

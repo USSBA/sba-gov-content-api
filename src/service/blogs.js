@@ -18,6 +18,9 @@ function filterBlogs (blogs = [], params = []) {
     if (Number(params.author) && (blog.author !== Number(params.author))) {
       includeBlog = false
     }
+    if (Number(params.office) && (blog.office !== Number(params.office))) {
+      includeBlog = false
+    }
     return includeBlog
   })
   return filteredBlogs
