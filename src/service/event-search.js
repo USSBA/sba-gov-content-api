@@ -22,26 +22,47 @@ async function runSearch (params) {
   return result
 }
 
-function buildQuery (query) {
-  const queryStatements = []
-  let queryString = `startdatetime: ['${moment.utc().format()}',}`
+function buildQuery (query, dateRange) {
+  // if no date range is given, create a starting date range based on current time to exclude old events
+  let dateRangeString
+  if (dateRange) {
+    const dateRanges = dateRange ? dateRange.split(',') : [moment.utc().format()]
+    const formattedStartDateString = `['${dateRanges[0]}'`
+    const formattedEndDateString = dateRanges[1] ? `'${dateRanges[1]}']` : `}`
+    dateRangeString = `${formattedStartDateString},${formattedEndDateString}`
+  } else {
+    dateRangeString = `['${moment.utc().format()}',}`
+  }
 
+  const keywordQueryStatements = []
+  let keywordQueryString
   if (query) {
     const fieldsToSearch = ['description', 'name', 'summary']
     for (const field of fieldsToSearch) {
-      queryStatements.push(`${field}: '${formatString(query)}'`)
+      keywordQueryStatements.push(`${field}: '${formatString(query)}'`)
     }
   }
-  if (queryStatements.length > 1) {
-    queryString = `(or ${queryStatements.join(' ')})`
+  if (keywordQueryStatements.length > 1) {
+    keywordQueryString = `(or ${keywordQueryStatements.join(' ')})`
   }
+
+  // we always include the starting date range in a default search to exclude old events
+  let queryString, dateRangeQueryString
+  if (keywordQueryString) {
+    dateRangeQueryString = `(range field=startdatetime ${dateRangeString})`
+    queryString = `(and ${dateRangeQueryString} ${keywordQueryString})`
+  } else {
+    dateRangeQueryString = `startdatetime: ${dateRangeString}`
+    queryString = dateRangeQueryString
+  }
+
   return queryString
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, distance, q } = query // eslint-disable-line id-length
+  const { pageSize, start, distance, dateRange, q } = query // eslint-disable-line id-length
   const { latitude, longitude } = geo
-  const queryString = buildQuery(q)
+  const queryString = buildQuery(q, dateRange)
   const defaultPageSize = 20
   const defaultStart = 0
   let params = {
