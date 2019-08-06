@@ -220,7 +220,7 @@ describe('Searching for blogs', () => {
     expect(resultsBlogs[0]).to.not.equal(controlBlogs[0])
     expect(resultsBlogs[0]).to.equal(controlBlogs[1])
   })
-  it("should return the correct blogs given 'asc' parameter when combined with 'start', 'end', 'order', 'category', and parameters", async () => {
+  it("should return the correct blogs given 'asc' parameter when combined with 'start', 'end', 'order', and 'category' parameters", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'start': 1, 'end': 3, 'order': 'asc', 'category': 'bar' })
