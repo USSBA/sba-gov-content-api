@@ -152,7 +152,7 @@ Example Response:
 |  author    | The ID of the `person` who wrote the blog
 |  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` and `desc` as valid.
 |  start     | The first index of the matching blogs that will be returned
-|  end       | The last index of the matching blogs that will be returned
+|  end       | The index after the last matching blog that will be returned
 
 #### Fetch a Blog
 To get an individual blog post make request at `*/blogs/{:id}.json`. This endpoint does not accept any other parameters.
