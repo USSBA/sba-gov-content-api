@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 const sinon = require('sinon')
 var expect = require('chai').expect
+const { clone } = require('lodash')
 
 const { fetchBlogs, fetchBlog } = require('./blogs.js')
 const s3CacheReader = require('../clients/s3-cache-reader.js')
@@ -112,10 +113,21 @@ describe('Searching for blogs', () => {
     expect(resultsBlogs).to.have.lengthOf(2)
     expect(resultsBlogs[0].author).to.equal(22222)
   })
-  it("should return only the correct blogs when given a 'category' and 'author'", async () => {
+  it("should only return blogs by the correct office when given an 'office' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const results = await fetchBlogs({ 'category': 'bar', 'author': '22222' })
+    const results = await fetchBlogs({ 'office': '99991' })
+    const resultsTotal = results['total']
+    const resultsBlogs = results['blogs']
+
+    expect(resultsTotal).to.equal(3)
+    expect(resultsBlogs).to.have.lengthOf(3)
+    expect(resultsBlogs[0].office).to.equal(99991)
+  })
+  it("should return only the correct blogs when given a 'category', 'author', and 'office'", async () => {
+    getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
+
+    const results = await fetchBlogs({ 'category': 'bar', 'author': '22222', 'office': '99992' })
     const resultsTotal = results['total']
     const resultsBlogs = results['blogs']
 
@@ -123,6 +135,7 @@ describe('Searching for blogs', () => {
     expect(resultsBlogs).to.have.lengthOf(1)
     expect(resultsBlogs[0].blogCategory).to.equal('bar')
     expect(resultsBlogs[0].author).to.equal(22222)
+    expect(resultsBlogs[0].office).to.equal(99992)
   })
   it('should return back all the blogs when given an invalid parameter', async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
@@ -137,27 +150,43 @@ describe('Searching for blogs', () => {
   it("should return the correct number of blogs when given an 'end' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const results = await fetchBlogs({ 'end': 3 })
-    const resultsBlogs = results['blogs']
+    const endIndexValue = 3
+    // The expected result count will be equal to the end index value
+    // because the end index is not included in the result list
+    const expectedResultCount = endIndexValue
 
-    expect(resultsBlogs).to.have.lengthOf(3)
+    const results = await fetchBlogs({ 'end': endIndexValue })
+
+    expect(results.blogs).to.have.lengthOf(expectedResultCount)
   })
-  it("should return the correct blogs when given an 'start' parameter", async () => {
+  it("should return the correct blogs when given a 'start' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
-    const results = await fetchBlogs({ 'start': 2 })
-    const resultsTotal = results['total']
-    const resultsBlogs = results['blogs']
-    const control = await fetchBlogs()
-    const controlTotal = control['total']
-    const controlBlogs = control['blogs']
+    const expectedDisplayedTotal = blogs.length
+    const startIndex = 2
+    // note: the start index is included in the result list
+    const expectedResultCount = expectedDisplayedTotal - startIndex
 
-    expect(resultsTotal).to.equal(blogs.length)
-    expect(resultsBlogs).to.have.lengthOf(blogs.length - 2)
+    const results = await fetchBlogs({ 'start': startIndex })
 
-    expect(resultsTotal).to.equal(controlTotal)
-    expect(resultsBlogs[0].id).to.not.equal(controlBlogs[0].id)
-    expect(resultsBlogs[0].id).to.equal(controlBlogs[2].id)
+    expect(results.total).to.equal(expectedDisplayedTotal)
+    expect(results.blogs.length).to.equal(expectedResultCount)
+  })
+  it("should return the correct blogs when given both a 'start' and 'end' parameter", async () => {
+    // this is to ensure that the most recent blogs are in indices 0 through 3
+    const blogsList = clone(blogs)
+    blogsList[0].created = 9999999999
+    blogsList[1].created = 9999999998
+    blogsList[2].created = 9999999997
+    blogsList[3].created = 9999999996
+
+    getKeyStub.withArgs('blog').returns(Promise.resolve(blogsList))
+
+    const results = await fetchBlogs({ 'start': 2, 'end': 4 })
+
+    expect(results.blogs).to.have.lengthOf(2)
+    expect(results.blogs[0].id).to.equal(blogsList[2].id)
+    expect(results.blogs[1].id).to.equal(blogsList[3].id)
   })
   it("should return the correct blogs when given both a 'start' and 'end' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
@@ -175,7 +204,7 @@ describe('Searching for blogs', () => {
     expect(resultsBlogs[0].id).to.equal(controlBlogs[2].id)
     expect(resultsBlogs[1].id).to.equal(controlBlogs[3].id)
   })
-  it("should return the correct blogs when given 'start', 'end', and 'category' parameters", async () => {
+  it("should return the correct blogs given 'start' and 'end' parameters when combined with a 'category' parameter", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'start': 1, 'end': 3, 'category': 'bar' })
@@ -191,7 +220,7 @@ describe('Searching for blogs', () => {
     expect(resultsBlogs[0]).to.not.equal(controlBlogs[0])
     expect(resultsBlogs[0]).to.equal(controlBlogs[1])
   })
-  it("should return the correct blogs when given 'start', 'end', 'order', and 'category' parameters", async () => {
+  it("should return the correct blogs given 'asc' parameter when combined with 'start', 'end', 'order', and 'category' parameters", async () => {
     getKeyStub.withArgs('blog').returns(Promise.resolve(blogs))
 
     const results = await fetchBlogs({ 'start': 1, 'end': 3, 'order': 'asc', 'category': 'bar' })

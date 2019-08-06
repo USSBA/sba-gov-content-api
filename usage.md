@@ -90,7 +90,7 @@ Hit the blogs endpoint at `*/blogs.json`
 
 Example Request:
 ```
-  https://example.com/blogs.json?category=foo&author=12345
+  https://example.com/blogs.json?category=foo&author=12345&office=99999
 ```
 
 Example Response:
@@ -110,7 +110,7 @@ Example Response:
       ],
       'blogTags': 'Franchising',
       'blogCategory': 'foo',
-      'office': {},
+      'office': 99999,
       'summary': 'How to Get Past the Fear of Buying a Franchise',
       'type': 'blog',
       'title': 'How to Get Past the Fear of Buying a Franchise',
@@ -132,7 +132,7 @@ Example Response:
       ],
       'blogTags': 'Franchising',
       'blogCategory': 'foo',
-      'office': {},
+      'office': 99999,
       'summary': 'How to Get Past the Fear of Buying a Franchise',
       'type': 'blog',
       'title': 'How to Get Past the Fear of Buying a Franchise',
@@ -150,9 +150,10 @@ Example Response:
 |------------|------------------
 |  category  | The category of blogs to be included in the results. Excludes results that are listed as a different category
 |  author    | The ID of the `person` who wrote the blog
+|  office    | The ID of the `office` associated with the blog
 |  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` and `desc` as valid.
 |  start     | The first index of the matching blogs that will be returned
-|  end       | The last index of the matching blogs that will be returned
+|  end       | The index after the last matching blog that will be returned
 
 #### Fetch a Blog
 To get an individual blog post make request at `*/blogs/{:id}.json`. This endpoint does not accept any other parameters.
