@@ -52,7 +52,8 @@ function filterArticles (params, allArticles) {
       params.searchTerm === 'all' ||
       article.title.toLowerCase().includes(params.searchTerm.toLowerCase())
     const matchesType = !params.articleType || params.articleType === 'all' || article.type === params.articleType
-    return matchesUrl && matchesCategory && matchesProgram && matchesTitle && matchesType
+    const matchesOffice = !params.office || params.office === 'all' || article.office === Number(params.office)
+    return matchesUrl && matchesCategory && matchesProgram && matchesTitle && matchesType && matchesOffice
   })
 }
 
