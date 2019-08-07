@@ -92,6 +92,25 @@ describe('Searching for articles', () => {
       expect(article.office).to.equal(Number(office))
     })
   })
+  it("should return all articles (not filtered by office) when given a value of 'all' for the 'office' parameter", async () => {
+    getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
+
+    const office = 'all'
+    const results = await fetchArticles({ office: office })
+
+    const expectedResultCount = articles.length
+    expect(results.count).to.equal(expectedResultCount)
+    expect(results.items).to.have.lengthOf(expectedResultCount)
+  })
+  it("should NOT return any articles when given an invalid value for the 'office' parameter", async () => {
+    getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
+
+    const office = 'not a valid office id'
+    const results = await fetchArticles({ office: office })
+
+    expect(results.count).to.equal(0)
+    expect(results.items).to.have.lengthOf(0)
+  })
   it('should return only matching articles when given multiple parameters', async () => {
     getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
 
