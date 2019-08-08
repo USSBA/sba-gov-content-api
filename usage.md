@@ -13,13 +13,14 @@ Hit the articles endpoint at `*/articles.json`
 |  articleCategory | The category of the article. Articles can be associated with multiple categories
 |  program         | The program that artcle is associated with. Articles can be assoicated with multiple programs
 |  type            | The type of resource being accessed.
+|  office          | The ID of the `office` associated with the blog
 |  sortBy          | The order of articles that are returned by the search. Valid inputs are `Title` and `Authored on Date`. Will defualt to sort on the `updated` field.
 |  start           | The first index of the matching articles that will be returned
 |  end             | The last index of the matching articles that will be returned 
 
 Example Request:
 ```
-  https://example.com/articles.json?searchTerm=foo&category=bar
+  https://example.com/articles.json?searchTerm=foo&category=bar&office=7428
 ```
 
 Example Response
