@@ -5,7 +5,7 @@ const articles = [
       'example category'
     ],
     'mediaContact': {},
-    'office': 7428,
+    'office': 9999,
     'officeLink': {
       'url': '/offices/headquarters/oit',
       'title': 'Office of International Trade'
@@ -27,7 +27,7 @@ const articles = [
       'example category'
     ],
     'mediaContact': {},
-    'office': 7428,
+    'office': 9999,
     'officeLink': {
       'url': '/offices/headquarters/oit',
       'title': 'Office of International Trade'
@@ -49,7 +49,7 @@ const articles = [
       'something'
     ],
     'mediaContact': {},
-    'office': 7428,
+    'office': 9999,
     'officeLink': {
       'url': '/offices/headquarters/oit',
       'title': 'Office of International Trade'
@@ -71,7 +71,7 @@ const articles = [
       'something'
     ],
     'mediaContact': {},
-    'office': 7428,
+    'office': 9998,
     'officeLink': {
       'url': '/offices/headquarters/oit',
       'title': 'Office of International Trade'
@@ -95,7 +95,7 @@ const articles = [
       'pagination test'
     ],
     'mediaContact': {},
-    'office': 7428,
+    'office': 9998,
     'officeLink': {
       'url': '/offices/headquarters/oit',
       'title': 'Office of International Trade'
@@ -119,7 +119,7 @@ const articles = [
       'pagination test'
     ],
     'mediaContact': {},
-    'office': 7428,
+    'office': 9998,
     'officeLink': {
       'url': '/offices/headquarters/oit',
       'title': 'Office of International Trade'
@@ -143,7 +143,7 @@ const articles = [
       'pagination test'
     ],
     'mediaContact': {},
-    'office': 7428,
+    'office': 9998,
     'officeLink': {
       'url': '/offices/headquarters/oit',
       'title': 'Office of International Trade'
@@ -167,7 +167,7 @@ const articles = [
       'pagination test'
     ],
     'mediaContact': {},
-    'office': 7428,
+    'office': 9998,
     'officeLink': {
       'url': '/offices/headquarters/oit',
       'title': 'Office of International Trade'
@@ -191,7 +191,7 @@ const articles = [
       'pagination test'
     ],
     'mediaContact': {},
-    'office': 7428,
+    'office': 9998,
     'officeLink': {
       'url': '/offices/headquarters/oit',
       'title': 'Office of International Trade'

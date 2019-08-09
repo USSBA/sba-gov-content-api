@@ -78,12 +78,46 @@ describe('Searching for articles', () => {
       expect(article.title.toLowerCase()).to.include(keyword)
     })
   })
-  it('should return only matching articles when given multiple parameter', async () => {
+  it("should return only matching articles when given the 'office' parameter", async () => {
+    getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
+
+    const office = '9999'
+    const results = await fetchArticles({ office: office })
+    const resultsTotal = results['count']
+    const resultsArticles = results['items']
+
+    expect(resultsTotal).to.equal(3)
+    expect(resultsArticles).to.have.lengthOf(resultsTotal)
+    resultsArticles.forEach(function (article) {
+      expect(article.office).to.equal(Number(office))
+    })
+  })
+  it("should return all articles (not filtered by office) when given a value of 'all' for the 'office' parameter", async () => {
+    getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
+
+    const office = 'all'
+    const results = await fetchArticles({ office: office })
+
+    const expectedResultCount = articles.length
+    expect(results.count).to.equal(expectedResultCount)
+    expect(results.items).to.have.lengthOf(expectedResultCount)
+  })
+  it("should NOT return any articles when given an invalid value for the 'office' parameter", async () => {
+    getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
+
+    const office = 'not a valid office id'
+    const results = await fetchArticles({ office: office })
+
+    expect(results.count).to.equal(0)
+    expect(results.items).to.have.lengthOf(0)
+  })
+  it('should return only matching articles when given multiple parameters', async () => {
     getKeyStub.withArgs('articles').returns(Promise.resolve(articles))
 
     const keyword = 'fancy'
     const program = 'FAKE PROGRAM'
-    const results = await fetchArticles({ searchTerm: keyword, program: program })
+    const office = '9998'
+    const results = await fetchArticles({ searchTerm: keyword, program: program, office: office })
     const resultsTotal = results['count']
     const resultsArticles = results['items']
 
@@ -92,6 +126,7 @@ describe('Searching for articles', () => {
     resultsArticles.forEach(function (article) {
       expect(article.title.toLowerCase()).to.include(keyword)
       expect(article.programs).to.include(program)
+      expect(article.office).to.equal(Number(office))
     })
   })
   it("should start at a specified index when given the 'start' parameter", async () => {

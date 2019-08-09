@@ -13,13 +13,14 @@ Hit the articles endpoint at `*/articles.json`
 |  articleCategory | The category of the article. Articles can be associated with multiple categories
 |  program         | The program that artcle is associated with. Articles can be assoicated with multiple programs
 |  type            | The type of resource being accessed.
+|  office          | The ID of the `office` that authored the article. Not all articles will be associated with an office and articles may only be associated with one office. This will also accept a value of `all` and will return all articles regardless of association with an office or not.
 |  sortBy          | The order of articles that are returned by the search. Valid inputs are `Title` and `Authored on Date`. Will defualt to sort on the `updated` field.
 |  start           | The first index of the matching articles that will be returned
 |  end             | The last index of the matching articles that will be returned 
 
 Example Request:
 ```
-  https://example.com/articles.json?searchTerm=foo&category=bar
+  https://example.com/articles.json?searchTerm=foo&category=bar&office=7428
 ```
 
 Example Response
@@ -84,9 +85,10 @@ Hit the blogs endpoint at `*/blogs.json`
 |------------|------------------
 |  category  | The category of blogs to be included in the results. Excludes results that are listed as a different category
 |  author    | The ID of the `person` who wrote the blog
+|  office    | The ID of the `office` associated with the blog
 |  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` and `desc` as valid.
 |  start     | The first index of the matching blogs that will be returned
-|  end       | The last index of the matching blogs that will be returned
+|  end       | The index after the last matching blog that will be returned
 
 Example Request:
 ```
@@ -145,15 +147,6 @@ Example Response:
   ]
 }
 ```
-
-| Parameters | Description
-|------------|------------------
-|  category  | The category of blogs to be included in the results. Excludes results that are listed as a different category
-|  author    | The ID of the `person` who wrote the blog
-|  office    | The ID of the `office` associated with the blog
-|  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` and `desc` as valid.
-|  start     | The first index of the matching blogs that will be returned
-|  end       | The index after the last matching blog that will be returned
 
 #### Fetch a Blog
 To get an individual blog post make request at `*/blogs/{:id}.json`. This endpoint does not accept any other parameters.
@@ -301,13 +294,14 @@ Access the events endpoint at `*search/events.json`. Will search against events 
 |  q            | The search query being used to filter events bases on name, summary, or description
 |  address      | The zip code being used in conjuction with the `distance` parameter to find events in a specific area. This is the zip code in the center of the area
 |  distance     | The size of the area to look for events in. Filters for events within a bounding box based on distance in miles and centered on the `address` parameter
+|  dateRange    | The date range for the `startdatetime`. Date/time must be converted to UTC time. This query parameter can accept either a single starting date or a date range separated by %2C (unicode comma).
 |  pageSize     | The number of events to return in the response
 |  start        | The first index of the matching documents that will be returned
 |  end          | The last index of the matching documents that will be returned
 
 Example Request
 ```
-http://example.com/search/events.json?q=foo&address=12345&distance=20
+http://example.com/search/events.json?q=foo&address=12345&distance=20?dateRange=2019-08-08T14%3A38%3A53Z%2C2019-09-06T23%3A59%3A59Z
 ```
 
 Example Response
