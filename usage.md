@@ -13,7 +13,7 @@ Hit the articles endpoint at `*/articles.json`
 |  articleCategory | The category of the article. Articles can be associated with multiple categories
 |  program         | The program that artcle is associated with. Articles can be assoicated with multiple programs
 |  type            | The type of resource being accessed.
-|  office          | The ID of the `office` that authored the article. Not all articles will be associated with an office and articles may only be associated with one office.
+|  office          | The ID of the `office` that authored the article. Not all articles will be associated with an office and articles may only be associated with one office. This will also accept a value of `all` and will return all articles regardless of association with an office or not.
 |  sortBy          | The order of articles that are returned by the search. Valid inputs are `Title` and `Authored on Date`. Will defualt to sort on the `updated` field.
 |  start           | The first index of the matching articles that will be returned
 |  end             | The last index of the matching articles that will be returned 
