@@ -62,7 +62,7 @@ async function run (event) {
 
 function createCsvFromJson (jsonData) {
   const fields = Object.keys(jsonData[0])
-  return json2csv(jsonData, {fields})
+  return json2csv(jsonData, { fields })
 }
 
 // for testing
