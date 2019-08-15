@@ -102,8 +102,8 @@ async function fetchEvents (query) {
         } else {
           _item = Object.assign({}, item, {
             exprs: {
-             // for now put a 0 but later this will have to add in the distance in order
-             // to filter by geolocation
+              // for now put a 0 but later this will have to add in the distance in order
+              // to filter by geolocation
               distance: 0// item.exprs.distance / kilometersPerMile
             }
           })

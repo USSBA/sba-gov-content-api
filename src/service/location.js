@@ -53,8 +53,8 @@ function computeBoundingBoxWithMiles (centerLat, centerLong, distance) {
   const distanceInMiles = distance * metersPerMile
   const bounds = getBoundsOfDistance({ latitude: centerLat, longitude: centerLong }, distanceInMiles)
 
-  return {northeast: bounds[1],
-    southwest: bounds[0]}
+  return { northeast: bounds[1],
+    southwest: bounds[0] }
 }
 
 // from office-search.js

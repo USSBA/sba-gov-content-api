@@ -6,7 +6,7 @@ const sinon = require('sinon')
 const { fetchDocuments, sortDocumentsByDate } = require('./documents.js')
 const s3CacheReader = require('../clients/s3-cache-reader.js')
 
-const {testDocs, sortedDocs} = require('../test-data/documents.js')
+const { testDocs, sortedDocs } = require('../test-data/documents.js')
 const { documents } = require('../test-data/documents.js')
 
 describe('Document sorting', () => {
