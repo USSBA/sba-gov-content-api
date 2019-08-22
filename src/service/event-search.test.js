@@ -143,11 +143,30 @@ describe('eventSearch', () => {
     it('should build a parameters object with a query', () => {
       const defaultDateRange = '2020-01-01T00:00:00Z'
       const params = {
-        q: 'test',
+        queryTerm: 'test',
         dateRange: defaultDateRange
       }
       const expected = JSON.stringify({
         query: `(and (range field=startdatetime ['${defaultDateRange}',}) (or description: 'test' name: 'test' summary: 'test'))`,
+        return: '_all_fields',
+        sort: 'startdatetime asc',
+        queryParser: 'structured',
+        size: 20,
+        start: 0
+      })
+      const result = JSON.stringify(eventSearch.buildParams(params, {}))
+      result.should.equal(expected)
+    })
+
+    it('should enter the office into the params for a cloudsearch query', async () => {
+      const defaultDateRange = '2020-01-01T00:00:00Z'
+      const officeId = Math.floor((Math.random() * 10000) + 1)
+      const params = {
+        office: officeId,
+        dateRange: defaultDateRange
+      }
+      const expected = JSON.stringify({
+        query: `(and (range field=startdatetime ['${defaultDateRange}',}) hostoffice: '${officeId}')`,
         return: '_all_fields',
         sort: 'startdatetime asc',
         queryParser: 'structured',
