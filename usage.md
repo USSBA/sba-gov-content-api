@@ -294,15 +294,15 @@ Access the events endpoint at `*search/events.json`. Will search against events 
 |  q            | The search query being used to filter events bases on name, summary, or description
 |  address      | The zip code being used in conjuction with the `distance` parameter to find events in a specific area. This is the zip code in the center of the area
 |  distance     | The size of the area to look for events in. Filters for events within a bounding box based on distance in miles and centered on the `address` parameter
-|  dateRange    | The date range for the `startdatetime`. Date/time must be converted to UTC time. This query parameter can accept either a single starting date or a date range separated by %2C (unicode comma)
-|  office       | The ID of SBA office that the event is associated with. Use the office ID to limit the search results to only events associated with that office
+|  dateRange    | The date range for the `startdatetime`. Date/time must be converted to UTC time. This query parameter can accept either a single starting date or a date range separated by `%2C` (unicode comma)
+|  office       | The ID of SBA office that the event is associated with. Use the office ID to limit the search results to only events associated with that office. Will match against the `hostoffice` field in cloudsearch
 |  pageSize     | The number of events to return in the response
 |  start        | The first index of the matching documents that will be returned
 |  end          | The last index of the matching documents that will be returned
 
 Example Request
 ```
-http://example.com/search/events.json?q=foo&address=12345&distance=20?dateRange=2019-08-08T14%3A38%3A53Z%2C2019-09-06T23%3A59%3A59Z
+http://example.com/search/events.json?q=foo&office=12345&address=12345&distance=20?dateRange=2019-08-08T14%3A38%3A53Z%2C2019-09-06T23%3A59%3A59Z
 ```
 
 Example Response
@@ -343,6 +343,9 @@ Example Response
         ],
         "description": [
           "There will be an event. That is all."
+        ],
+        "hostoffice": [
+          "12345"
         ],
         "is_free": [
           "0"
