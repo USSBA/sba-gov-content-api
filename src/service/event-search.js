@@ -72,9 +72,9 @@ function buildQuery (query, dateRange, office) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, distance, dateRange, queryTerm, office } = query // eslint-disable-line id-length
+  const { pageSize, start, distance, dateRange, q, office } = query // eslint-disable-line id-length
   const { latitude, longitude } = geo
-  const queryString = buildQuery(queryTerm, dateRange, office)
+  const queryString = buildQuery(q, dateRange, office)
   const defaultPageSize = 20
   const defaultStart = 0
   let params = {

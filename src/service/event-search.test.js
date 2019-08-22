@@ -143,7 +143,7 @@ describe('eventSearch', () => {
     it('should build a parameters object with a query', () => {
       const defaultDateRange = '2020-01-01T00:00:00Z'
       const params = {
-        queryTerm: 'test',
+        q: 'test',
         dateRange: defaultDateRange
       }
       const expected = JSON.stringify({
