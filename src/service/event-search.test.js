@@ -176,7 +176,7 @@ describe('eventSearch', () => {
       const result = JSON.stringify(eventSearch.buildParams(params, {}))
       result.should.equal(expected)
     })
-    
+
     it('should enter the office and query search phrase into the params for a cloudsearch query', async () => {
       const defaultDateRange = '2020-01-01T00:00:00Z'
       const officeId = Math.floor((Math.random() * 10000) + 1)
