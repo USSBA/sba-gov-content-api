@@ -22,7 +22,7 @@ async function runSearch (params) {
   return result
 }
 
-function buildQuery (query, dateRange) {
+function buildQuery (query, dateRange, office) {
   // if no date range is given, create a starting date range based on current time to exclude old events
   let dateRangeString
   if (dateRange) {
@@ -42,15 +42,27 @@ function buildQuery (query, dateRange) {
       keywordQueryStatements.push(`${field}: '${formatString(query)}'`)
     }
   }
+
   if (keywordQueryStatements.length > 1) {
     keywordQueryString = `(or ${keywordQueryStatements.join(' ')})`
   }
 
+  let officeQueryString
+  if (office) {
+    officeQueryString = `hostoffice: '${office}'`
+  }
+
   // we always include the starting date range in a default search to exclude old events
   let queryString, dateRangeQueryString
-  if (keywordQueryString) {
+  if (keywordQueryString && officeQueryString) {
+    dateRangeQueryString = `(range field=startdatetime ${dateRangeString})`
+    queryString = `(and ${dateRangeQueryString} ${keywordQueryString} ${officeQueryString})`
+  } else if (keywordQueryString) {
     dateRangeQueryString = `(range field=startdatetime ${dateRangeString})`
     queryString = `(and ${dateRangeQueryString} ${keywordQueryString})`
+  } else if (officeQueryString) {
+    dateRangeQueryString = `(range field=startdatetime ${dateRangeString})`
+    queryString = `(and ${dateRangeQueryString} ${officeQueryString})`
   } else {
     dateRangeQueryString = `startdatetime: ${dateRangeString}`
     queryString = dateRangeQueryString
@@ -60,9 +72,9 @@ function buildQuery (query, dateRange) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, distance, dateRange, q } = query // eslint-disable-line id-length
+  const { pageSize, start, distance, dateRange, q, office } = query // eslint-disable-line id-length
   const { latitude, longitude } = geo
-  const queryString = buildQuery(q, dateRange)
+  const queryString = buildQuery(q, dateRange, office)
   const defaultPageSize = 20
   const defaultStart = 0
   let params = {
