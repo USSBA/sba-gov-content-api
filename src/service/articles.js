@@ -57,6 +57,12 @@ function buildFilters (params) {
   if (params.program && params.program === 'all') {
     filters.push(`article_programs: '${cloudsearch.formatString(params.program)}'`)
   }
+  if (params.office && params.office === 'all') {
+    filters.push(`related_offices: '${cloudsearch.formatString(params.program)}'`)
+  }
+  if (params.region && params.region === 'all') {
+    filters.push(`region: '${cloudsearch.formatString(params.region)} National'`)
+  }
 
   if (filters.length === 1) {
     filterString = filters[0]
