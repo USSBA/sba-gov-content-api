@@ -1,23 +1,23 @@
 // /* eslint-env mocha */
-//const expect = require('chai').expect
-//const sinon = require('sinon')
+// const expect = require('chai').expect
+// const sinon = require('sinon')
 
 // const { fetchArticles } = require('./articles.js')
 // const s3CacheReader = require('../clients/s3-cache-reader.js')
 
-//let cloudsearch = require('../clients/cloudsearch.js')
+// let cloudsearch = require('../clients/cloudsearch.js')
 
 // const { articles } = require('../test-data/articles.js')
 
 describe('articles', () => {
-  //let articleSearchRunSearchStub
+  // let articleSearchRunSearchStub
 
   before(() => {
     // getKeyStub = sinon.stub(s3CacheReader, 'getKey')
-    //articleSearchRunSearchStub = sinon.stub(cloudsearch, 'runSearch')
+    // articleSearchRunSearchStub = sinon.stub(cloudsearch, 'runSearch')
   })
   it('test', () => {
-    //expect(articleSearchRunSearchStub).to.be(articleSearchRunSearchStub)
+    // expect(articleSearchRunSearchStub).to.be(articleSearchRunSearchStub)
   })
 })
 
