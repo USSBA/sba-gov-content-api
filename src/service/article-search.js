@@ -25,7 +25,7 @@ async function fetchArticles (queryParams) {
 function buildQuery (query) {
   const queryStatements = []
   let queryString = ''
-  //const fieldsToSearch = ['title', 'article_body', 'summary', 'url']
+  // const fieldsToSearch = ['title', 'article_body', 'summary', 'url']
   const fieldsToSearch = ['region', 'related_offices']
   for (const field of fieldsToSearch) {
     queryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
@@ -49,9 +49,9 @@ function buildFilters (params) {
   if (params.office && params.office === 'all') {
     filters.push(`related_offices: '${cloudsearch.formatString(params.program)}'`)
   }
-  //if (params.region && params.region === 'all') {
+  // if (params.region && params.region === 'all') {
   filters.push(`region: '${cloudsearch.formatString(params.region)} National'`)
-  //}
+  // }
 
   if (filters.length === 1) {
     filterString = filters[0]
