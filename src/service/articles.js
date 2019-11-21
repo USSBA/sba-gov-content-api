@@ -1,37 +1,25 @@
 const config = require('../config')
-const s3CacheReader = require('../clients/s3-cache-reader.js')
-const searchUtils = require('./search-utils.js')
+// const s3CacheReader = require('../clients/s3-cache-reader.js')
+// const searchUtils = require('./search-utils.js')
 const cloudsearch = require('../clients/cloudsearch.js')
 
-const { isEmpty, orderBy } = require('lodash')
+// const { isEmpty, orderBy } = require('lodash')
 
 const endpoint = config.cloudSearch.articleEndpoint
 
-async function fetchArticles (queryParams){
+async function fetchArticles (queryParams) {
   let cloudParams = {
     query: buildQuery(queryParams.searchTerm), /* required */
     filterQuery: buildFilters(queryParams),
     queryParser: 'structured',
-    size: pageSize,
-    start: start,
+    size: queryParams.pageSize,
+    start: queryParams.start,
     sort: setArticleSearchSort(queryParams.sortBy),
     return: '_all_fields'
   }
-  const result =  await cloudsearch.runSearch(cloudParams, endpoint)
+  const result = await cloudsearch.runSearch(cloudParams, endpoint)
   const hits = result.hits
-  const newHitList = hits.hit.map(item => {
-    let _item = item
-    if (item && item.exprs && item.exprs.distance >= 0) {
-      if (!address) {
-        _item = Object.assign({}, item)
-        delete _item.exprs
-      } else {
-        _item = Object.assign({}, item, { exprs: { distance: item.exprs.distance / location.kilometersPerMile } })
-      }
-    }
-    return _item
-  })
-  return Object.assign({}, hits, { hit: newHitList })
+  return Object.assign({}, hits)
 }
 
 function buildQuery (query) {
@@ -72,12 +60,12 @@ function buildFilters (params) {
   return filterString
 }
 
-function setArticleSearchSort(sortParm){
+function setArticleSearchSort (sortParm) {
   let sortString = 'created desc'
 
-  if (sortParm && sortParm === 'Title'){
+  if (sortParm && sortParm === 'Title') {
     sortString = 'title desc'
-  } else if (sortParm && sortParm === 'Authored on Date'){
+  } else if (sortParm && sortParm === 'Authored on Date') {
     sortString = 'created desc'
   } else if (sortParm && sortParm === 'Last Updated') {
     sortString = 'updated desc'
