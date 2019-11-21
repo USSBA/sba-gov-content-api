@@ -1,13 +1,13 @@
 // /* eslint-env mocha */
-// const expect = require('chai').expect
-// const sinon = require('sinon')
+const expect = require('chai').expect
+const sinon = require('sinon')
 
-// const { fetchArticles } = require('./articles.js')
-// const s3CacheReader = require('../clients/s3-cache-reader.js')
+const { fetchArticles } = require('./articles.js')
+const s3CacheReader = require('../clients/s3-cache-reader.js')
 
-// let cloudsearch = require('../clients/cloudsearch.js')
+let cloudsearch = require('../clients/cloudsearch.js')
 
-// const { articles } = require('../test-data/articles.js')
+const { articles } = require('../test-data/articles.js')
 
 // describe('Searching for articles', () => {
 //   let getKeyStub
