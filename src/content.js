@@ -13,7 +13,7 @@ const {
   fetchPersons,
   fetchTaxonomys
 } = require('./service/drupal-eight.js')
-const { fetchArticles } = require('./service/articles.js')
+const { fetchArticles } = require('./service/article-search.js')
 const { getAuthors } = require('./service/authors.js')
 const { fetchBlogs, fetchBlog } = require('./service/blogs.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
