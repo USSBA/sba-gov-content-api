@@ -90,7 +90,7 @@ async function fetchContentByType (pathParams, queryStringParameters) {
   <katanaUrl>/offices/district/<districtOfficeId>
   returns cloudsearch formatted json objects, which have snake_case formatted properties.
 
-  For now, we should enable the endpoint functionalities found in (articles.json and article-search.json) to be configurable by the request.
+  For now, we should enable the endpoint fetchArticles() functionality to be configurable by the request.
 
   the queryStringParameter, "mode: articleLookup|districtOffice" toggles the articles.json and the article-search.json files, respectively.
 
