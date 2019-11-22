@@ -101,10 +101,8 @@ async function fetchContentByType (pathParams, queryStringParameters) {
 
   */
 
-  let fetchArticles
-  if (pathParams) {
-    fetchArticles = pathParams.type === 'articles' && queryStringParameters.mode === 'districtOffice' ? lookupDistrictOfficeArticles.fetchArticles : lookupArticles.fetchArticles
-  }
+  const articles = pathParams && pathParams.type === 'articles' && queryStringParameters && queryStringParameters.mode === 'districtOffice' ? lookupDistrictOfficeArticles : lookupArticles
+  const { fetchArticles } = articles
 
   const typeFunctionsMap = {
     announcements: fetchAnnouncements,

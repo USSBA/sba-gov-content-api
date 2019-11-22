@@ -1,10 +1,5 @@
 const config = require('../config')
-// const s3CacheReader = require('../clients/s3-cache-reader.js')
-// const searchUtils = require('./search-utils.js')
 const cloudsearch = require('../clients/cloudsearch.js')
-
-// const { isEmpty, orderBy } = require('lodash')
-
 const endpoint = config.cloudSearch.articleEndpoint
 
 function buildQuery (query) {
