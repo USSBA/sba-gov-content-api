@@ -13,7 +13,8 @@ const {
   fetchPersons,
   fetchTaxonomys
 } = require('./service/drupal-eight.js')
-const { fetchArticles } = require('./service/article-search.js')
+const lookupArticles = require('./service/articles.js')
+const lookupDistrictOfficeArticles = require('./service/article-search.js')
 const { getAuthors } = require('./service/authors.js')
 const { fetchBlogs, fetchBlog } = require('./service/blogs.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
@@ -78,6 +79,33 @@ async function fetchContentById (params, headers) {
 }
 
 async function fetchContentByType (pathParams, queryStringParameters) {
+  /*
+  Permission Toggle Feature Flag 11/22/2019
+
+  endpoint: /api/content/search/articles.json is invoked by both <katanaUrl>/article and <katanaUrl>/offices/district/<districtOfficeId>
+
+  <katanaUrl>/article
+  returns daisho formatted json objects, which have camelCase formatted properties.
+
+  <katanaUrl>/offices/district/<districtOfficeId>
+  returns cloudsearch formatted json objects, which have snake_case formatted properties.
+
+  For now, we should enable this endpoint (articles.json) to be configurable by the request.
+
+  the queryStringParameter, "mode: articleLookup|districtOffice" toggles the article-search.json and the articles.json files, respectively.
+
+  Please note, by default articles.json is selected. article-search.json is only selected if mode is set to "districtOffice".
+
+  In the future, articles.json functionality should be ported into article-search.json but in order to do that,
+  the <katanaUrl>/article page has to be able to parse cloudsearch formatted json.
+
+  */
+
+  let fetchArticles
+  if (pathParams) {
+    fetchArticles = pathParams.type === 'articles' && queryStringParameters.mode === 'districtOffice' ? lookupDistrictOfficeArticles.fetchArticles : lookupArticles.fetchArticles
+  }
+
   const typeFunctionsMap = {
     announcements: fetchAnnouncements,
     articles: fetchArticles,

@@ -7,26 +7,10 @@ const cloudsearch = require('../clients/cloudsearch.js')
 
 const endpoint = config.cloudSearch.articleEndpoint
 
-async function fetchArticles (queryParams) {
-  let cloudParams = {
-    query: buildQuery(queryParams.searchTerm), /* required */
-    filterQuery: buildFilters(queryParams),
-    queryParser: 'structured',
-    size: queryParams.pageSize,
-    start: queryParams.start,
-    sort: setArticleSearchSort(queryParams.sortBy),
-    return: '_all_fields'
-  }
-  const result = await cloudsearch.runSearch(cloudParams, endpoint)
-  const hits = result.hits
-  return Object.assign({}, hits)
-}
-
 function buildQuery (query) {
   const queryStatements = []
   let queryString = ''
-  // const fieldsToSearch = ['title', 'article_body', 'summary', 'url']
-  const fieldsToSearch = ['region', 'related_offices']
+  const fieldsToSearch = ['title', 'article_body', 'summary', 'url']
   for (const field of fieldsToSearch) {
     queryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
   }
@@ -40,23 +24,23 @@ function buildFilters (params) {
   let filterString = null
   let filters = []
 
-  if (params.articleCategory && params.articleCategory === 'all') {
+  if (params.articleCategory && params.articleCategory !== 'all') {
     filters.push(`article_category: '${cloudsearch.formatString(params.articleCategory)}'`)
   }
-  if (params.program && params.program === 'all') {
-    filters.push(`article_programs: '${cloudsearch.formatString(params.program)}'`)
+  if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
+    filters.push(`related_offices: '${params.relatedOffice}'`)
   }
-  if (params.office && params.office === 'all') {
-    filters.push(`related_offices: '${cloudsearch.formatString(params.program)}'`)
+  if (params.region) {
+    filters.push(`region: '${cloudsearch.formatString(params.region)}'`)
   }
-  // if (params.region && params.region === 'all') {
-  filters.push(`region: '${cloudsearch.formatString(params.region)} National'`)
-  // }
+  if (params.national && params.national === 'true') {
+    filters.push(`region: 'National'`)
+  }
 
   if (filters.length === 1) {
     filterString = filters[0]
   } else if (filters.length > 1) {
-    filterString = `(and ${filters.join(' ')})`
+    filterString = `(or ${filters.join(' ')})`
   }
   return filterString
 }
@@ -72,6 +56,22 @@ function setArticleSearchSort (sortParm) {
     sortString = 'updated desc'
   }
   return sortString
+}
+
+async function fetchArticles (queryParams) {
+  const query = queryParams.searchTerm ? buildQuery(queryParams.searchTerm) : 'matchall'
+  let cloudParams = {
+    query: query, /* required */
+    filterQuery: buildFilters(queryParams),
+    queryParser: 'structured',
+    size: queryParams.pageSize,
+    start: queryParams.start,
+    sort: setArticleSearchSort(queryParams.sortBy),
+    return: '_all_fields'
+  }
+  const result = await cloudsearch.runSearch(cloudParams, endpoint)
+  const hits = result.hits
+  return Object.assign({}, hits)
 }
 
 module.exports.fetchArticles = fetchArticles
