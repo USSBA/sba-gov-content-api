@@ -1,5 +1,6 @@
-const config = require('../config')
 const cloudsearch = require('../clients/cloudsearch.js')
+const searchUtils = require('./search-utils.js')
+const config = require('../config')
 const endpoint = config.cloudSearch.articleEndpoint
 
 function buildQuery (query) {
@@ -61,13 +62,12 @@ async function fetchArticles (queryParams) {
     query: query, /* required */
     filterQuery: buildFilters(queryParams),
     queryParser: 'structured',
-    size: queryParams.pageSize,
-    start: queryParams.start,
     sort: setArticleSearchSort(queryParams.sortBy),
     return: '_all_fields'
   }
   const result = await cloudsearch.runSearch(cloudParams, endpoint)
-  const hits = result.hits
+  const { end, start } = queryParams
+  const hits = searchUtils.paginateSearch(result.hits, start, end)
   return Object.assign({}, hits)
 }
 
