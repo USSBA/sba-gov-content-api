@@ -19,9 +19,6 @@ function buildFilters (params) {
   let filterString = null
   let filters = []
 
-  if (params.articleCategory && params.articleCategory !== 'all') {
-    filters.push(`article_category: '${cloudsearch.formatString(params.articleCategory)}'`)
-  }
   if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
     filters.push(`related_offices: '${params.relatedOffice}'`)
   }
@@ -37,6 +34,11 @@ function buildFilters (params) {
   } else if (filters.length > 1) {
     filterString = `(or ${filters.join(' ')})`
   }
+
+  if (params.articleCategory && params.articleCategory !== 'all') {
+    filterString = `article_category: '${cloudsearch.formatString(params.articleCategory)}' and ${filterString}`
+  }
+
   return filterString
 }
 
