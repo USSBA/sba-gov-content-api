@@ -17,7 +17,7 @@ function buildQuery (query) {
 }
 
 function buildFilters (params) {
-  let filterString = null
+  let filterString = ''
   let filters = []
 
   if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
@@ -37,8 +37,7 @@ function buildFilters (params) {
   }
 
   if (params.articleCategory && params.articleCategory !== 'all') {
-    const subFilterString = filterString !== null ? filterString : ''
-    filterString = `(and article_category: '${cloudsearch.formatString(params.articleCategory)}' ${subFilterString})`
+    filterString = `(and article_category: '${cloudsearch.formatString(params.articleCategory)}' ${filterString})`
   }
 
   return filterString
