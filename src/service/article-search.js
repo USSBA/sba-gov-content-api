@@ -67,7 +67,7 @@ async function fetchArticles (queryParams) {
   }
   const result = await cloudsearch.runSearch(cloudParams, endpoint)
   const { end, start } = queryParams
-  const hits = searchUtils.paginateSearch(result.hit, start, end)
+  const hits = searchUtils.paginateSearch(result.hits.hit, start, end)
   return Object.assign({}, {
     items: hits,
     count: hits.length
