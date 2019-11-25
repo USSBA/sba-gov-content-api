@@ -1,10 +1,4 @@
 const config = require('../config')
-// const aws = require('aws-sdk')
-// const csd = new aws.CloudSearchDomain({
-//   endpoint: config.cloudSearch.searchEndpoint,
-//   region: 'us-east-1',
-//   apiVersions: '2013-01-01'
-// })
 const endpoint = config.cloudSearch.searchEndpoint
 const cloudsearch = require('../clients/cloudsearch.js')
 
