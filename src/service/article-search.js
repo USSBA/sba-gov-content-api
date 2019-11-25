@@ -36,7 +36,7 @@ function buildFilters (params) {
   }
 
   if (params.articleCategory && params.articleCategory !== 'all') {
-    filterString = `article_category: '${cloudsearch.formatString(params.articleCategory)}' and ${filterString}`
+    filterString = `(and article_category: '${cloudsearch.formatString(params.articleCategory)}' ${filterString})`
   }
 
   return filterString
