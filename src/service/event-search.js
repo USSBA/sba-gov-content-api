@@ -1,26 +1,9 @@
 const config = require('../config')
-const aws = require('aws-sdk')
 const moment = require('moment-timezone')
 const location = require('./location.js')
-let csd
+const cloudsearch = require('../clients/cloudsearch.js')
 
-function formatString (string) {
-  let result = decodeURI(string)
-  // cloudsearch requires us to escape backslashes and quotes
-  result = result.replace(/\\/g, '\\\\')
-  result = result.replace(/'/g, "\\'")
-  return result
-}
-
-async function runSearch (params) {
-  csd = csd || new aws.CloudSearchDomain({
-    endpoint: config.cloudSearch.eventEndpoint,
-    region: 'us-east-1',
-    apiVersions: '2013-01-01'
-  })
-  const result = await csd.search(params).promise()
-  return result
-}
+const endpoint = config.cloudSearch.eventEndpoint
 
 function buildQuery (query, dateRange, office) {
   // if no date range is given, create a starting date range based on current time to exclude old events
@@ -39,7 +22,7 @@ function buildQuery (query, dateRange, office) {
   if (query) {
     const fieldsToSearch = ['description', 'name', 'summary']
     for (const field of fieldsToSearch) {
-      keywordQueryStatements.push(`${field}: '${formatString(query)}'`)
+      keywordQueryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
     }
   }
 
@@ -103,7 +86,7 @@ async function fetchEvents (query) {
 
   const params = buildParams(queryObj, geo)
   try {
-    const result = await module.exports.runSearch(params) // call the module.exports version for stubbing during testing
+    const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
     const hits = result.hits
     const newHitList = hits.hit.map(item => {
       let _item = item
@@ -133,7 +116,6 @@ async function fetchEvents (query) {
 }
 
 module.exports = {
-  runSearch,
   buildQuery,
   buildParams,
   fetchEvents

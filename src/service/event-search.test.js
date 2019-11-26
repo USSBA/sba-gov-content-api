@@ -8,6 +8,7 @@ const moment = require('moment')
 const location = require('./location.js')
 const eventSearch = require('./event-search.js')
 const dynamoDbClient = require('../clients/dynamo-db-client.js')
+const cloudsearch = require('../clients/cloudsearch.js')
 
 let exampleDynamoDBResponse = {
   Items: [
@@ -79,7 +80,7 @@ describe('eventSearch', () => {
 
   let stubRunSearch
   before(() => {
-    stubRunSearch = sinon.stub(eventSearch, 'runSearch')
+    stubRunSearch = sinon.stub(cloudsearch, 'runSearch')
     dynamoDbClientQueryStub = sinon.stub(dynamoDbClient, 'queryDynamoDb')
   })
   afterEach(() => {

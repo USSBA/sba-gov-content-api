@@ -1,10 +1,6 @@
 const config = require('../config')
-const aws = require('aws-sdk')
-const csd = new aws.CloudSearchDomain({
-  endpoint: config.cloudSearch.searchEndpoint,
-  region: 'us-east-1',
-  apiVersions: '2013-01-01'
-})
+const endpoint = config.cloudSearch.searchEndpoint
+const cloudsearch = require('../clients/cloudsearch.js')
 
 async function runSearch (req, res) {
   const { term, pageSize, start } = req
@@ -26,7 +22,7 @@ async function runSearch (req, res) {
   }
 
   try {
-    let result = await csd.search(params).promise()
+    let result = await cloudsearch.runSearch(params, endpoint)
     return result
   } catch (e) {
     console.log('Error retrieving results from cloudsearch for ' + JSON.stringify(params), e)

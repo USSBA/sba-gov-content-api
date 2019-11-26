@@ -2,7 +2,8 @@ module.exports = {
   cloudSearch: {
     searchEndpoint: process.env.CLOUDSEARCH_SEARCH_ENDPOINT,
     officeEndpoint: process.env.CLOUDSEARCH_OFFICE_ENDPOINT,
-    eventEndpoint: process.env.CLOUDSEARCH_EVENT_ENDPOINT
+    eventEndpoint: process.env.CLOUDSEARCH_EVENT_ENDPOINT,
+    articleEndpoint: process.env.CLOUDSEARCH_ARTICLE_ENDPOINT
   },
   contentBucket: process.env.CONTENT_BUCKET,
   zipCodeDynamoDbTable: process.env.ZIP_CODE_DYNAMODB_TABLE,

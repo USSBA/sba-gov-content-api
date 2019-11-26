@@ -6,6 +6,7 @@ chai.should()
 
 let officeSearch = require('./office-search.js')
 let dynamoDbClient = require('../clients/dynamo-db-client.js')
+let cloudsearch = require('../clients/cloudsearch.js')
 
 let exampleDynamoDBResponse = {
   Items: [
@@ -91,7 +92,7 @@ describe('# Office Search', () => {
 
   before(() => {
     dynamoDbClientQueryStub = sinon.stub(dynamoDbClient, 'queryDynamoDb')
-    officeSearchRunSearchStub = sinon.stub(officeSearch, 'runSearch')
+    officeSearchRunSearchStub = sinon.stub(cloudsearch, 'runSearch')
   })
 
   afterEach(() => {
