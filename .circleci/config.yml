@@ -119,7 +119,7 @@ workflows:
 jobs:
   cache-dependencies:
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:12.13
     steps:
       - checkout
       - restore_cache:
