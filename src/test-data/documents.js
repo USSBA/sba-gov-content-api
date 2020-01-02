@@ -49,7 +49,17 @@ const testDocs = [{
 }
 ]
 
-const sortedDocs = [{
+const sortedDocs = [
+  {
+    files: [{
+      effectiveDate: '2020-01-01'
+    },
+    {
+      effectiveDate: '2015-01-01'
+    }
+    ]
+  },
+{
   files: [{
     effectiveDate: '2018-01-01'
   },
@@ -64,15 +74,6 @@ const sortedDocs = [{
   },
   {
     effectiveDate: '2016-01-01'
-  }
-  ]
-},
-{
-  files: [{
-    effectiveDate: '2020-01-01'
-  },
-  {
-    effectiveDate: '2015-01-01'
   }
   ]
 },
