@@ -119,7 +119,7 @@ workflows:
 jobs:
   cache-dependencies:
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:12.13
     steps:
       - checkout
       - restore_cache:
@@ -135,7 +135,7 @@ jobs:
           key: v2-dependencies-{{ checksum "package.json" }}
   npm-test:
     docker:
-    - image: circleci/node:8.10
+    - image: circleci/node:12.13
     steps:
       - checkout
       - restore_cache:
@@ -147,7 +147,7 @@ jobs:
             npm test
   test-lint:
     docker:
-    - image: circleci/node:8.10
+    - image: circleci/node:12.13
     steps:
       - checkout
       # Download and cache dependencies
@@ -171,7 +171,7 @@ jobs:
          poirot --patterns='https://raw.githubusercontent.com/DCgov/poirot-patterns/master/financial.txt'
   build-package:
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:12.13
     steps:
       - checkout
       - restore_cache:
