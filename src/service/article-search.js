@@ -35,10 +35,10 @@ function buildFilters (params) {
     officeFilters.push(`(term field=region 'National')`)
   }
 
-  if (officefilters.length === 1) {
-    officeFilterString = officefilters[0]
-  } else if (officefilters.length > 1) {
-    officeFilterString = `(or ${officefilters.join(' ')})`
+  if (officeFilters.length === 1) {
+    officeFilterString = officeFilters[0]
+  } else if (officeFilters.length > 1) {
+    officeFilterString = `(or ${officeFilters.join(' ')})`
   }
 
   if (params.program && params.program !== 'all') {
