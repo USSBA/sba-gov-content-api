@@ -25,14 +25,14 @@ function buildFilters (params) {
   let filterString = null
 
   if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
-    officeFilters.push(`(term field=related_offices '${params.relatedOffice}')`)
-    officeFilters.push(`(term field=office '${params.office}')`)
+    officeFilters.push(`(related_offices: '${params.relatedOffice}')`)
+    officeFilters.push(`(offices: '${params.office}')`)
   }
   if (params.region) {
-    officeFilters.push(`(term field=region '${cloudsearch.formatString(params.region)}')`)
+    officeFilters.push(`(region: '${cloudsearch.formatString(params.region)}')`)
   }
   if (params.national && params.national === 'true') {
-    officeFilters.push(`(term field=region 'National')`)
+    officeFilters.push(`(region: 'National')`)
   }
 
   if (officeFilters.length === 1) {
@@ -42,11 +42,11 @@ function buildFilters (params) {
   }
 
   if (params.program && params.program !== 'all') {
-    programFilterString = `(term field=article_programs '${cloudsearch.formatString(params.program)}')`
+    programFilterString = `(article_programs: '${cloudsearch.formatString(params.program)}')`
   }
 
   if (params.articleCategory && params.articleCategory !== 'all') {
-    categoryFilterString = `(term field=article_category '${cloudsearch.formatString(params.articleCategory)}')`
+    categoryFilterString = `(article_category: '${cloudsearch.formatString(params.articleCategory)}')`
   }
 
   officeFilterString && filters.push(officeFilterString)
