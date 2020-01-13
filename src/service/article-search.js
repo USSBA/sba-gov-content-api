@@ -17,44 +17,69 @@ function buildQuery (query) {
 }
 
 function buildFilters (params) {
-  let filterString = null
+  let officeFilters = []
+  let officeFilterString
+  let programFilterString
+  let categoryFilterString
   let filters = []
+  let filterString = null
 
   if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
-    filters.push(`related_offices: '${params.relatedOffice}'`)
+    officeFilters.push(`(term field=related_offices '${params.relatedOffice}')`)
+    officeFilters.push(`(term field=office '${params.office}')`)
   }
   if (params.region) {
-    filters.push(`region: '${cloudsearch.formatString(params.region)}'`)
+    officeFilters.push(`(term field=region '${cloudsearch.formatString(params.region)}')`)
   }
   if (params.national && params.national === 'true') {
-    filters.push(`region: 'National'`)
+    officeFilters.push(`(term field=region 'National')`)
   }
+
+  if (officefilters.length === 1) {
+    officeFilterString = officefilters[0]
+  } else if (officefilters.length > 1) {
+    officeFilterString = `(or ${officefilters.join(' ')})`
+  }
+
+  if (params.program && params.program !== 'all') {
+    programFilterString = `(term field=article_programs '${cloudsearch.formatString(params.program)}')`
+  }
+
+  if (params.articleCategory && params.articleCategory !== 'all') {
+    categoryFilterString = `(term field=article_category '${cloudsearch.formatString(params.articleCategory)}')`
+  }
+
+  officeFilterString && filters.push(officeFilterString)
+  programFilterString && filters.push(programFilterString)
+  categoryFilterString && filters.push(categoryFilterString)
 
   if (filters.length === 1) {
     filterString = filters[0]
   } else if (filters.length > 1) {
-    filterString = `(or ${filters.join(' ')})`
-  }
-
-  if (params.articleCategory && params.articleCategory !== 'all') {
-    const subFilterString = filterString !== null ? filterString : ''
-    filterString = `(and article_category: '${cloudsearch.formatString(params.articleCategory)}' ${subFilterString})`
+    filterString = `(and ${filters.join(' ')})`
   }
 
   return filterString
 }
 
-function setArticleSearchSort (sortParm) {
-  let sortString = 'created desc'
+function setArticleSearchSort (params) {
+  let sortField = 'updated'
+  let sortOrder = 'desc'
 
-  if (sortParm && sortParm === 'Title') {
-    sortString = 'title desc'
-  } else if (sortParm && sortParm === 'Authored on Date') {
-    sortString = 'created desc'
-  } else if (sortParm && sortParm === 'Last Updated') {
-    sortString = 'updated desc'
+  if (params.sortBy) {
+    if (params.sortBy === 'Title') {
+      sortField = 'title'
+    }
+    if (params.sortBy === 'Authored on Date') {
+      sortField = 'created'
+    }
   }
-  return sortString
+
+  if (params.order && params.order === 'asc') {
+    sortField = 'asc'
+  }
+
+  return `${sortField} ${sortOrder}`
 }
 
 async function fetchArticles (queryParams) {
@@ -63,7 +88,7 @@ async function fetchArticles (queryParams) {
     query: query, /* required */
     filterQuery: buildFilters(queryParams),
     queryParser: 'structured',
-    sort: setArticleSearchSort(queryParams.sortBy),
+    sort: setArticleSearchSort(queryParams),
     return: '_all_fields'
   }
   const result = await cloudsearch.runSearch(cloudParams, endpoint)
