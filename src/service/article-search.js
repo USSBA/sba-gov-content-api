@@ -22,42 +22,38 @@ function buildFilters (params) {
   let programFilterString
   let categoryFilterString
   let filters = []
-  let filterString = null
+  let filterString = ''
 
   if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
-    officeFilters.push(`(related_offices: '${params.relatedOffice}')`)
-    officeFilters.push(`(offices: '${params.office}')`)
+    officeFilters.push(`(or related_offices: '${params.relatedOffice}')`)
+  }
+  if (params.relatedOffice && !isNaN(Number(params.office))) {
+    officeFilters.push(`(or office: '${params.office}')`)
   }
   if (params.region) {
-    officeFilters.push(`(region: '${cloudsearch.formatString(params.region)}')`)
+    officeFilters.push(`(or region: '${cloudsearch.formatString(params.region)}')`)
   }
   if (params.national && params.national === 'true') {
-    officeFilters.push(`(region: 'National')`)
+    officeFilters.push(`(or region: 'National')`)
   }
 
   if (officeFilters.length === 1) {
     officeFilterString = officeFilters[0]
   } else if (officeFilters.length > 1) {
-    officeFilterString = `(or ${officeFilters.join(' ')})`
+    officeFilterString = officeFilters.join(' ')
   }
 
   if (params.program && params.program !== 'all') {
-    programFilterString = `(article_programs: '${cloudsearch.formatString(params.program)}')`
+    programFilterString = `article_programs: '${cloudsearch.formatString(params.program)}'`
   }
 
   if (params.articleCategory && params.articleCategory !== 'all') {
-    categoryFilterString = `(article_category: '${cloudsearch.formatString(params.articleCategory)}')`
+    categoryFilterString = `article_category: '${cloudsearch.formatString(params.articleCategory)}'`
   }
 
-  officeFilterString && filters.push(officeFilterString)
   programFilterString && filters.push(programFilterString)
   categoryFilterString && filters.push(categoryFilterString)
-
-  if (filters.length === 1) {
-    filterString = filters[0]
-  } else if (filters.length > 1) {
-    filterString = `(and ${filters.join(' ')})`
-  }
+  filterString += `(and ${officeFilterString} ${filters.join(' ')})`
 
   return filterString
 }
