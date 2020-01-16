@@ -3,8 +3,7 @@ const searchUtils = require('./search-utils.js')
 const config = require('../config')
 const endpoint = config.cloudSearch.articleEndpoint
 
-function ArticleSearch() {
-
+function ArticleSearch () {
   function buildQuery (query) {
     const queryStatements = []
     let queryString = ''
@@ -106,7 +105,6 @@ function ArticleSearch() {
     setArticleSearchSort,
     buildQuery
   }
-
 }
 
 module.exports = ArticleSearch()
