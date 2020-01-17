@@ -1,5 +1,4 @@
 const cloudsearch = require('../clients/cloudsearch.js')
-const searchUtils = require('./search-utils.js')
 const config = require('../config')
 const endpoint = config.cloudSearch.articleEndpoint
 
@@ -53,9 +52,11 @@ function ArticleSearch () {
       categoryFilterString = `article_category: '${cloudsearch.formatString(params.articleCategory)}'`
     }
 
-    programFilterString && filters.push(programFilterString)
-    categoryFilterString && filters.push(categoryFilterString)
-    filterString += `(and ${officeFilterString} ${filters.join(' ')})`
+    programFilterString.length > 0 && filters.push(programFilterString)
+    categoryFilterString.length > 0 && filters.push(categoryFilterString)
+    if (officeFilterString.length > 0 || filters.length > 0) {
+      filterString += `(and ${officeFilterString} ${filters.join(' ')})`
+    }
 
     return filterString
   }
@@ -85,17 +86,26 @@ function ArticleSearch () {
     const query = queryParams.searchTerm ? this.buildQuery(queryParams.searchTerm) : 'matchall'
     let cloudParams = {
       query: query, /* required */
-      filterQuery: this.buildFilters(queryParams),
       queryParser: 'structured',
       sort: this.setArticleSearchSort(queryParams),
+      start: 0,
       return: '_all_fields'
     }
-    const result = await cloudsearch.runSearch(cloudParams, endpoint)
+    const filters = this.buildFilters(queryParams)
+    if (filters.length > 0) {
+      cloudParams.filterQuery = filters
+    }
     const { end, start } = queryParams
-    const hits = searchUtils.paginateSearch(result.hits.hit, start, end)
+    if (start) {
+      cloudParams.start = start
+    }
+    if (end) {
+      cloudParams.size = end - cloudParams.start
+    }
+    const result = await cloudsearch.runSearch(cloudParams, endpoint)
     return Object.assign({}, {
-      items: hits,
-      count: hits.length
+      items: result.hits.hit,
+      count: result.hits.found
     })
   }
 
