@@ -59,7 +59,7 @@ function ArticleSearch () {
 
     return filterString
   }
-  
+
   this.setArticleSearchSort = function (params) {
     let sortField = 'updated'
     let sortOrder = 'desc'
