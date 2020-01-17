@@ -19,12 +19,12 @@ function ArticleSearch () {
   }
 
   this.buildFilters = function (params) {
-    let officeFilters = []
-    let officeFilterString
-    let programFilterString
-    let categoryFilterString
     let filters = []
+    let officeFilters = []
     let filterString = ''
+    let officeFilterString = ''
+    let programFilterString = ''
+    let categoryFilterString = ''
 
     if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
       officeFilters.push(`(or related_offices: '${params.relatedOffice}')`)
