@@ -13,7 +13,7 @@ const {
   fetchPersons,
   fetchTaxonomys
 } = require('./service/drupal-eight.js')
-const articleSearch = require('./service/article-search.js')
+const { fetchArticles } = require('./service/article-search.js')
 const { getAuthors } = require('./service/authors.js')
 const { fetchBlogs, fetchBlog } = require('./service/blogs.js')
 const { fetchCourses, fetchCourse } = require('./service/courses.js')
@@ -80,7 +80,7 @@ async function fetchContentById (params, headers) {
 async function fetchContentByType (pathParams, queryStringParameters) {
   const typeFunctionsMap = {
     announcements: fetchAnnouncements,
-    articles: articleSearch.fetchArticles,
+    articles: fetchArticles,
     blog: fetchBlog,
     blogs: fetchBlogs,
     contacts: fetchContacts,

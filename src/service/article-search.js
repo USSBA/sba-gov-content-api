@@ -4,7 +4,7 @@ const config = require('../config')
 const endpoint = config.cloudSearch.articleEndpoint
 
 function ArticleSearch () {
-  function buildQuery (query) {
+  this.buildQuery = function (query) {
     const queryStatements = []
     let queryString = ''
     const fieldsToSearch = ['title', 'article_body', 'summary', 'url']
@@ -18,7 +18,7 @@ function ArticleSearch () {
     return queryString
   }
 
-  function buildFilters (params) {
+  this.buildFilters = function (params) {
     let officeFilters = []
     let officeFilterString
     let programFilterString
@@ -59,8 +59,8 @@ function ArticleSearch () {
 
     return filterString
   }
-
-  function setArticleSearchSort (params) {
+  
+  this.setArticleSearchSort = function (params) {
     let sortField = 'updated'
     let sortOrder = 'desc'
 
@@ -81,7 +81,7 @@ function ArticleSearch () {
     return result
   }
 
-  async function fetchArticles (queryParams) {
+  this.fetchArticles = async function (queryParams) {
     const query = queryParams.searchTerm ? this.buildQuery(queryParams.searchTerm) : 'matchall'
     let cloudParams = {
       query: query, /* required */
@@ -100,10 +100,10 @@ function ArticleSearch () {
   }
 
   return {
-    buildFilters,
-    fetchArticles,
-    setArticleSearchSort,
-    buildQuery
+    buildQuery: this.buildQuery,
+    buildFilters: this.buildFilters,
+    setArticleSearchSort: this.setArticleSearchSort,
+    fetchArticles: this.fetchArticles
   }
 }
 
