@@ -28,7 +28,7 @@ function ArticleSearch () {
     if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
       officeFilters.push(`(or related_offices: '${params.relatedOffice}')`)
     }
-    if (params.relatedOffice && !isNaN(Number(params.office))) {
+    if (params.office && !isNaN(Number(params.office))) {
       officeFilters.push(`(or office: '${params.office}')`)
     }
     if (params.region) {
