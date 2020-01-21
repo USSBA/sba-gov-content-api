@@ -1,6 +1,8 @@
 # Usage
 
-The content API allows for searching of different resources used in the _SBA.gov_ site. To utilize the search hit the relevant endpoint for the AWS Lambda that is running the content API. The endpoint will accept URL parameters and will return any of the relevant resources that match the search parameters. Any invalid parameters will be ignored and not affect the results.
+The content API allows for searching of different resources used in the _SBA.gov_ site. To utilize the search hit the relevant endpoint for the AWS Lambda that is running the content API. The endpoint will accept URL parameters. Articles are stored in Cloudsearch, so the content API will make a request to the AWS Cloudsearch Articles Domain using the URL parameters and will return the matching Cloudsearch results. Any invalid parameters will be ignored and not affect the results.
+
+The docs for AWS Cloudsearch Developer Guide can be found here: https://docs.aws.amazon.com/cloudsearch/latest/developerguide
 
 _Note:_ This API only is for `GET` actions. It does not support any create or update actions. Those actions are handled by other services
 
@@ -9,14 +11,17 @@ Hit the articles endpoint at `*/articles.json`
 
 | Parameters       | Description
 |------------------|------------------
-|  searchTerm      | A keyword search for the title and summary fields of the article
+|  searchTerm      | A keyword search.
 |  articleCategory | The category of the article. Articles can be associated with multiple categories
 |  program         | The program that artcle is associated with. Articles can be assoicated with multiple programs
 |  type            | The type of resource being accessed.
-|  office          | The ID of the `office` that authored the article. Not all articles will be associated with an office and articles may only be associated with one office. This will also accept a value of `all` and will return all articles regardless of association with an office or not.
-|  sortBy          | The order of articles that are returned by the search. Valid inputs are `Title` and `Authored on Date`. Will defualt to sort on the `updated` field.
+|  relatedOffice   | The ID of an office. This will search Cloudsearch on the `related_offices` field (artices tagged to a certain office) AND the `office` field (articles authored by a certain office).
+|  region          | The region of an office.
+|  national        | Boolean field that, when `true`, will search Cloudsearch on the `region` field for articles containing a `National` region. This will search Cloudsearch on the related_offices field (artices tagged to a certain office) AND the office field (articles authored by a certain office).
+|  sortBy          | The field that will be sorted determined by the `order` param. Valid inputs are `Title` and `Authored on Date`. Will default to sort on the `updated` field.
+|  order           | The order of the articles based on the `sortBy` param. Will default to descending order. Only accepts `asc` and `desc` as valid.
 |  start           | The first index of the matching articles that will be returned
-|  end             | The last index of the matching articles that will be returned 
+|  end             | The index after the last index of the returned matching articles
 
 Example Request:
 ```

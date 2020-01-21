@@ -1,78 +1,120 @@
 const cloudsearch = require('../clients/cloudsearch.js')
-const searchUtils = require('./search-utils.js')
 const config = require('../config')
 const endpoint = config.cloudSearch.articleEndpoint
 
-function buildQuery (query) {
-  const queryStatements = []
-  let queryString = ''
-  const fieldsToSearch = ['title', 'article_body', 'summary', 'url']
-  for (const field of fieldsToSearch) {
-    queryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
+function ArticleSearch () {
+  this.buildQuery = function (query) {
+    const queryStatements = []
+    let queryString = ''
+    const fieldsToSearch = ['title', 'article_body', 'summary', 'url']
+    for (const field of fieldsToSearch) {
+      queryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
+    }
+    if (queryStatements.length > 1) {
+      queryString = `(or ${queryStatements.join(' ')})`
+    }
+
+    return queryString
   }
-  if (queryStatements.length > 1) {
-    queryString = `(or ${queryStatements.join(' ')})`
+
+  this.buildFilters = function (params) {
+    let filters = []
+    let officeFilters = []
+    let filterString = ''
+    let officeFilterString = ''
+    let programFilterString = ''
+    let categoryFilterString = ''
+
+    if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
+      officeFilters.push(`(or related_offices: '${params.relatedOffice}')`)
+    }
+    if (params.office && !isNaN(Number(params.office))) {
+      officeFilters.push(`(or office: '${params.office}')`)
+    }
+    if (params.region) {
+      officeFilters.push(`(or region: '${cloudsearch.formatString(params.region)}')`)
+    }
+    if (params.national && params.national === 'true') {
+      officeFilters.push(`(or region: 'National')`)
+    }
+
+    if (officeFilters.length === 1) {
+      officeFilterString = officeFilters[0]
+    } else if (officeFilters.length > 1) {
+      officeFilterString = officeFilters.join(' ')
+    }
+
+    if (params.program && params.program !== 'all') {
+      programFilterString = `article_programs: '${cloudsearch.formatString(params.program)}'`
+    }
+
+    if (params.articleCategory && params.articleCategory !== 'all') {
+      categoryFilterString = `article_category: '${cloudsearch.formatString(params.articleCategory)}'`
+    }
+
+    programFilterString.length > 0 && filters.push(programFilterString)
+    categoryFilterString.length > 0 && filters.push(categoryFilterString)
+    if (officeFilterString.length > 0 || filters.length > 0) {
+      filterString += `(and ${officeFilterString} ${filters.join(' ')})`
+    }
+
+    return filterString
   }
-  return queryString
+
+  this.setArticleSearchSort = function (params) {
+    let sortField = 'updated'
+    let sortOrder = 'desc'
+
+    if (params.sortBy) {
+      if (params.sortBy === 'Title') {
+        sortField = 'title'
+      }
+      if (params.sortBy === 'Authored on Date') {
+        sortField = 'created'
+      }
+    }
+
+    if (params.order && params.order === 'asc') {
+      sortOrder = 'asc'
+    }
+
+    const result = `${sortField} ${sortOrder}`
+    return result
+  }
+
+  this.fetchArticles = async function (queryParams) {
+    const query = queryParams.searchTerm ? this.buildQuery(queryParams.searchTerm) : 'matchall'
+    let cloudParams = {
+      query: query, /* required */
+      queryParser: 'structured',
+      sort: this.setArticleSearchSort(queryParams),
+      start: 0,
+      return: '_all_fields'
+    }
+    const filters = this.buildFilters(queryParams)
+    if (filters.length > 0) {
+      cloudParams.filterQuery = filters
+    }
+    const { end, start } = queryParams
+    if (start) {
+      cloudParams.start = start
+    }
+    if (end) {
+      cloudParams.size = end - cloudParams.start
+    }
+    const result = await cloudsearch.runSearch(cloudParams, endpoint)
+    return Object.assign({}, {
+      items: result.hits.hit,
+      count: result.hits.found
+    })
+  }
+
+  return {
+    buildQuery: this.buildQuery,
+    buildFilters: this.buildFilters,
+    setArticleSearchSort: this.setArticleSearchSort,
+    fetchArticles: this.fetchArticles
+  }
 }
 
-function buildFilters (params) {
-  let filterString = null
-  let filters = []
-
-  if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
-    filters.push(`related_offices: '${params.relatedOffice}'`)
-  }
-  if (params.region) {
-    filters.push(`region: '${cloudsearch.formatString(params.region)}'`)
-  }
-  if (params.national && params.national === 'true') {
-    filters.push(`region: 'National'`)
-  }
-
-  if (filters.length === 1) {
-    filterString = filters[0]
-  } else if (filters.length > 1) {
-    filterString = `(or ${filters.join(' ')})`
-  }
-
-  if (params.articleCategory && params.articleCategory !== 'all') {
-    const subFilterString = filterString !== null ? filterString : ''
-    filterString = `(and article_category: '${cloudsearch.formatString(params.articleCategory)}' ${subFilterString})`
-  }
-
-  return filterString
-}
-
-function setArticleSearchSort (sortParm) {
-  let sortString = 'created desc'
-
-  if (sortParm && sortParm === 'Title') {
-    sortString = 'title desc'
-  } else if (sortParm && sortParm === 'Authored on Date') {
-    sortString = 'created desc'
-  } else if (sortParm && sortParm === 'Last Updated') {
-    sortString = 'updated desc'
-  }
-  return sortString
-}
-
-async function fetchArticles (queryParams) {
-  const query = queryParams.searchTerm ? buildQuery(queryParams.searchTerm) : 'matchall'
-  let cloudParams = {
-    query: query, /* required */
-    filterQuery: buildFilters(queryParams),
-    queryParser: 'structured',
-    sort: setArticleSearchSort(queryParams.sortBy),
-    return: '_all_fields'
-  }
-  const result = await cloudsearch.runSearch(cloudParams, endpoint)
-  const { end, start } = queryParams
-  const hits = searchUtils.paginateSearch(result.hits.hit, start, end)
-  return Object.assign({}, {
-    items: hits,
-    count: hits.length
-  })
-}
-
-module.exports.fetchArticles = fetchArticles
+module.exports = ArticleSearch()
