@@ -15,7 +15,8 @@ Hit the articles endpoint at `*/articles.json`
 |  articleCategory | The category of the article. Articles can be associated with multiple categories
 |  program         | The program that artcle is associated with. Articles can be assoicated with multiple programs
 |  type            | The type of resource being accessed.
-|  relatedOffice   | The ID of an office. This will search Cloudsearch on the `related_offices` field (artices tagged to a certain office) AND the `office` field (articles authored by a certain office).
+|  relatedOffice   | The ID of an office. This will search Cloudsearch on the `related_offices` field (articles tagged to a certain office).
+|  office   | The ID of an office. This will search Cloudsearch on the `office` field (articles authored by a certain office).
 |  region          | The region of an office.
 |  national        | Boolean field that, when `true`, will search Cloudsearch on the `region` field for articles containing a `National` region. This will search Cloudsearch on the related_offices field (artices tagged to a certain office) AND the office field (articles authored by a certain office).
 |  sortBy          | The field that will be sorted determined by the `order` param. Valid inputs are `Title` and `Authored on Date`. Will default to sort on the `updated` field.
