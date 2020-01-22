@@ -26,16 +26,16 @@ function ArticleSearch () {
     let categoryFilterString = ''
 
     if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
-      officeFilters.push(`(or related_offices: '${params.relatedOffice}')`)
+      officeFilters.push(`related_offices: '${params.relatedOffice}'`)
     }
     if (params.office && !isNaN(Number(params.office))) {
-      officeFilters.push(`(or office: '${params.office}')`)
+      officeFilters.push(`office: '${params.office}'`)
     }
     if (params.region) {
-      officeFilters.push(`(or region: '${cloudsearch.formatString(params.region)}')`)
+      officeFilters.push(`region: '${cloudsearch.formatString(params.region)}'`)
     }
     if (params.national && params.national === 'true') {
-      officeFilters.push(`(or region: 'National')`)
+      officeFilters.push(`region: 'National'`)
     }
 
     if (officeFilters.length === 1) {
@@ -54,8 +54,12 @@ function ArticleSearch () {
 
     programFilterString.length > 0 && filters.push(programFilterString)
     categoryFilterString.length > 0 && filters.push(categoryFilterString)
-    if (officeFilterString.length > 0 || filters.length > 0) {
-      filterString += `(and ${officeFilterString} ${filters.join(' ')})`
+    if (officeFilterString.length > 0 && filters.length === 0) {
+      filterString += `(or ${officeFilterString})`
+    } else if (officeFilterString.length === 0 && filters.length > 0) {
+      filterString += `(and ${filters.join(' ')})`
+    } else if (officeFilterString.length > 0 && filters.length > 0) {
+      filterString += `(and (or ${officeFilterString}) ${filters.join(' ')})`
     }
 
     return filterString
@@ -82,6 +86,30 @@ function ArticleSearch () {
     return result
   }
 
+  this.transformToDaishoArticleObjectFormat = function (articles) {
+    const remappedArticles = []
+    for (let i = 0; i < articles.length; i++) {
+      const { fields } = articles[i]
+      const remappedArticle = {
+        id: Number(articles[i].id),
+        category: fields.article_category ? fields.article_category : [],
+        office: fields.office ? Number(fields.office[0]) : {},
+        programs: fields.article_programs ? fields.article_programs : [],
+        region: fields.region ? fields.region : [],
+        relatedOffices: fields.related_offices ? fields.related_offices.map(office => Number(office)) : [],
+        summary: fields.summary ? fields.summary[0] : '',
+        type: 'article',
+        title: fields.title ? fields.title[0] : '',
+        created: fields.created ? Number(fields.created[0]) : {},
+        updated: fields.updated ? Number(fields.updated[0]) : {},
+        url: fields.url ? fields.url[0] : ''
+      }
+
+      remappedArticles.push(remappedArticle)
+    }
+    return remappedArticles
+  }
+
   this.fetchArticles = async function (queryParams) {
     const query = queryParams.searchTerm ? this.buildQuery(queryParams.searchTerm) : 'matchall'
     let cloudParams = {
@@ -104,7 +132,7 @@ function ArticleSearch () {
     }
     const result = await cloudsearch.runSearch(cloudParams, endpoint)
     return Object.assign({}, {
-      items: result.hits.hit,
+      items: this.transformToDaishoArticleObjectFormat(result.hits.hit),
       count: result.hits.found
     })
   }
@@ -113,7 +141,8 @@ function ArticleSearch () {
     buildQuery: this.buildQuery,
     buildFilters: this.buildFilters,
     setArticleSearchSort: this.setArticleSearchSort,
-    fetchArticles: this.fetchArticles
+    fetchArticles: this.fetchArticles,
+    transformToDaishoArticleObjectFormat: this.transformToDaishoArticleObjectFormat
   }
 }
 
