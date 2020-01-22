@@ -26,16 +26,16 @@ function ArticleSearch () {
     let categoryFilterString = ''
 
     if (params.relatedOffice && !isNaN(Number(params.relatedOffice))) {
-      officeFilters.push(`(or related_offices: '${params.relatedOffice}')`)
+      officeFilters.push(`related_offices: '${params.relatedOffice}'`)
     }
     if (params.office && !isNaN(Number(params.office))) {
-      officeFilters.push(`(or office: '${params.office}')`)
+      officeFilters.push(`office: '${params.office}'`)
     }
     if (params.region) {
-      officeFilters.push(`(or region: '${cloudsearch.formatString(params.region)}')`)
+      officeFilters.push(`region: '${cloudsearch.formatString(params.region)}'`)
     }
     if (params.national && params.national === 'true') {
-      officeFilters.push(`(or region: 'National')`)
+      officeFilters.push(`region: 'National'`)
     }
 
     if (officeFilters.length === 1) {
@@ -54,8 +54,12 @@ function ArticleSearch () {
 
     programFilterString.length > 0 && filters.push(programFilterString)
     categoryFilterString.length > 0 && filters.push(categoryFilterString)
-    if (officeFilterString.length > 0 || filters.length > 0) {
-      filterString += `(and ${officeFilterString} ${filters.join(' ')})`
+    if (officeFilterString.length > 0 && filters.length === 0) {
+      filterString += `(or ${officeFilterString})`
+    } else if (officeFilterString.length === 0 && filters.length > 0) {
+      filterString += `(and ${filters.join(' ')})`
+    } else if (officeFilterString.length > 0 && filters.length > 0) {
+      filterString += `(and (or ${officeFilterString}) ${filters.join(' ')})`
     }
 
     return filterString

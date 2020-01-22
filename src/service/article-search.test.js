@@ -100,7 +100,7 @@ describe('articleSearch', () => {
   describe('buildFilters', () => {
     it('should format filter string for cloudsearch()', () => {
       const params = Object.assign({}, defaultQueryParams)
-      const expected = "(and (or related_offices: '6386') (or office: '3948') (or region: 'Region IV') (or region: 'National') article_programs: 'SBIC' article_category: 'Press release')"
+      const expected = "(and (or related_offices: '6386' office: '3948' region: 'Region IV' region: 'National') article_programs: 'SBIC' article_category: 'Press release')"
       const result = articleSearch.buildFilters(params)
       result.should.eql(expected)
     })
