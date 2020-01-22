@@ -130,4 +130,141 @@ describe('articleSearch', () => {
       result.should.eql(expected)
     })
   })
+  describe('transformToDaishoArticleObjectFormat', () => {
+    it('should remap an object when all fields are present', () => {
+      const items = [
+        {
+          id: '20351',
+          fields: {
+            article_category: ['Press release'],
+            office: ['6422'],
+            article_programs: ['7(a)'],
+            region: ['National (all regions)'],
+            related_offices: ['17054'],
+            summary: ['summary text'],
+            title: ['CST Article 2 (single input fields)'],
+            created: ['1574192414'],
+            updated: ['1574192835'],
+            url: ['/article/2019/nov/19/cst-article-2-single-input-fields']
+          }
+        }
+      ]
+
+      const expected = [
+        {
+          id: 20351,
+          category: ['Press release'],
+          office: 6422,
+          programs: ['7(a)'],
+          region: ['National (all regions)'],
+          relatedOffices: [17054],
+          summary: 'summary text',
+          type: 'article',
+          title: 'CST Article 2 (single input fields)',
+          created: 1574192414,
+          updated: 1574192835,
+          url: '/article/2019/nov/19/cst-article-2-single-input-fields'
+        }
+      ]
+      const result = articleSearch.transformToDaishoArticleObjectFormat(items)
+      result.should.eql(expected)
+    })
+
+    it('should remap an object with default values when any field is NOT present', () => {
+      const items = [
+        {
+          id: '20351',
+          fields: {}
+        }
+      ]
+
+      const expected = [
+        {
+          id: 20351,
+          category: [],
+          office: {},
+          programs: [],
+          region: [],
+          relatedOffices: [],
+          summary: '',
+          type: 'article',
+          title: '',
+          created: {},
+          updated: {},
+          url: ''
+        }
+      ]
+
+      const result = articleSearch.transformToDaishoArticleObjectFormat(items)
+      result.should.eql(expected)
+    })
+
+    it('should remap an object with stringified numbers converted to numbers for certain fields', () => {
+      const items = [
+        {
+          id: '20351',
+          fields: {
+            office: ['6422'],
+            related_offices: ['17054', '23566'],
+            created: ['1574192414'],
+            updated: ['1574192835']
+          }
+        }
+      ]
+
+      const expected = [
+        {
+          id: 20351,
+          category: [],
+          office: 6422,
+          programs: [],
+          region: [],
+          relatedOffices: [17054, 23566],
+          summary: '',
+          type: 'article',
+          title: '',
+          created: 1574192414,
+          updated: 1574192835,
+          url: ''
+        }
+      ]
+
+      const result = articleSearch.transformToDaishoArticleObjectFormat(items)
+      result.should.eql(expected)
+    })
+
+    it('should remap an object while preserving arrays for certain fields', () => {
+      const items = [
+        {
+          id: '20351',
+          fields: {
+            article_category: ['Notice', 'Press release'],
+            article_programs: ['7(a)', '8(a)'],
+            region: ['Region I', 'Region V'],
+            related_offices: ['17054', '23566']
+          }
+        }
+      ]
+
+      const expected = [
+        {
+          id: 20351,
+          category: ['Notice', 'Press release'],
+          office: {},
+          programs: ['7(a)', '8(a)'],
+          region: ['Region I', 'Region V'],
+          relatedOffices: [17054, 23566],
+          summary: '',
+          type: 'article',
+          title: '',
+          created: {},
+          updated: {},
+          url: ''
+        }
+      ]
+
+      const result = articleSearch.transformToDaishoArticleObjectFormat(items)
+      result.should.eql(expected)
+    })
+  })
 })

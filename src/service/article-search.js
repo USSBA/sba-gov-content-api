@@ -82,6 +82,30 @@ function ArticleSearch () {
     return result
   }
 
+  this.transformToDaishoArticleObjectFormat = function (articles) {
+    const remappedArticles = []
+    for (let i = 0; i < articles.length; i++) {
+      const { fields } = articles[i]
+      const remappedArticle = {
+        id: Number(articles[i].id),
+        category: fields.article_category ? fields.article_category : [],
+        office: fields.office ? Number(fields.office[0]) : {},
+        programs: fields.article_programs ? fields.article_programs : [],
+        region: fields.region ? fields.region : [],
+        relatedOffices: fields.related_offices ? fields.related_offices.map(office => Number(office)) : [],
+        summary: fields.summary ? fields.summary[0] : '',
+        type: 'article',
+        title: fields.title ? fields.title[0] : '',
+        created: fields.created ? Number(fields.created[0]) : {},
+        updated: fields.updated ? Number(fields.updated[0]) : {},
+        url: fields.url ? fields.url[0] : ''
+      }
+
+      remappedArticles.push(remappedArticle)
+    }
+    return remappedArticles
+  }
+
   this.fetchArticles = async function (queryParams) {
     const query = queryParams.searchTerm ? this.buildQuery(queryParams.searchTerm) : 'matchall'
     let cloudParams = {
@@ -104,7 +128,7 @@ function ArticleSearch () {
     }
     const result = await cloudsearch.runSearch(cloudParams, endpoint)
     return Object.assign({}, {
-      items: result.hits.hit,
+      items: this.transformToDaishoArticleObjectFormat(result.hits.hit),
       count: result.hits.found
     })
   }
@@ -113,7 +137,8 @@ function ArticleSearch () {
     buildQuery: this.buildQuery,
     buildFilters: this.buildFilters,
     setArticleSearchSort: this.setArticleSearchSort,
-    fetchArticles: this.fetchArticles
+    fetchArticles: this.fetchArticles,
+    transformToDaishoArticleObjectFormat: this.transformToDaishoArticleObjectFormat
   }
 }
 
