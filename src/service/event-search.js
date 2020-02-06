@@ -4,7 +4,7 @@ const endpoint = config.cloudSearch.eventEndpoint
 const moment = require('moment-timezone')
 const location = require('./location.js')
 
-function EventSearch() {
+function EventSearch () {
   this.buildQuery = function (query, dateRange, office) {
     // if no date range is given, create a starting date range based on current time to exclude old events
     let dateRangeString
@@ -79,7 +79,7 @@ function EventSearch() {
     return params
   }
 
-  this.transformToDaishoEventObjectFormat = function(events) {
+  this.transformToDaishoEventObjectFormat = function (events) {
     const remappedEvents = []
     for (let i = 0; i < events.length; i++) {
       const { fields } = events[i]
@@ -96,12 +96,12 @@ function EventSearch() {
         startDate: getValue(fields.startdatetime),
         endDate: getValue(fields.enddatetime),
         timezone: getValue(fields.timezone),
-        //cost: clean(item.field_event_fee) || '0.00',
+        // cost: clean(item.field_event_fee) || '0.00',
         locationType: getValue(fields.event_type),
         location: {
           name: getValue(fields.location_name),
           address: getValue(fields.location_street_address),
-          //address_additional: item.additional,
+          // address_additional: item.additional,
           city: getValue(fields.location_city),
           zipcode: getValue(fields.location_zipcode),
           state: getValue(fields.location_state),
@@ -110,7 +110,7 @@ function EventSearch() {
         },
         contact: {
           name: getValue(fields.organizer_name),
-          email:getValue(fields.organizer_email),
+          email: getValue(fields.organizer_email),
           phone: getValue(fields.organizer_phone_number)
         },
         // sponsor: {
