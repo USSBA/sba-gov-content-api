@@ -233,7 +233,7 @@ describe('eventSearch', () => {
     })
   })
 
-  describe.only('transformToDaishoEventObjectFormat', () => {
+  describe('transformToDaishoEventObjectFormat', () => {
     it('should remap an object when all fields are present', () => {
       const items = [
         {
