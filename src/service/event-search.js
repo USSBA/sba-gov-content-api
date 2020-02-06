@@ -154,7 +154,7 @@ function EventSearch () {
         return _item
       })
       return Object.assign({}, hits, {
-        hit: newHitList
+        hit: this.transformToDaishoEventObjectFormat(newHitList)
       })
     } catch (err) {
       console.error(err, err.stack)

@@ -64,7 +64,8 @@ let mockCloudSearchResponseWithEvents = {
         'organizer_phone_number': ['100-200-3000'],
         'organizer_name': ['Organizing Olivia'],
         'location_street_address': ['8 Market Place'],
-        'name': ['Test Event (non-recurring)']
+        'name': ['Test Event (non-recurring)'],
+        'geolocation': ['111111,222222']
       }
     }]
   }
@@ -226,10 +227,40 @@ describe('eventSearch', () => {
       const params = {
         q: 'test'
       }
-      const expected = JSON.stringify(mockCloudSearchResponseWithEvents.hits)
+      let expected = {
+        'found': 1,
+        'start': 0,
+        'hit': [{
+          'id': 19164,
+          'title': 'Test Event (non-recurring)',
+          'type': 'event',
+          'description': 'There will be an event. That is all.',
+          'registrationUrl': {},
+          'startDate': '2019-08-31T16:00:00Z',
+          'endDate': '2019-08-31T22:00:00Z',
+          'timezone': 'Eastern time zone',
+          'locationType': 'Online',
+          'location': {
+            'name': 'Spark Baltimore',
+            'address': '8 Market Place',
+            'city': 'Baltimore',
+            'zipcode': '21202',
+            'state': 'MD',
+            'latitude': '111111',
+            'longitude': '222222'
+          },
+          'contact': {
+            'name': 'Organizing Olivia',
+            'email': 'organizingolivia@email.com',
+            'phone': '100-200-3000'
+          },
+          'recurring': -1,
+          'recurringType': {}
+        }]
+      }
       stubRunSearch.returns(mockCloudSearchResponseWithEvents)
-      const result = JSON.stringify(await eventSearch.fetchEvents(params))
-      result.should.equal(expected)
+      const result = await eventSearch.fetchEvents(params)
+      result.should.eql(expected)
     })
   })
 
