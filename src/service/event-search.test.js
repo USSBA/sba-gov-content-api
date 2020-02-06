@@ -232,4 +232,100 @@ describe('eventSearch', () => {
       result.should.equal(expected)
     })
   })
+
+  describe.only('transformToDaishoEventObjectFormat', () => {
+    it('should remap an object when all fields are present', () => {
+      const items = [
+        {
+          id: '20351',
+          fields: {
+            name: ['My Test Event'],
+            registration_website: ['https://myevent.com/register-here'],
+            description: ['description text'],
+            startdatetime: ['12345678'],
+            enddatetime: ['987654321'],
+            timezone: ['UTC'],
+            event_type: ['in-person'],
+            location_name: ['Washington Convention Center'],
+            location_street_address: ['1600 Pennsylvania Ave'],
+            location_city: ['Washington'],
+            location_zipcode: ['12345'],
+            location_state: ['DC'],
+            geolocation: ['1111111111,2222222222'],
+            organizer_name: ['J Edgar'],
+            organizer_email: ['jedgar@hoover.gov'],
+            organizer_phone_number: ['202-123-7771'],
+            is_recurring: [0],
+            recurring_interval: ['test']
+          }
+        }
+      ]
+
+      const expected = [{
+        id: 20351,
+        title: 'My Test Event',
+        type: 'event',
+        description: 'description text',
+        registrationUrl: 'https://myevent.com/register-here',
+        startDate: '12345678',
+        endDate: '987654321',
+        timezone: 'UTC',
+        locationType: 'in-person',
+        location: {
+          name: 'Washington Convention Center',
+          address: '1600 Pennsylvania Ave',
+          city: 'Washington',
+          zipcode: '12345',
+          state: 'DC',
+          latitude: '1111111111',
+          longitude: '2222222222'
+        },
+        contact: {
+          name: 'J Edgar',
+          email: 'jedgar@hoover.gov',
+          phone: '202-123-7771'
+        },
+        recurring: -1,
+        recurringType: 'test'
+      }]
+
+      const result = eventSearch.transformToDaishoEventObjectFormat(items)
+      result.should.eql(expected)
+    })
+    it('should remap an object with default values when any field is NOT present', () => {
+      const items = [
+        {
+          id: '20351',
+          fields: {}
+        }
+      ]
+
+      const expected = [{
+        id: 20351,
+        title: {},
+        type: 'event',
+        description: {},
+        registrationUrl: {},
+        startDate: {},
+        endDate: {},
+        timezone: {},
+        locationType: {},
+        location: {
+          name: {},
+          address: {},
+          city: {},
+          zipcode: {},
+          state: {},
+          latitude: {},
+          longitude: {}
+        },
+        contact: { name: {}, email: {}, phone: {} },
+        recurring: -1,
+        recurringType: {}
+      }]
+
+      const result = eventSearch.transformToDaishoEventObjectFormat(items)
+      result.should.eql(expected)
+    })
+  })
 })
