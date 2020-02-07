@@ -64,7 +64,8 @@ let mockCloudSearchResponseWithEvents = {
         'organizer_phone_number': ['100-200-3000'],
         'organizer_name': ['Organizing Olivia'],
         'location_street_address': ['8 Market Place'],
-        'name': ['Test Event (non-recurring)']
+        'name': ['Test Event (non-recurring)'],
+        'geolocation': ['111111,222222']
       }
     }]
   }
@@ -226,10 +227,136 @@ describe('eventSearch', () => {
       const params = {
         q: 'test'
       }
-      const expected = JSON.stringify(mockCloudSearchResponseWithEvents.hits)
+      let expected = {
+        'found': 1,
+        'start': 0,
+        'hit': [{
+          'id': 19164,
+          'title': 'Test Event (non-recurring)',
+          'type': 'event',
+          'description': 'There will be an event. That is all.',
+          'registrationUrl': {},
+          'startDate': '2019-08-31T16:00:00Z',
+          'endDate': '2019-08-31T22:00:00Z',
+          'timezone': 'Eastern time zone',
+          'locationType': 'Online',
+          'location': {
+            'name': 'Spark Baltimore',
+            'address': '8 Market Place',
+            'city': 'Baltimore',
+            'zipcode': '21202',
+            'state': 'MD',
+            'latitude': '111111',
+            'longitude': '222222'
+          },
+          'contact': {
+            'name': 'Organizing Olivia',
+            'email': 'organizingolivia@email.com',
+            'phone': '100-200-3000'
+          },
+          'recurring': -1,
+          'recurringType': {}
+        }]
+      }
       stubRunSearch.returns(mockCloudSearchResponseWithEvents)
-      const result = JSON.stringify(await eventSearch.fetchEvents(params))
-      result.should.equal(expected)
+      const result = await eventSearch.fetchEvents(params)
+      result.should.eql(expected)
+    })
+  })
+
+  describe('transformToDaishoEventObjectFormat', () => {
+    it('should remap an object when all fields are present', () => {
+      const items = [
+        {
+          id: '20351',
+          fields: {
+            name: ['My Test Event'],
+            registration_website: ['https://myevent.com/register-here'],
+            description: ['description text'],
+            startdatetime: ['12345678'],
+            enddatetime: ['987654321'],
+            timezone: ['UTC'],
+            event_type: ['in-person'],
+            location_name: ['Washington Convention Center'],
+            location_street_address: ['1600 Pennsylvania Ave'],
+            location_city: ['Washington'],
+            location_zipcode: ['12345'],
+            location_state: ['DC'],
+            geolocation: ['1111111111,2222222222'],
+            organizer_name: ['J Edgar'],
+            organizer_email: ['jedgar@hoover.gov'],
+            organizer_phone_number: ['202-123-7771'],
+            is_recurring: [0],
+            recurring_interval: ['test']
+          }
+        }
+      ]
+
+      const expected = [{
+        id: 20351,
+        title: 'My Test Event',
+        type: 'event',
+        description: 'description text',
+        registrationUrl: 'https://myevent.com/register-here',
+        startDate: '12345678',
+        endDate: '987654321',
+        timezone: 'UTC',
+        locationType: 'in-person',
+        location: {
+          name: 'Washington Convention Center',
+          address: '1600 Pennsylvania Ave',
+          city: 'Washington',
+          zipcode: '12345',
+          state: 'DC',
+          latitude: '1111111111',
+          longitude: '2222222222'
+        },
+        contact: {
+          name: 'J Edgar',
+          email: 'jedgar@hoover.gov',
+          phone: '202-123-7771'
+        },
+        recurring: -1,
+        recurringType: 'test'
+      }]
+
+      const result = eventSearch.transformToDaishoEventObjectFormat(items)
+      result.should.eql(expected)
+    })
+    it('should remap an object with default values when any field is NOT present', () => {
+      const items = [
+        {
+          id: '20351',
+          fields: {}
+        }
+      ]
+
+      const expected = [{
+        id: 20351,
+        title: {},
+        type: 'event',
+        description: {},
+        registrationUrl: {},
+        startDate: {},
+        endDate: {},
+        timezone: {},
+        locationType: {},
+        location: {
+          name: {},
+          address: {},
+          city: {},
+          zipcode: {},
+          state: {},
+          latitude: {},
+          longitude: {}
+        },
+        contact: { name: {}, email: {}, phone: {} },
+        recurring: -1,
+        recurringType: {}
+      }]
+
+      const result = eventSearch.transformToDaishoEventObjectFormat(items)
+      result.should.eql(expected)
     })
   })
 })
