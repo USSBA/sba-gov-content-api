@@ -5,7 +5,7 @@ const endpoint = config.cloudSearch.articleEndpoint
 function ArticleSearch () {}
 
 ArticleSearch.prototype.buildQuery = function (query) {
-  console.log("Build Quer!!!!", query) 
+  console.log('Build Quer!!!!', query)
   const queryStatements = []
   let queryString = ''
   const fieldsToSearch = ['title', 'article_body', 'summary', 'url']
@@ -15,12 +15,12 @@ ArticleSearch.prototype.buildQuery = function (query) {
   if (queryStatements.length > 1) {
     queryString = `(or ${queryStatements.join(' ')})`
   }
-  
+
   return queryString
 }
 
 ArticleSearch.prototype.buildFilters = function (params) {
-  console.log("Build Filter!!!!", params)
+  console.log('Build Filter!!!!', params)
   let filters = []
   let officeFilters = []
   let filterString = ''
@@ -67,9 +67,9 @@ ArticleSearch.prototype.buildFilters = function (params) {
 
   return filterString
 }
-  
+
 ArticleSearch.prototype.setArticleSearchSort = function (params) {
-  console.log("SearchSnort!!!!", params)
+  console.log('SearchSnort!!!!', params)
   let sortField = 'updated'
   let sortOrder = 'desc'
 
@@ -151,4 +151,3 @@ module.exports = {
   buildFilters: buildFilters.bind(_articleSearch),
   buildQuery: buildQuery.bind(_articleSearch)
 }
-
