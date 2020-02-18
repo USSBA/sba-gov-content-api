@@ -5,7 +5,6 @@ const endpoint = config.cloudSearch.articleEndpoint
 function ArticleSearch () {}
 
 ArticleSearch.prototype.buildQuery = function (query) {
-  console.log('Build Quer!!!!', query)
   const queryStatements = []
   let queryString = ''
   const fieldsToSearch = ['title', 'article_body', 'summary', 'url']
@@ -20,7 +19,6 @@ ArticleSearch.prototype.buildQuery = function (query) {
 }
 
 ArticleSearch.prototype.buildFilters = function (params) {
-  console.log('Build Filter!!!!', params)
   let filters = []
   let officeFilters = []
   let filterString = ''
@@ -69,7 +67,6 @@ ArticleSearch.prototype.buildFilters = function (params) {
 }
 
 ArticleSearch.prototype.setArticleSearchSort = function (params) {
-  console.log('SearchSnort!!!!', params)
   let sortField = 'updated'
   let sortOrder = 'desc'
 
