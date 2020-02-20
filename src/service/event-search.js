@@ -80,6 +80,7 @@ EventSearch.prototype.buildParams = function (query, geo) {
 }
 
 EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
+  console.log('Events ', events)
   const remappedEvents = []
   for (let i = 0; i < events.length; i++) {
     const { fields } = events[i]
@@ -123,6 +124,7 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
     }
     remappedEvents.push(remappedEvent)
   }
+  console.log('Remapped events ', remappedEvents)
   return remappedEvents
 }
 
@@ -132,9 +134,11 @@ EventSearch.prototype.fetchEvents = async function (query) {
   let geo = await location.generateGeocode(address, mapCenter)
 
   const params = this.buildParams(queryObj, geo)
+  console.log('Params: ', params)
   try {
     const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
     const hits = result.hits
+    console.log('Hits ', hits)
     const newHitList = hits.hit.map(item => {
       let _item = item
       if (item && item.exprs && item.exprs.distance >= 0) {
@@ -153,6 +157,7 @@ EventSearch.prototype.fetchEvents = async function (query) {
       }
       return _item
     })
+    console.log('Returned hits ', hits)
     return Object.assign({}, hits, {
       hit: this.transformToDaishoEventObjectFormat(newHitList)
     })
