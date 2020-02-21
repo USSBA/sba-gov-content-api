@@ -22,7 +22,7 @@ const { fetchOffices } = require('./service/office-search.js')
 const d7Events = require('./service/events.js')
 const d8Events = require('./service/event-search.js')
 const events = config.eventsApi.getBackendSourceToggle() !== 'true' ? d7Events : d8Events
-const { fetchEvents } = events
+const { fetchEvent, fetchEvents } = events
 const { runSearch } = require('./service/search.js')
 const { getSuggestedRoutes } = require('./service/suggested-routes.js')
 
@@ -89,6 +89,7 @@ async function fetchContentByType (pathParams, queryStringParameters) {
     courses: fetchCourses,
     disaster: fetchDisaster,
     documents: fetchDocuments,
+    event: fetchEvent,
     events: fetchEvents,
     mainMenu: fetchMainMenu,
     nodes: fetchNodes,
