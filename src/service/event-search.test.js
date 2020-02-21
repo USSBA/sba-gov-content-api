@@ -243,6 +243,7 @@ describe('eventSearch', () => {
           'location': {
             'name': 'Spark Baltimore',
             'address': '8 Market Place',
+            'address2': {},
             'city': 'Baltimore',
             'zipcode': '21202',
             'state': 'MD',
@@ -255,7 +256,8 @@ describe('eventSearch', () => {
             'phone': '100-200-3000'
           },
           'recurring': -1,
-          'recurringType': {}
+          'recurringType': {},
+          'cost': {}
         }]
       }
       stubRunSearch.returns(mockCloudSearchResponseWithEvents)
@@ -279,6 +281,7 @@ describe('eventSearch', () => {
             event_type: ['in-person'],
             location_name: ['Washington Convention Center'],
             location_street_address: ['1600 Pennsylvania Ave'],
+            location_street_address2: ['Suite 100'],
             location_city: ['Washington'],
             location_zipcode: ['12345'],
             location_state: ['DC'],
@@ -287,7 +290,8 @@ describe('eventSearch', () => {
             organizer_email: ['jedgar@hoover.gov'],
             organizer_phone_number: ['202-123-7771'],
             is_recurring: [0],
-            recurring_interval: ['test']
+            recurring_interval: ['test'],
+            event_cost: 123.45
           }
         }
       ]
@@ -305,6 +309,7 @@ describe('eventSearch', () => {
         location: {
           name: 'Washington Convention Center',
           address: '1600 Pennsylvania Ave',
+          address2: 'Suite 100',
           city: 'Washington',
           zipcode: '12345',
           state: 'DC',
@@ -317,7 +322,8 @@ describe('eventSearch', () => {
           phone: '202-123-7771'
         },
         recurring: -1,
-        recurringType: 'test'
+        recurringType: 'test',
+        cost: 123.45
       }]
 
       const result = eventSearch.transformToDaishoEventObjectFormat(items)
@@ -344,6 +350,7 @@ describe('eventSearch', () => {
         location: {
           name: {},
           address: {},
+          address2: {},
           city: {},
           zipcode: {},
           state: {},
@@ -352,7 +359,8 @@ describe('eventSearch', () => {
         },
         contact: { name: {}, email: {}, phone: {} },
         recurring: -1,
-        recurringType: {}
+        recurringType: {},
+        cost: {}
       }]
 
       const result = eventSearch.transformToDaishoEventObjectFormat(items)

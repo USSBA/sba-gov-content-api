@@ -80,7 +80,6 @@ EventSearch.prototype.buildParams = function (query, geo) {
 }
 
 EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
-  console.log('Events ', events)
   const remappedEvents = []
   for (let i = 0; i < events.length; i++) {
     const { fields } = events[i]
@@ -97,11 +96,13 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
       startDate: getValue(fields.start_datetime),
       endDate: getValue(fields.end_datetime),
       timezone: getValue(fields.timezone),
-      // cost: clean(item.field_event_fee) || '0.00',
+      cost: getValue(fields.event_cost),
+      cost: fields.event_cost ? fields.event_cost : {},
       locationType: getValue(fields.event_type),
       location: {
         name: getValue(fields.location_name),
         address: getValue(fields.location_street_address),
+        address2: getValue(fields.location_street_address2),
         // address_additional: item.additional,
         city: getValue(fields.location_city),
         zipcode: getValue(fields.location_zipcode),
@@ -124,7 +125,6 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
     }
     remappedEvents.push(remappedEvent)
   }
-  console.log('Remapped events ', remappedEvents)
   return remappedEvents
 }
 
@@ -134,11 +134,9 @@ EventSearch.prototype.fetchEvents = async function (query) {
   let geo = await location.generateGeocode(address, mapCenter)
 
   const params = this.buildParams(queryObj, geo)
-  console.log('Params: ', params)
   try {
     const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
     const hits = result.hits
-    console.log('Hits ', hits)
     const newHitList = hits.hit.map(item => {
       let _item = item
       if (item && item.exprs && item.exprs.distance >= 0) {
@@ -157,7 +155,6 @@ EventSearch.prototype.fetchEvents = async function (query) {
       }
       return _item
     })
-    console.log('Returned hits ', hits)
     return Object.assign({}, hits, {
       hit: this.transformToDaishoEventObjectFormat(newHitList)
     })
