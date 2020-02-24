@@ -126,45 +126,6 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
   return remappedEvents
 }
 
-EventSearch.prototype.fetchEvent = async function (eventId) {
-  const params = {
-    query: eventId,
-    return: '_all_fields',
-    sort: 'start_datetime asc',
-    queryParser: 'structured',
-    fields: 'event_id'
-  }
-  try {
-    const result = await cloudsearch.runSearch(params, endpoint)
-    const hits = result.hits
-    const newHitList = hits.hit.map(item => {
-      let _item = item
-      // if (item && item.exprs && item.exprs.distance >= 0) {
-      //   if (!address) {
-      //     _item = Object.assign({}, item)
-      //     delete _item.exprs
-      //   } else {
-      //     _item = Object.assign({}, item, {
-      //       exprs: {
-      //         // for now put a 0 but later this will have to add in the distance in order
-      //         // to filter by geolocation
-      //         distance: 0// item.exprs.distance / kilometersPerMile
-      //       }
-      //     })
-      //   }
-      // }
-      return _item
-    })
-
-    return Object.assign({}, hits, {
-      hit: this.transformToDaishoEventObjectFormat(newHitList)
-    })
-  } catch (err) {
-    console.error(err, err.stack)
-    throw new Error('Failed to retrieve event from cloudsearch')
-  }
-}
-
 EventSearch.prototype.fetchEvents = async function (query) {
   const queryObj = query || {}
   const { address, mapCenter } = queryObj
@@ -202,10 +163,9 @@ EventSearch.prototype.fetchEvents = async function (query) {
 }
 
 const _eventSearch = new EventSearch()
-const { fetchEvent, fetchEvents, buildQuery, buildParams, transformToDaishoEventObjectFormat } = _eventSearch
+const { fetchEvents, buildQuery, buildParams, transformToDaishoEventObjectFormat } = _eventSearch
 
 module.exports = {
-  fetchEvent: fetchEvent.bind(_eventSearch),
   fetchEvents: fetchEvents.bind(_eventSearch),
   buildQuery: buildQuery.bind(_eventSearch),
   buildParams: buildParams.bind(_eventSearch),
