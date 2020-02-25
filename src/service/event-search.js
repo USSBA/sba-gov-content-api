@@ -38,16 +38,16 @@ EventSearch.prototype.buildQuery = function (query, dateRange, office) {
   // we always include the starting date range in a default search to exclude old events
   let queryString, dateRangeQueryString
   if (keywordQueryString && officeQueryString) {
-    dateRangeQueryString = `(range field=startdatetime ${dateRangeString})`
+    dateRangeQueryString = `(range field=start_datetime ${dateRangeString})`
     queryString = `(and ${dateRangeQueryString} ${keywordQueryString} ${officeQueryString})`
   } else if (keywordQueryString) {
-    dateRangeQueryString = `(range field=startdatetime ${dateRangeString})`
+    dateRangeQueryString = `(range field=start_datetime ${dateRangeString})`
     queryString = `(and ${dateRangeQueryString} ${keywordQueryString})`
   } else if (officeQueryString) {
-    dateRangeQueryString = `(range field=startdatetime ${dateRangeString})`
+    dateRangeQueryString = `(range field=start_datetime ${dateRangeString})`
     queryString = `(and ${dateRangeQueryString} ${officeQueryString})`
   } else {
-    dateRangeQueryString = `startdatetime: ${dateRangeString}`
+    dateRangeQueryString = `start_datetime: ${dateRangeString}`
     queryString = dateRangeQueryString
   }
 
@@ -63,7 +63,7 @@ EventSearch.prototype.buildParams = function (query, geo) {
   let params = {
     query: queryString,
     return: '_all_fields',
-    sort: 'startdatetime asc',
+    sort: 'start_datetime asc',
     queryParser: 'structured',
     size: pageSize || defaultPageSize,
     start: start || defaultStart
@@ -93,15 +93,15 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
       type: 'event',
       description: getValue(fields.description),
       registrationUrl: getValue(fields.registration_website),
-      startDate: getValue(fields.startdatetime),
-      endDate: getValue(fields.enddatetime),
+      startDate: getValue(fields.start_datetime),
+      endDate: getValue(fields.end_datetime),
       timezone: getValue(fields.timezone),
-      // cost: clean(item.field_event_fee) || '0.00',
+      cost: fields.event_cost ? fields.event_cost : {},
       locationType: getValue(fields.event_type),
       location: {
         name: getValue(fields.location_name),
         address: getValue(fields.location_street_address),
-        // address_additional: item.additional,
+        address2: getValue(fields.location_street_address2),
         city: getValue(fields.location_city),
         zipcode: getValue(fields.location_zipcode),
         state: getValue(fields.location_state),
