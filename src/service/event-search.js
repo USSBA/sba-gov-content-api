@@ -50,7 +50,6 @@ EventSearch.prototype.buildQuery = function (query, dateRange, office) {
     dateRangeQueryString = `start_datetime: ${dateRangeString}`
     queryString = dateRangeQueryString
   }
-  console.log('Event cloudsearch query string ', queryString)
 
   return queryString
 }
