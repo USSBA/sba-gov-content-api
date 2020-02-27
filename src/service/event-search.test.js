@@ -168,7 +168,7 @@ describe('eventSearch', () => {
         dateRange: defaultDateRange
       }
       const expected = JSON.stringify({
-        query: `(and (range field=start_datetime ['${defaultDateRange}',}) hostoffice: '${officeId}')`,
+        query: `(and (range field=start_datetime ['${defaultDateRange}',}) host_office: '${officeId}')`,
         return: '_all_fields',
         sort: 'start_datetime asc',
         queryParser: 'structured',
@@ -188,7 +188,7 @@ describe('eventSearch', () => {
         dateRange: defaultDateRange
       }
       const expected = JSON.stringify({
-        query: `(and (range field=start_datetime ['${defaultDateRange}',}) (or description: 'test' name: 'test' summary: 'test') hostoffice: '${officeId}')`,
+        query: `(and (range field=start_datetime ['${defaultDateRange}',}) (or description: 'test' name: 'test' summary: 'test') host_office: '${officeId}')`,
         return: '_all_fields',
         sort: 'start_datetime asc',
         queryParser: 'structured',

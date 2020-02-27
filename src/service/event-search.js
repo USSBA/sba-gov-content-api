@@ -32,7 +32,7 @@ EventSearch.prototype.buildQuery = function (query, dateRange, office) {
 
   let officeQueryString
   if (office) {
-    officeQueryString = `hostoffice: '${office}'`
+    officeQueryString = `host_office: '${office}'`
   }
 
   // we always include the starting date range in a default search to exclude old events
@@ -50,6 +50,7 @@ EventSearch.prototype.buildQuery = function (query, dateRange, office) {
     dateRangeQueryString = `start_datetime: ${dateRangeString}`
     queryString = dateRangeQueryString
   }
+  console.log('Event cloudsearch query string ', queryString)
 
   return queryString
 }
