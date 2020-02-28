@@ -134,7 +134,6 @@ EventSearch.prototype.fetchEvents = async function (query) {
     params = {
       query: `event_id: '${queryObj.id}'`,
       return: '_all_fields',
-      sort: 'start_datetime asc',
       queryParser: 'structured',
       size: 1,
       start: 0
