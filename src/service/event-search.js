@@ -128,7 +128,6 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
 
 EventSearch.prototype.fetchEvents = async function (query) {
   const queryObj = query || {}
-  const { address, mapCenter } = queryObj
   let params
   if (queryObj.id) {
     params = {
