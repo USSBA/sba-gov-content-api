@@ -129,16 +129,28 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
 EventSearch.prototype.fetchEvents = async function (query) {
   const queryObj = query || {}
   const { address, mapCenter } = queryObj
-  let geo = await location.generateGeocode(address, mapCenter)
-
-  const params = this.buildParams(queryObj, geo)
+  let params
+  if (queryObj.id) {
+    params = {
+      query: `event_id: '${queryObj.id}'`,
+      return: '_all_fields',
+      sort: 'start_datetime asc',
+      queryParser: 'structured',
+      size: 1,
+      start: 0
+    }
+  } else {
+    const { address, mapCenter } = queryObj
+    let geo = await location.generateGeocode(address, mapCenter)
+    params = this.buildParams(queryObj, geo)
+  }
   try {
     const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
     const hits = result.hits
     const newHitList = hits.hit.map(item => {
       let _item = item
       if (item && item.exprs && item.exprs.distance >= 0) {
-        if (!address) {
+        if (!queryObj.address) {
           _item = Object.assign({}, item)
           delete _item.exprs
         } else {
