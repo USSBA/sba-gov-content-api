@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 /* eslint-disable no-unused-expressions */
 let sinon = require('sinon')
 let chai = require('chai')
