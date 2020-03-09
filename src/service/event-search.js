@@ -93,6 +93,7 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
       type: 'event',
       description: getValue(fields.description),
       registrationUrl: getValue(fields.registration_link),
+      status: getValue(fields.status),
       startDate: getValue(fields.start_datetime),
       endDate: getValue(fields.end_datetime),
       timezone: getValue(fields.timezone),
