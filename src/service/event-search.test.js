@@ -273,7 +273,7 @@ describe('eventSearch', () => {
           id: '20351',
           fields: {
             name: ['My Test Event'],
-            registration_website: ['https://myevent.com/register-here'],
+            registration_link: ['https://myevent.com/register-here'],
             description: ['description text'],
             start_datetime: ['12345678'],
             end_datetime: ['987654321'],

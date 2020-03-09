@@ -380,7 +380,7 @@ Example Response
         "summary": [
           "This is the event summary section."
         ],
-        "registration_website": [
+        "registration_link": [
           "http://registerhere.com"
         ],
         "organizer_name": [
