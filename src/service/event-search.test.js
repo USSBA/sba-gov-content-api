@@ -257,7 +257,8 @@ describe('eventSearch', () => {
           },
           'recurring': -1,
           'recurringType': {},
-          'cost': {}
+          'cost': {},
+          'status': {}
         }]
       }
       stubRunSearch.returns(mockCloudSearchResponseWithEvents)
@@ -291,7 +292,8 @@ describe('eventSearch', () => {
             organizer_phone_number: ['202-123-7771'],
             is_recurring: [0],
             recurring_interval: ['test'],
-            event_cost: 123.45
+            event_cost: 123.45,
+            status: ['Approved']
           }
         }
       ]
@@ -323,7 +325,8 @@ describe('eventSearch', () => {
         },
         recurring: -1,
         recurringType: 'test',
-        cost: 123.45
+        cost: 123.45,
+        status: 'Approved'
       }]
 
       const result = eventSearch.transformToDaishoEventObjectFormat(items)
@@ -360,7 +363,8 @@ describe('eventSearch', () => {
         contact: { name: {}, email: {}, phone: {} },
         recurring: -1,
         recurringType: {},
-        cost: {}
+        cost: {},
+        status: {}
       }]
 
       const result = eventSearch.transformToDaishoEventObjectFormat(items)
