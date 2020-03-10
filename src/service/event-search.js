@@ -84,7 +84,7 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
   for (let i = 0; i < events.length; i++) {
     const { fields } = events[i]
 
-    const getValue = (field) => field ? field[0] : {}
+    const getValue = (field) => field ? field[0] : ''
     const geolocation = fields.geolocation ? fields.geolocation[0].split(',') : null
     const isRecurring = getValue(fields.is_recurring)
     const remappedEvent = {
@@ -97,7 +97,7 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
       startDate: getValue(fields.start_datetime),
       endDate: getValue(fields.end_datetime),
       timezone: getValue(fields.timezone),
-      cost: fields.event_cost ? fields.event_cost : {},
+      cost: fields.event_cost ? fields.event_cost : '',
       locationType: getValue(fields.event_type),
       location: {
         name: getValue(fields.location_name),
@@ -106,8 +106,8 @@ EventSearch.prototype.transformToDaishoEventObjectFormat = function (events) {
         city: getValue(fields.location_city),
         zipcode: getValue(fields.location_zipcode),
         state: getValue(fields.location_state),
-        latitude: geolocation ? geolocation[0] : {},
-        longitude: geolocation ? geolocation[1] : {}
+        latitude: geolocation ? geolocation[0] : '',
+        longitude: geolocation ? geolocation[1] : ''
       },
       contact: {
         name: getValue(fields.organizer_name),
