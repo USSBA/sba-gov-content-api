@@ -235,7 +235,7 @@ describe('eventSearch', () => {
           'title': 'Test Event (non-recurring)',
           'type': 'event',
           'description': 'There will be an event. That is all.',
-          'registrationUrl': {},
+          'registrationUrl': '',
           'startDate': '2019-08-31T16:00:00Z',
           'endDate': '2019-08-31T22:00:00Z',
           'timezone': 'Eastern time zone',
@@ -243,7 +243,7 @@ describe('eventSearch', () => {
           'location': {
             'name': 'Spark Baltimore',
             'address': '8 Market Place',
-            'address2': {},
+            'address2': '',
             'city': 'Baltimore',
             'zipcode': '21202',
             'state': 'MD',
@@ -256,9 +256,9 @@ describe('eventSearch', () => {
             'phone': '100-200-3000'
           },
           'recurring': -1,
-          'recurringType': {},
-          'cost': {},
-          'status': {}
+          'recurringType': '',
+          'cost': '',
+          'status': ''
         }]
       }
       stubRunSearch.returns(mockCloudSearchResponseWithEvents)
@@ -342,29 +342,29 @@ describe('eventSearch', () => {
 
       const expected = [{
         id: 20351,
-        title: {},
+        title: '',
         type: 'event',
-        description: {},
-        registrationUrl: {},
-        startDate: {},
-        endDate: {},
-        timezone: {},
-        locationType: {},
+        description: '',
+        registrationUrl: '',
+        startDate: '',
+        endDate: '',
+        timezone: '',
+        locationType: '',
         location: {
-          name: {},
-          address: {},
-          address2: {},
-          city: {},
-          zipcode: {},
-          state: {},
-          latitude: {},
-          longitude: {}
+          name: '',
+          address: '',
+          address2: '',
+          city: '',
+          zipcode: '',
+          state: '',
+          latitude: '',
+          longitude: ''
         },
-        contact: { name: {}, email: {}, phone: {} },
+        contact: { name: '', email: '', phone: '' },
         recurring: -1,
-        recurringType: {},
-        cost: {},
-        status: {}
+        recurringType: '',
+        cost: '',
+        status: ''
       }]
 
       const result = eventSearch.transformToDaishoEventObjectFormat(items)
