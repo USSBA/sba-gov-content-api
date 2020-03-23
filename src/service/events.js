@@ -129,7 +129,9 @@ function mapD7EventDataToBetterSchema (item) {
 async function fetchEventById (id) {
   let result = await eventClient.getEvents({ nid: id })
   if (Array.isArray(result) && result.length !== 0) {
-    return mapD7EventDataToBetterSchema(result[0])
+    return {
+      items: [mapD7EventDataToBetterSchema(result[0])]
+    }
   } else {
     return {}
   }

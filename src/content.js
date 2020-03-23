@@ -32,7 +32,7 @@ async function fetchContentById (params, headers) {
   }
 
   if (config.eventsApi.getBackendSourceToggle() !== 'true') {
-    fetchFunctionsMap.event = events.fetchEventById
+    fetchFunctionsMap.events = events.fetchEventById
   }
 
   if (params && params.type && params.id) {
