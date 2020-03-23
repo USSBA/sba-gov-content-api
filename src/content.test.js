@@ -40,7 +40,7 @@ describe('# Content Handler', () => {
 
       let expected = { statusCode: HttpStatus.OK, body: data }
       let result = await contentHandler.fetchContentById({ type: 'events', id: 1 })
-      
+
       expect(result).to.deep.equal(expected)
     })
 
