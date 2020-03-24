@@ -39,7 +39,7 @@ describe('# Content Handler', () => {
       eventStub.withArgs(1).returns(data)
 
       let expected = { statusCode: HttpStatus.OK, body: data }
-      let result = await contentHandler.fetchContentById({ type: 'event', id: 1 })
+      let result = await contentHandler.fetchContentById({ type: 'events', id: 1 })
 
       expect(result).to.deep.equal(expected)
     })
@@ -48,8 +48,8 @@ describe('# Content Handler', () => {
       getBackendSourceToggleStub.returns('false')
       eventStub.returns(null)
 
-      let expected = { statusCode: HttpStatus.NOT_FOUND, body: 'Unable to find event with id 1' }
-      let result = await contentHandler.fetchContentById({ type: 'event', id: 1 })
+      let expected = { statusCode: HttpStatus.NOT_FOUND, body: 'Unable to find events with id 1' }
+      let result = await contentHandler.fetchContentById({ type: 'events', id: 1 })
 
       expect(result).to.deep.equal(expected)
     })
@@ -60,7 +60,6 @@ describe('# Content Handler', () => {
 
       let expected = { statusCode: HttpStatus.NOT_FOUND, body: 'Unknown type event' }
       let result = await contentHandler.fetchContentById({ type: 'event', id })
-
       expect(result).to.deep.equal(expected)
     })
   })
