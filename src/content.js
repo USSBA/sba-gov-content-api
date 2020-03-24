@@ -31,9 +31,7 @@ async function fetchContentById (params, headers) {
     node: fetchFormattedNode
   }
 
-  if (config.eventsApi.getBackendSourceToggle() !== 'true') {
-    fetchFunctionsMap.events = events.fetchEventById
-  }
+  fetchFunctionsMap.events = config.eventsApi.getBackendSourceToggle() !== 'true' ? events.fetchEventById : events.fetchEvents
 
   if (params && params.type && params.id) {
     const type = params.type
@@ -42,7 +40,8 @@ async function fetchContentById (params, headers) {
 
     if (fetchFunction) {
       try {
-        let result = await fetchFunction(id, {
+        const args = config.eventsApi.getBackendSourceToggle() === 'true' && type === 'events' ? { id } : id
+        let result = await fetchFunction(args, {
           headers
         })
         if (result) {

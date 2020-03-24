@@ -58,9 +58,8 @@ describe('# Content Handler', () => {
       const id = 1
       getBackendSourceToggleStub.returns('true')
 
-      let expected = { statusCode: HttpStatus.NOT_FOUND, body: 'Unknown type events' }
-      let result = await contentHandler.fetchContentById({ type: 'events', id })
-
+      let expected = { statusCode: HttpStatus.NOT_FOUND, body: 'Unknown type event' }
+      let result = await contentHandler.fetchContentById({ type: 'event', id })
       expect(result).to.deep.equal(expected)
     })
   })
