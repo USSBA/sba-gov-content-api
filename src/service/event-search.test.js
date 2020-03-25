@@ -57,7 +57,6 @@ let mockCloudSearchResponseWithEvents = {
         'description': ['There will be an event. That is all.'],
         'end_datetime': ['2019-08-31T22:00:00Z'],
         'summary': ['This is the event summary section.'],
-        'recurring_enddatetime': ['2019-07-20T00:00:00Z'],
         'start_datetime': ['2019-08-31T16:00:00Z'],
         'event_type': ['Online'],
         'timezone': ['Eastern time zone'],
