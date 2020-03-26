@@ -57,7 +57,6 @@ let mockCloudSearchResponseWithEvents = {
         'description': ['There will be an event. That is all.'],
         'end_datetime': ['2019-08-31T22:00:00Z'],
         'summary': ['This is the event summary section.'],
-        'recurring_enddatetime': ['2019-07-20T00:00:00Z'],
         'start_datetime': ['2019-08-31T16:00:00Z'],
         'event_type': ['Online'],
         'timezone': ['Eastern time zone'],
@@ -65,7 +64,9 @@ let mockCloudSearchResponseWithEvents = {
         'organizer_name': ['Organizing Olivia'],
         'location_street_address': ['8 Market Place'],
         'name': ['Test Event (non-recurring)'],
-        'geolocation': ['111111,222222']
+        'geolocation': ['111111,222222'],
+        'recurring_enddatetime': ['2019-10-31T16:00:00Z'],
+        'recurring_interval': ['Daily']
       }
     }]
   }
@@ -255,8 +256,8 @@ describe('eventSearch', () => {
             'email': 'organizingolivia@email.com',
             'phone': '100-200-3000'
           },
-          'recurring': -1,
-          'recurringType': '',
+          'recurringType': 'Daily',
+          'recurringEndDate': '2019-10-31T16:00:00Z',
           'cost': '',
           'status': ''
         }]
@@ -276,8 +277,8 @@ describe('eventSearch', () => {
             name: ['My Test Event'],
             registration_link: ['https://myevent.com/register-here'],
             description: ['description text'],
-            start_datetime: ['12345678'],
-            end_datetime: ['987654321'],
+            start_datetime: ['2019-07-20T00:00:00Z'],
+            end_datetime: ['2019-07-20T00:30:00Z'],
             timezone: ['UTC'],
             event_type: ['in-person'],
             location_name: ['Washington Convention Center'],
@@ -290,8 +291,8 @@ describe('eventSearch', () => {
             organizer_name: ['J Edgar'],
             organizer_email: ['jedgar@hoover.gov'],
             organizer_phone_number: ['202-123-7771'],
-            is_recurring: [0],
             recurring_interval: ['test'],
+            recurring_enddatetime: ['2019-07-20T00:00:00Z'],
             event_cost: 123.45,
             status: ['Approved']
           }
@@ -304,8 +305,8 @@ describe('eventSearch', () => {
         type: 'event',
         description: 'description text',
         registrationUrl: 'https://myevent.com/register-here',
-        startDate: '12345678',
-        endDate: '987654321',
+        startDate: '2019-07-20T00:00:00Z',
+        endDate: '2019-07-20T00:30:00Z',
         timezone: 'UTC',
         locationType: 'in-person',
         location: {
@@ -323,8 +324,8 @@ describe('eventSearch', () => {
           email: 'jedgar@hoover.gov',
           phone: '202-123-7771'
         },
-        recurring: -1,
         recurringType: 'test',
+        recurringEndDate: '2019-07-20T00:00:00Z',
         cost: 123.45,
         status: 'Approved'
       }]
@@ -361,8 +362,8 @@ describe('eventSearch', () => {
           longitude: ''
         },
         contact: { name: '', email: '', phone: '' },
-        recurring: -1,
         recurringType: '',
+        recurringEndDate: '',
         cost: '',
         status: ''
       }]
