@@ -2,6 +2,7 @@ module.exports = {
   cloudSearch: {
     searchEndpoint: process.env.CLOUDSEARCH_SEARCH_ENDPOINT,
     officeEndpoint: process.env.CLOUDSEARCH_OFFICE_ENDPOINT,
+    lenderEndpoint: process.env.CLOUDSEARCH_LENDER_ENDPOINT,
     eventEndpoint: process.env.CLOUDSEARCH_EVENT_ENDPOINT,
     articleEndpoint: process.env.CLOUDSEARCH_ARTICLE_ENDPOINT
   },
