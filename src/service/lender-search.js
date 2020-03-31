@@ -34,8 +34,9 @@ function buildParams (query, geo) {
   const defaultPageSize = 5
   const defaultStart = 0
   let params = {
+    query: 'matchall',
     return: '_all_fields',
-    sort: 'title asc',
+    sort: 'lender_name asc',
     queryParser: 'structured',
     size: pageSize || defaultPageSize,
     start: start || defaultStart
@@ -52,9 +53,9 @@ function buildParams (query, geo) {
 
 async function fetchLenders (query) {
   const queryObj = query || {}
-  const { address } = queryObj
+  const { address, mapCenter } = queryObj
 
-  let geo = await location.generateGeocode(address)
+  let geo = await location.generateGeocode(address, mapCenter)
   const params = buildParams(queryObj, geo)
 
   try {
