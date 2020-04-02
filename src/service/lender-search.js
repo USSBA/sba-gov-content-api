@@ -3,6 +3,7 @@ const cloudsearch = require('../clients/cloudsearch.js')
 const location = require('./location.js')
 
 const endpoint = config.cloudSearch.lenderEndpoint
+// the default geocode is located in Washington, DC 20001
 const defaultGeocode = {
   latitude: 38.893311,
   longitude: -77.014647
