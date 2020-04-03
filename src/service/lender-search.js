@@ -9,9 +9,9 @@ const defaultGeocode = {
   longitude: -77.014647
 }
 
-function buildFilters (isRapidLenders) {
+function buildFilters (hasFiled2019Taxes) {
   let filterString
-  if (isRapidLenders === 'true') {
+  if (hasFiled2019Taxes === 'true') {
     filterString = 'is_fast_track: 1'
   }
   return filterString
@@ -38,13 +38,13 @@ function buildDefaultQueryParams (geo) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, rapidLenders } = query
+  const { pageSize, start, hasFiled2019Taxes } = query
   const { latitude, longitude } = geo
   const defaultPageSize = 5
   const defaultStart = 0
   let params = {
     query: 'matchall',
-    filterQuery: buildFilters(rapidLenders),
+    filterQuery: buildFilters(hasFiled2019Taxes),
     return: '_all_fields',
     sort: 'lender_name asc',
     queryParser: 'structured',
