@@ -9,6 +9,14 @@ const defaultGeocode = {
   longitude: -77.014647
 }
 
+function buildFilters (isRapidLenders) {
+  let filterString
+  if (isRapidLenders === 'true') {
+    filterString = 'is_fast_track: 1'
+  }
+  return filterString
+}
+
 function buildDefaultQueryParams (geo) {
   let { latitude, longitude } = geo
   const numberOfResults = 1
@@ -18,7 +26,7 @@ function buildDefaultQueryParams (geo) {
     longitude = defaultGeocode.longitude
   }
   let params = {
-    query: `type: 'office'`,
+    query: `matchall`,
     sort: 'distance asc',
     return: '_all_fields,distance',
     expr: `{"distance":"haversin(${latitude},${longitude},geolocation.latitude,geolocation.longitude)"}`,
@@ -30,12 +38,13 @@ function buildDefaultQueryParams (geo) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start } = query
+  const { pageSize, start, rapidLenders } = query
   const { latitude, longitude } = geo
   const defaultPageSize = 5
   const defaultStart = 0
   let params = {
     query: 'matchall',
+    filterQuery: buildFilters(rapidLenders),
     return: '_all_fields',
     sort: 'lender_name asc',
     queryParser: 'structured',
