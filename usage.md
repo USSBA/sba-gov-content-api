@@ -391,3 +391,95 @@ Example Response
   ]
 }
 ```
+## Lenders API
+
+Hit the lenders endpoint at `*/lenders.json`
+
+| Parameters         | Description
+|--------------------|------------------
+|  address           | The zip code to search for nearby lenders. If both `address` and `mapCenter` are passed in, it will search by the `address`
+|  mapCenter         | Comma separated latitude and longitude coordinates to search for nearby lenders. If both `address` and `mapCenter` are passed in, it will search by the `address`
+|  hasFiled2019Taxes | Accepts `true` to search for rapid (fast track) lenders. If empty or any value except `true`, it will return ALL lenders (both rapid and non-rapid)
+|  pageSize          | The number of results to return per page (utilized for pagination on the front end)
+|  start             | The index of the matching lenders that will be returned, where the first index is `0`. Can be utilized in conjunction with `pageSize` for pagination on the front end
+
+**Note:** The search will return ALL lenders, but will sort lenders by distance to the specified address or map center, if present.
+
+Example Request:
+```
+  https://example.com/lenders.json?address=12345&mapCenter=mapCenter=39.283041199676305%2C-76.61091513698732&hasFiled2019Taxes=true&pageSize=5&start=0
+```
+
+Example Response:
+```
+{
+  "found": 2,
+  "start": 0,
+  "hit": [
+    {
+      "id": "7172295",
+      "fields": {
+        "geolocation": [
+          "39.27679,-76.61234"
+        ],
+        "city": [
+          "BALTIMORE"
+        ],
+        "address": [
+          "1111 Light St"
+        ],
+        "zipcode": [
+          "21230"
+        ],
+        "is_fast_track": [
+          "1"
+        ],
+        "bank_phone": [
+          "410-783-1024"
+        ],
+        "state": [
+          "MD"
+        ],
+        "lender_name": [
+          "Manufacturers and Traders Trust Company"
+        ]
+      },
+      "exprs": {
+        "distance": 0.7800699910588602
+      }
+    },
+    {
+      "id": "5534630",
+      "fields": {
+        "geolocation": [
+          "39.277523,-76.61246"
+        ],
+        "city": [
+          "Baltimore"
+        ],
+        "address": [
+          "1046 Light St"
+        ],
+        "zipcode": [
+          "21230"
+        ],
+        "is_fast_track": [
+          "0"
+        ],
+        "bank_phone": [
+          "410-752-7481"
+        ],
+        "state": [
+          "MD"
+        ],
+        "lender_name": [
+          "Bank of America, National Association"
+        ]
+      },
+      "exprs": {
+        "distance": 0.7920915372801751
+      }
+    }
+  ]
+}
+```
