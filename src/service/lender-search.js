@@ -10,7 +10,7 @@ const defaultGeocode = {
 }
 
 function buildFilters (hasFiled2019Taxes) {
-  let filterString
+  let filterString = null
   if (hasFiled2019Taxes === 'true') {
     filterString = 'is_fast_track: 1'
   }
