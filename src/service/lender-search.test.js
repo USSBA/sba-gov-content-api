@@ -129,7 +129,6 @@ describe('# Lender Search', () => {
     })
 
     describe('cloudsearch query', () => {
-      // should set the sort to distance asc when address is present
       it('should enter lat and long into the params for cloudsearch query when address is passed in', async () => {
         dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
         lenderSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
