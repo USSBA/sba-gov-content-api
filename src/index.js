@@ -4,14 +4,22 @@ const { splitAsObject } = require('./util.js')
 const json2csv = require('json2csv').parse
 
 exports.handler = (event, context, callback) => {
-  run(event)
-    .then(result => {
-      callback(null, result)
-    })
-    .catch(err => {
-      console.error(err)
-      callback(err)
-    })
+  const { resource } = event
+  if (resource === '/{proxy+}') {
+    const awsServerlessExpress = require('aws-serverless-express')
+    const GraphQLApp = require('./graphql/app')
+    const server = awsServerlessExpress.createServer(GraphQLApp)
+    awsServerlessExpress.proxy(server, event, context)
+  } else {
+    run(event)
+      .then(result => {
+        callback(null, result)
+      })
+      .catch(err => {
+        console.error(err)
+        callback(err)
+      })
+  }
 }
 
 async function run (event) {
