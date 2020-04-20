@@ -9,7 +9,7 @@ const GraphQLSchema = require('./schema')
 const app = express()
 app.use(bodyParser.json({ limit: '50mb' }))
 app.use(
-  '/api/content/graphql',
+  '/api/content/search/graphql',
   expressGraphQL(() => {
     return {
       graphiql: true, // ENVIRONMENT !== 'prod',
