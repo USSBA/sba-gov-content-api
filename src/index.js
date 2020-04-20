@@ -5,6 +5,7 @@ const json2csv = require('json2csv').parse
 
 exports.handler = (event, context, callback) => {
   const { resource } = event
+  console.log('A--', JSON.stringify(event))
   if (resource === '/{proxy+}') {
     const awsServerlessExpress = require('aws-serverless-express')
     const GraphQLApp = require('./graphql/app')
