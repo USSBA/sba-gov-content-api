@@ -2,6 +2,7 @@
 const GraphQL = require('graphql')
 const {
   GraphQLObjectType,
+  GraphQLID,
   GraphQLString,
   GraphQLList
 } = GraphQL
@@ -10,13 +11,17 @@ const MainMenuItemType = new GraphQLObjectType({
   name: 'MainMenuItem',
   description: 'MainMenuItem Type for the main menu items stored in S3.',
   fields: () => ({
+    id: {
+      type: GraphQLID,
+      description: 'ID of the item'
+    },
     linkTitle: {
       type: GraphQLString,
       description: 'title of menu item link'
     },
     link: {
       type: GraphQLString,
-      description: 'route of menut item'
+      description: 'route of menu item'
     },
     children: {
       type: new GraphQLList(MainMenuItemType),
