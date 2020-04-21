@@ -173,6 +173,8 @@ const OfficeItemType = new GraphQLObjectType({
     },
     website: {
       type: new GraphQLObjectType({
+        name: 'WebsiteItem',
+        description: 'website item',
         fields: () => ({
           url: {
             type: GraphQLString,
