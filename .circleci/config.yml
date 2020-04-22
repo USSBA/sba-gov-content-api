@@ -55,6 +55,7 @@ workflows:
             - production
             - staging
             - mint
+            - qa
             - /int-\w+/
             - amy
             - pat
@@ -66,6 +67,7 @@ workflows:
             - master
           tags:
             only:
+            - qa
             - /int-\w+/
             - amy
             - pat
@@ -78,6 +80,7 @@ workflows:
             - master
           tags:
             only:
+            - qa
             - /int-\w+/
             - amy
             - pat
