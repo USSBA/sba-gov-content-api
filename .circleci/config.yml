@@ -72,13 +72,13 @@ workflows:
             - amy
             - pat
         context: sba-gov-lower
-     - upload-package-integration:
-        requires: [build-package]
-        filters:
-          branches:
-            only:
-            - Feature-TA-3690-TEST
-        context: sba-gov-lower
+    - upload-package-integration:
+      requires: [build-package]
+      filters:
+        branches:
+          only:
+          - Feature-TA-3690-TEST
+      context: sba-gov-lower
     - deploy-package:
         requires: [upload-package]
         filters:
