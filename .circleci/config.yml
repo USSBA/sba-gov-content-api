@@ -63,8 +63,8 @@ workflows:
         requires: [build-package]
         filters:
           branches:
-            only:
-            - master
+            ignore:
+            - /.*/
           tags:
             only:
             - qa
@@ -72,18 +72,32 @@ workflows:
             - amy
             - pat
         context: sba-gov-lower
+     - upload-package-integration:
+        requires: [build-package]
+        filters:
+          branches:
+            only:
+            - Feature-TA-3690-TEST
+        context: sba-gov-lower
     - deploy-package:
         requires: [upload-package]
         filters:
           branches:
-            only:
-            - master
+            ignore:
+            - /.*/
           tags:
             only:
             - qa
             - /int-\w+/
             - amy
             - pat
+        context: sba-gov-lower
+    - deploy-package-integration:
+        requires: [upload-package-integration]
+        filters:
+          branches:
+            only:
+            - Feature-TA-3690-TEST
         context: sba-gov-lower
     - hold:
         type: approval
@@ -210,26 +224,35 @@ jobs:
           name: publish
           shell: /bin/bash -eo pipefail
           command: |
-            if [ -z "${CIRCLE_BRANCH}" ]
-            then
-              TARGET_ENVIRONMENT=${CIRCLE_TAG}
-            else
-              TARGET_ENVIRONMENT=${CIRCLE_BRANCH}
-            fi
 
-            case $TARGET_ENVIRONMENT in
-              master)
-                export ENVIRONMENT=mint
-                ;;
-              *)
-                export ENVIRONMENT=${CIRCLE_TAG}
-                ;;
-            esac
-            
+            export ENVIRONMENT=${CIRCLE_TAG}
+
             export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
             export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
 
             aws s3api put-object --body "workspace/sba-gov-content-api.zip" --bucket "${BUCKET_NAME}" --key "${ENVIRONMENT}/sba-gov-content-api.zip"
+  
+  upload-package-integration:
+    docker:
+      - image: ussba/cc-docker-git-aws:latest
+    steps:
+      - checkout
+      - attach_workspace:
+          at: workspace
+      - run:
+          name: publish
+          shell: /bin/bash -eo pipefail
+          command: |
+
+            INTEGRATION=mint
+            QUALITYASSURANCE=qa
+            
+            export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+            export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
+
+            aws s3api put-object --body "workspace/sba-gov-content-api.zip" --bucket "${BUCKET_NAME}" --key "${INTEGRATION}/sba-gov-content-api.zip"
+            aws s3api put-object --body "workspace/sba-gov-content-api.zip" --bucket "${BUCKET_NAME}" --key "${QUALITYASSURANCE}/sba-gov-content-api.zip"
+
   deploy-package:
     docker:
       - image: ussba/cc-docker-git-aws:latest
@@ -239,22 +262,8 @@ jobs:
           name: deploy
           shell: /bin/bash -eo pipefail
           command: |
-            if [ -z "${CIRCLE_BRANCH}" ]
-            then
-              TARGET_ENVIRONMENT=${CIRCLE_TAG}
-            else
-              TARGET_ENVIRONMENT=${CIRCLE_BRANCH}
-            fi
-
-            case $TARGET_ENVIRONMENT in
-              master)
-                export ENVIRONMENT=mint
-                ;;
-              *)
-                export ENVIRONMENT=${CIRCLE_TAG}
-                ;;
-            esac
             
+            export ENVIRONMENT=${CIRCLE_TAG}
             
             export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
             export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
@@ -263,6 +272,33 @@ jobs:
             export LAMBDA_NAME="${ENVIRONMENT}-ContentLambda"
 
             aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${ENVIRONMENT}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
+  
+  deploy-package-integration:
+    docker:
+      - image: ussba/cc-docker-git-aws:latest
+    steps:
+      - checkout
+      - run:
+          name: deploy
+          shell: /bin/bash -eo pipefail
+          command: |
+            
+            INTEGRATION=mint
+            QUALITYASSURANCE=qa
+            
+            export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+            export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
+
+
+            export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix "${INTEGRATION}/sba-gov-content-api.zip" | jq '.Versions[0].VersionId')
+            export LAMBDA_NAME="${INTEGRATION}-ContentLambda"
+            aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${INTEGRATION}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
+  
+
+            export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix "${QUALITYASSURANCE}/sba-gov-content-api.zip" | jq '.Versions[0].VersionId')
+            export LAMBDA_NAME="${QUALITYASSURANCE}-ContentLambda"
+            aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${QUALITYASSURANCE}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
+  
   upload-package-with-approval:
     docker:
       - image: ussba/cc-docker-git-aws:latest
