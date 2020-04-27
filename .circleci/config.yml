@@ -67,18 +67,17 @@ workflows:
             - /.*/
           tags:
             only:
-            - qa
             - /int-\w+/
             - amy
             - pat
         context: sba-gov-lower
     - upload-package-integration:
-      requires: [build-package]
-      filters:
-        branches:
-          only:
-          - Feature-TA-3690-TEST
-      context: sba-gov-lower
+        requires: [build-package]
+        filters:
+          branches:
+            only:
+            - master
+        context: sba-gov-lower
     - deploy-package:
         requires: [upload-package]
         filters:
@@ -87,7 +86,6 @@ workflows:
             - /.*/
           tags:
             only:
-            - qa
             - /int-\w+/
             - amy
             - pat
@@ -97,7 +95,7 @@ workflows:
         filters:
           branches:
             only:
-            - Feature-TA-3690-TEST
+            - master
         context: sba-gov-lower
     - hold:
         type: approval
