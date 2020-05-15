@@ -147,7 +147,6 @@ describe('# Lender Search', () => {
         result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
       })
 
-
       it('should properly handle an empty address', async () => {
         dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
         lenderSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
