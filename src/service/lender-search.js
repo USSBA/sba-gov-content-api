@@ -106,3 +106,4 @@ async function fetchLenders (query) {
 }
 
 module.exports.fetchLenders = fetchLenders
+module.exports.fetchSuggestions = fetchSuggestions
