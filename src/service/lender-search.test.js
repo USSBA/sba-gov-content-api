@@ -164,10 +164,10 @@ describe('# Lender Search', () => {
         result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
       })
 
-      it('should it should search by lenders nearest to the geographic location when lender name is passed in', async () => {
+      it('should search by lenders nearest to the geographic location when lender name is passed in', async () => {
         dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
         lenderSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
-        let result = await lenderSearch.fetchLenders({ address: '06870', lenderName: 'Chase Bank' })
+        const result = await lenderSearch.fetchLenders({ address: '06870', lenderName: 'Chase Bank' })
 
         lenderSearchRunSearchStub.calledWith({
           query: "lender_name: 'Chase Bank'",
