@@ -96,6 +96,7 @@ async function fetchContentByType (pathParams, queryStringParameters) {
     offices: fetchOffices,
     officesRaw: fetchOfficesRaw,
     lenders: fetchLenders,
+    suggestions: fetchSuggestions,
     persons: fetchPersons,
     search: runSearch,
     siteMap: fetchFormattedMenu,
