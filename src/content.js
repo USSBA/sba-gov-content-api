@@ -20,6 +20,7 @@ const { fetchCourses, fetchCourse } = require('./service/courses.js')
 const { fetchDocuments } = require('./service/documents.js')
 const { fetchOffices } = require('./service/office-search.js')
 const { fetchLenders } = require('./service/lender-search.js')
+const { fetchSuggestions } = require('./service/lender-search.js')
 const d7Events = require('./service/events.js')
 const d8Events = require('./service/event-search.js')
 const events = config.eventsApi.getBackendSourceToggle() !== 'true' ? d7Events : d8Events

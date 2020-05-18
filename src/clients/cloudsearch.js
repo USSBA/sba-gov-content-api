@@ -18,5 +18,17 @@ async function runSearch (params, endpoint) {
   return result
 }
 
+async function runSuggester (params, endpoint) {
+  const csd = new aws.CloudSearchDomain({
+    endpoint: endpoint,
+    region: 'us-east-1',
+    apiVersions: '2013-01-01'
+  })
+
+  const result = await csd.suggest(params).promise()
+  return result
+}
+
 module.exports.formatString = formatString
 module.exports.runSearch = runSearch
+module.exports.runSuggester = runSuggester
