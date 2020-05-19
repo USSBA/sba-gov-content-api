@@ -9,14 +9,6 @@ const defaultGeocode = {
   longitude: -77.014647
 }
 
-function buildFilters (hasFiled2019Taxes) {
-  let filterString = null
-  if (hasFiled2019Taxes === 'true') {
-    filterString = 'is_fast_track: 1'
-  }
-  return filterString
-}
-
 function buildDefaultQueryParams (geo) {
   let { latitude, longitude } = geo
   const numberOfResults = 1
@@ -38,19 +30,21 @@ function buildDefaultQueryParams (geo) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, hasFiled2019Taxes } = query
+  const { pageSize, start, lenderName } = query
   const { latitude, longitude } = geo
   const defaultPageSize = 5
   const defaultStart = 0
+  const queryString = lenderName ? `lender_name: '${cloudsearch.formatString(lenderName)}'` : 'matchall'
+
   let params = {
-    query: 'matchall',
-    filterQuery: buildFilters(hasFiled2019Taxes),
+    query: queryString,
     return: '_all_fields',
     sort: 'lender_name asc',
     queryParser: 'structured',
     size: pageSize || defaultPageSize,
     start: start || defaultStart
   }
+
   if (latitude && longitude) {
     params = Object.assign({}, params, {
       sort: 'distance asc',

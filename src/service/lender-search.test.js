@@ -135,7 +135,6 @@ describe('# Lender Search', () => {
         let result = await lenderSearch.fetchLenders({ address: '06870' })
         lenderSearchRunSearchStub.calledWith({
           query: 'matchall',
-          filterQuery: null,
           queryParser: 'structured',
           return: '_all_fields,distance',
           sort: 'distance asc',
@@ -154,7 +153,6 @@ describe('# Lender Search', () => {
         let result = await lenderSearch.fetchLenders({ address: null })
         lenderSearchRunSearchStub.calledWith({
           query: 'matchall',
-          filterQuery: null,
           queryParser: 'structured',
           return: '_all_fields',
           sort: 'lender_name asc',
@@ -166,36 +164,19 @@ describe('# Lender Search', () => {
         result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
       })
 
-      it('should set the filterQuery param for cloudsearch query when hasFiled2019Taxes query parameter is passed in', async () => {
+      it('should search by lenders nearest to the geographic location when lender name is passed in', async () => {
         dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
         lenderSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
-        let result = await lenderSearch.fetchLenders({ hasFiled2019Taxes: 'true' })
-        lenderSearchRunSearchStub.calledWith({
-          query: 'matchall',
-          filterQuery: 'is_fast_track: 1',
-          queryParser: 'structured',
-          return: '_all_fields',
-          sort: 'lender_name asc',
-          size: 5,
-          start: 0
-        }).should.be.true
-        result.hit.should.eql(exampleCloudSearchEmptyResponse.hits.hit)
-        result.found.should.eql(exampleCloudSearchEmptyResponse.hits.found)
-        result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
-      })
+        const result = await lenderSearch.fetchLenders({ address: '06870', lenderName: 'Chase Bank' })
 
-      it('should NOT set the filterQuery param for cloudsearch query when hasFiled2019Taxes query parameter is empty', async () => {
-        dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
-        lenderSearchRunSearchStub.returns(exampleCloudSearchEmptyResponse)
-        let result = await lenderSearch.fetchLenders({ hasFiled2019Taxes: '' })
         lenderSearchRunSearchStub.calledWith({
-          query: 'matchall',
-          filterQuery: null,
+          query: "lender_name: 'Chase Bank'",
           queryParser: 'structured',
-          return: '_all_fields',
-          sort: 'lender_name asc',
+          return: '_all_fields,distance',
+          sort: 'distance asc',
           size: 5,
-          start: 0
+          start: 0,
+          expr: '{"distance":"haversin(41.033347,-73.568040,geolocation.latitude,geolocation.longitude)"}'
         }).should.be.true
         result.hit.should.eql(exampleCloudSearchEmptyResponse.hits.hit)
         result.found.should.eql(exampleCloudSearchEmptyResponse.hits.found)
