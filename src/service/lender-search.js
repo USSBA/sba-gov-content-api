@@ -55,10 +55,11 @@ function buildParams (query, geo) {
   return params
 }
 
-async function fetchSuggestions (lenderName) {
+async function fetchSuggestions (query) {
+  const { lenderName } = query
   try {
     let params = {
-      query: `lender_name: '${cloudsearch.formatString(lenderName)}'`,
+      query: `'${cloudsearch.formatString(lenderName)}'`,
       suggester: 'lender_name_suggester',
       size: '10'
     }
