@@ -178,7 +178,6 @@ describe('# Lender Search', () => {
           start: 0,
           expr: '{"distance":"haversin(41.033347,-73.568040,geolocation.latitude,geolocation.longitude)"}'
         }).should.be.true
-        console.log('lenderSearch stub', lenderSearchRunSearchStub)
         result.hit.should.eql(exampleCloudSearchEmptyResponse.hits.hit)
         result.found.should.eql(exampleCloudSearchEmptyResponse.hits.found)
         result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
