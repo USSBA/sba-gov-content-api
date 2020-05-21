@@ -64,6 +64,7 @@ async function fetchSuggestions (query) {
       size: '10'
     }
     const result = await cloudsearch.runSuggester(params, endpoint) // call the module.exports version for stubbing during testing
+
     return result
   } catch (err) {
     console.error(err, err.stack)
@@ -80,6 +81,7 @@ async function fetchLenders (query) {
   try {
     const params = buildParams(queryObj, geo)
     const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
+
     const hits = result.hits
     if (hits && hits.found > 0) {
       const newHitList = hits.hit.map(item => {

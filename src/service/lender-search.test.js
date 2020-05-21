@@ -89,28 +89,32 @@ let exampleCloudSearchEmptyResponse = {
   hits: { found: 0, start: 0, hit: [] }
 }
 
+let exampleCloudSearchEmptySuggestion = {
+  status: { timems: 1, rid: 'w4mdnqMuwRkKL4eS' },
+  suggest: { query: '', found: 0, suggestions: [] }
+}
+
 describe('# Lender Search', () => {
   let dynamoDbClientQueryStub
   let lenderSearchRunSearchStub
+  let lenderSearchRunSuggesterStub
 
   before(() => {
     dynamoDbClientQueryStub = sinon.stub(dynamoDbClient, 'queryDynamoDb')
     lenderSearchRunSearchStub = sinon.stub(cloudsearch, 'runSearch')
+    lenderSearchRunSuggesterStub = sinon.stub(cloudsearch, 'runSuggester')
   })
 
   afterEach(() => {
     dynamoDbClientQueryStub.reset()
     lenderSearchRunSearchStub.reset()
+    lenderSearchRunSuggesterStub.reset()
   })
 
   after(() => {
     dynamoDbClientQueryStub.restore()
     lenderSearchRunSearchStub.restore()
-  })
-
-  afterEach(() => {
-    dynamoDbClientQueryStub.reset()
-    lenderSearchRunSearchStub.reset()
+    lenderSearchRunSuggesterStub.restore()
   })
 
   describe('lenderSearch', () => {
@@ -126,6 +130,17 @@ describe('# Lender Search', () => {
       const actualAndOriginalDifference = Math.abs(distanceInKilometers - actualMiles)
       // done this way to handle imprecision in floats
       actualAndExpectedDiference.should.be.lessThan(actualAndOriginalDifference)
+    })
+
+    describe('cloudsearchsuggester query', () => {
+      it('should suggest lenders with a given incomplete lender name', async () => {
+        await lenderSearch.fetchSuggestions({ lenderName: 'Chase Ban' })      
+        lenderSearchRunSuggesterStub.calledWith({
+          query: "'Chase Ban'",
+          suggester: 'lender_name_suggester',
+          size: '10'
+        }).should.be.true
+      })
     })
 
     describe('cloudsearch query', () => {
@@ -178,7 +193,7 @@ describe('# Lender Search', () => {
           start: 0,
           expr: '{"distance":"haversin(41.033347,-73.568040,geolocation.latitude,geolocation.longitude)"}'
         }).should.be.true
-        console.log('lenderSearch stub', lenderSearchRunSearchStub)
+
         result.hit.should.eql(exampleCloudSearchEmptyResponse.hits.hit)
         result.found.should.eql(exampleCloudSearchEmptyResponse.hits.found)
         result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
