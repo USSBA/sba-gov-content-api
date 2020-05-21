@@ -89,11 +89,6 @@ let exampleCloudSearchEmptyResponse = {
   hits: { found: 0, start: 0, hit: [] }
 }
 
-let exampleCloudSearchEmptySuggestion = {
-  status: { timems: 1, rid: 'w4mdnqMuwRkKL4eS' },
-  suggest: { query: '', found: 0, suggestions: [] }
-}
-
 describe('# Lender Search', () => {
   let dynamoDbClientQueryStub
   let lenderSearchRunSearchStub
@@ -134,7 +129,7 @@ describe('# Lender Search', () => {
 
     describe('cloudsearchsuggester query', () => {
       it('should suggest lenders with a given incomplete lender name', async () => {
-        await lenderSearch.fetchSuggestions({ lenderName: 'Chase Ban' })      
+        await lenderSearch.fetchSuggestions({ lenderName: 'Chase Ban' })
         lenderSearchRunSuggesterStub.calledWith({
           query: "'Chase Ban'",
           suggester: 'lender_name_suggester',
