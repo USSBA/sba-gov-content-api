@@ -55,6 +55,31 @@ function buildParams (query, geo) {
   return params
 }
 
+function titleCase (str) {
+  var splitStr = str.toLowerCase().split(' ')
+  for (var i = 0; i < splitStr.length; i++) {
+    splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1)   
+  }
+  return splitStr.join(' '); 
+}
+
+function dedupSuggester (result) {
+  var i
+  let dedupSuggestions = []
+  let suggestions = result ? result.suggest.suggestions : ''
+
+  for (i = 0; i < suggestions.length; i++) {
+    dedupSuggestions.push(
+      titleCase(suggestions[i]
+        .suggestion
+        .split(' - ')[0]
+        .replace(/ atm/gi, '')
+      )
+    )
+  }
+  return [...new Set(dedupSuggestions)]
+}
+
 async function fetchSuggestions (query) {
   const { lenderName } = query
   try {
@@ -65,7 +90,7 @@ async function fetchSuggestions (query) {
     }
     const result = await cloudsearch.runSuggester(params, endpoint) // call the module.exports version for stubbing during testing
 
-    return result
+    return dedupSuggester(result)
   } catch (err) {
     console.error(err, err.stack)
     throw new Error('Failed to fetch suggestions')
@@ -81,7 +106,6 @@ async function fetchLenders (query) {
   try {
     const params = buildParams(queryObj, geo)
     const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
-
     const hits = result.hits
     if (hits && hits.found > 0) {
       const newHitList = hits.hit.map(item => {
