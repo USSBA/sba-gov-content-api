@@ -96,7 +96,7 @@ let exampleCloudSuggestEmptyResponse = {
 
 let exampleCloudSuggestResponse = {
   status: { timems: 3, rid: 'pfH666MutC8KL4eS' },
-  suggest: { 
+  suggest: {
     query: 'Capital On',
     found: 5,
     suggestions: [
