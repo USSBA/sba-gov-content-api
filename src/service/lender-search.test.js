@@ -117,6 +117,9 @@ let exampleCloudSuggestResponse = {
         id: '8181733' },
       { suggestion: 'Capital One Bank',
         score: 0,
+        id: '2131734' },
+      { suggestion: 'Capital one bank',
+        score: 0,
         id: '2131734' }
     ]
   }
