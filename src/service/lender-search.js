@@ -55,6 +55,23 @@ function buildParams (query, geo) {
   return params
 }
 
+async function fetchSuggestions (query) {
+  const { lenderName } = query
+  try {
+    let params = {
+      query: `'${cloudsearch.formatString(lenderName)}'`,
+      suggester: 'lender_name_suggester',
+      size: '10'
+    }
+    const result = await cloudsearch.runSuggester(params, endpoint) // call the module.exports version for stubbing during testing
+
+    return result
+  } catch (err) {
+    console.error(err, err.stack)
+    throw new Error('Failed to fetch suggestions')
+  }
+}
+
 async function fetchLenders (query) {
   const queryObj = query || {}
   const { address, mapCenter } = queryObj
@@ -64,6 +81,7 @@ async function fetchLenders (query) {
   try {
     const params = buildParams(queryObj, geo)
     const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
+
     const hits = result.hits
     if (hits && hits.found > 0) {
       const newHitList = hits.hit.map(item => {
@@ -91,3 +109,4 @@ async function fetchLenders (query) {
 }
 
 module.exports.fetchLenders = fetchLenders
+module.exports.fetchSuggestions = fetchSuggestions
