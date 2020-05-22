@@ -72,7 +72,7 @@ function dedupSuggester (result) {
     dedupSuggestions.push(
       titleCase(suggestions[i]
         .suggestion
-        .split(' - ')[0]
+        .split(/ -| \|/)[0]
         .replace(/ atm/gi, '')
       )
     )

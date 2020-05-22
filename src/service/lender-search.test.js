@@ -120,7 +120,10 @@ let exampleCloudSuggestResponse = {
         id: '2131734' },
       { suggestion: 'Capital one bank',
         score: 0,
-        id: '2131734' }
+        id: '2131734' },
+      { suggestion: 'Capital one mortgage | Melanie Welsh | Wilmington, Nc',
+        score: 0,
+        id: '2345567' }
     ]
   }
 }
@@ -182,7 +185,7 @@ describe('# Lender Search', () => {
           suggester: 'lender_name_suggester',
           size: '10'
         }).should.be.true
-        result.should.eql([ 'Capital One', 'Capital One Bank' ])
+        result.should.eql([ 'Capital One', 'Capital One Bank', 'Capital One Mortgage' ])
       })
     })
 
