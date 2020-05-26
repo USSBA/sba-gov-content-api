@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-expressions */
 let sinon = require('sinon')
 let chai = require('chai')
-
 chai.should()
 
 let lenderSearch = require('./lender-search.js')
