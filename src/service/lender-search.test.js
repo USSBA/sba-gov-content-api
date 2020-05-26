@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-expressions */
 let sinon = require('sinon')
 let chai = require('chai')
+
 chai.should()
 
 let lenderSearch = require('./lender-search.js')
@@ -180,15 +181,24 @@ describe('# Lender Search', () => {
         }).should.be.true
       })
 
-      it('should dedupe suggesters as much as possible', async () => {
+      it('should return list of suggesters', async () => {
         lenderSearchRunSuggesterStub.returns(exampleCloudSuggestResponse)
         let result = await lenderSearch.fetchSuggestions({ lenderName: 'Capital On' })
-        lenderSearchRunSuggesterStub.calledWith({
-          query: "'Capital On'",
-          suggester: 'lender_name_suggester',
-          size: '10'
-        }).should.be.true
+      
         result.should.eql([ 'Capital One', 'Capital One Bank', 'Capital One Mortgage' ])
+      })
+
+      it('should dedupe list of lenders', () => {
+        lenderSearchRunSuggesterStub.returns(exampleCloudSuggestResponse)
+        let suggestions = lenderSearch.dedupeLenders(exampleCloudSuggestResponse.suggest.suggestions)
+
+        suggestions.should.eql([ 'Capital One', 'Capital One Bank', 'Capital One Mortgage' ])
+      })
+
+      it('title cases all lender names', () => {
+        let lenderName = lenderSearch.titleCase('bank of america')
+         
+        lenderName.should.eq('Bank Of America')
       })
     })
 
