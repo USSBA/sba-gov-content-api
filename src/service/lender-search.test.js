@@ -194,11 +194,35 @@ describe('# Lender Search', () => {
         suggestions.should.eql([ 'Capital One', 'Capital One Bank', 'Capital One Mortgage' ])
       })
 
-      it('title cases all lender names', () => {
-        let lenderName = lenderSearch.titleCase('bank of america')
-         
-        lenderName.should.eq('Bank Of America')
+      it('removes ATM from the lender name', () => {
+        let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america ATM' }])
+
+        lenders[0].should.eq('Bank Of America')
       })
+      it('removes everything preseding a - ', () => {
+        let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america - blah blah blah' }])
+
+        lenders[0].should.eq('Bank Of America')
+      })
+
+      it('removes everything preseding a | ', () => {
+        let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america | blah blah blah' }])
+
+        lenders[0].should.eq('Bank Of America')
+      })
+
+      it('removes any trailing spaces', () => {
+        let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america         ' }])
+
+        lenders[0].should.eq('Bank Of America')
+      })
+
+      it('title cases all lender names', () => {
+        let lenders = lenderSearch.titleCase('bank of america')
+
+        lenders.should.eq('Bank Of America')
+      })
+
     })
 
     describe('cloudsearch query', () => {
