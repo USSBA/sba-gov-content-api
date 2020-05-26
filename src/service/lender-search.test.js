@@ -123,7 +123,10 @@ let exampleCloudSuggestResponse = {
         id: '2131734' },
       { suggestion: 'Capital one mortgage | Melanie Welsh | Wilmington, Nc',
         score: 0,
-        id: '2345567' }
+        id: '2345567' },
+      { suggestion: 'Capital One ATM ',
+        score: 0,
+        id: '4549096' }
     ]
   }
 }

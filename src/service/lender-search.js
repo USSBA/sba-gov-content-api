@@ -65,6 +65,7 @@ function titleCase (str) {
 
 function dedupLenders (lenders) {
   let dedupedLenders = []
+  if (lenders.length < 1) return
 
   dedupedLenders = lenders.map((lender) => {
     return titleCase(lender
@@ -85,9 +86,9 @@ async function fetchSuggestions (query) {
       suggester: 'lender_name_suggester',
       size: '10'
     }
-    const result = await cloudsearch.runSuggester(params, endpoint) // call the module.exports version for stubbing during testing
+    const suggestedLenders = await cloudsearch.runSuggester(params, endpoint) // call the module.exports version for stubbing during testing
 
-    return dedupLenders(result.suggest.suggestions)
+    return dedupLenders(suggestedLenders.suggest.suggestions)
   } catch (err) {
     console.error(err, err.stack)
     throw new Error('Failed to fetch suggestions')
