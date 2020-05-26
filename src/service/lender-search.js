@@ -64,19 +64,16 @@ function titleCase (str) {
 }
 
 function dedupLenders (lenders) {
-  var i
   let dedupedLenders = []
-  let suggestions = lenders ? lenders.suggest.suggestions : ''
 
-  for (i = 0; i < suggestions.length; i++) {
-    dedupedLenders.push(
-      titleCase(suggestions[i]
-        .suggestion
-        .split(/ -| \|/)[0]
-        .replace(/ atm/gi, '')
-      )
+  dedupedLenders = lenders.map((lender) => {
+    return titleCase(lender
+      .suggestion
+      .split(/ -| \|/)[0]
+      .replace(/ atm/gi, '')
+      .trim()
     )
-  }
+  })
   return [...new Set(dedupedLenders)]
 }
 
@@ -90,7 +87,7 @@ async function fetchSuggestions (query) {
     }
     const result = await cloudsearch.runSuggester(params, endpoint) // call the module.exports version for stubbing during testing
 
-    return dedupLenders(result)
+    return dedupLenders(result.suggest.suggestions)
   } catch (err) {
     console.error(err, err.stack)
     throw new Error('Failed to fetch suggestions')
