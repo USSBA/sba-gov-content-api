@@ -55,6 +55,29 @@ function buildParams (query, geo) {
   return params
 }
 
+function titleCase (str) {
+  var splitStr = str.toLowerCase().split(' ')
+  for (let i = 0; i < splitStr.length; i++) {
+    splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1)
+  }
+  return splitStr.join(' ')
+}
+
+function dedupeLenders (lenders) {
+  if (lenders.length < 1) return lenders
+
+  const cleanupLenderList = lenders.map((lender) => {
+    return titleCase(lender
+      .suggestion
+      .split(/ -| \|/)[0]
+      .replace(/ atm/gi, '')
+      .trim()
+    )
+  })
+
+  return [...new Set(cleanupLenderList)]
+}
+
 async function fetchSuggestions (query) {
   const { lenderName } = query
   try {
@@ -63,9 +86,8 @@ async function fetchSuggestions (query) {
       suggester: 'lender_name_suggester',
       size: '10'
     }
-    const result = await cloudsearch.runSuggester(params, endpoint) // call the module.exports version for stubbing during testing
-
-    return result
+    const suggestedLenders = await cloudsearch.runSuggester(params, endpoint) // call the module.exports version for stubbing during testing
+    return dedupeLenders(suggestedLenders.suggest.suggestions)
   } catch (err) {
     console.error(err, err.stack)
     throw new Error('Failed to fetch suggestions')
@@ -81,7 +103,6 @@ async function fetchLenders (query) {
   try {
     const params = buildParams(queryObj, geo)
     const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
-
     const hits = result.hits
     if (hits && hits.found > 0) {
       const newHitList = hits.hit.map(item => {
@@ -110,3 +131,5 @@ async function fetchLenders (query) {
 
 module.exports.fetchLenders = fetchLenders
 module.exports.fetchSuggestions = fetchSuggestions
+module.exports.dedupeLenders = dedupeLenders
+module.exports.titleCase = titleCase

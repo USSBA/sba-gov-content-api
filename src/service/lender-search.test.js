@@ -89,6 +89,48 @@ let exampleCloudSearchEmptyResponse = {
   hits: { found: 0, start: 0, hit: [] }
 }
 
+let exampleCloudSuggestEmptyResponse = {
+  status: { timems: 1, rid: 'sbbG76Mu9jAKL4eS' },
+  suggest: { query: '', found: 0, suggestions: [] }
+}
+
+let exampleCloudSuggestResponse = {
+  status: { timems: 3, rid: 'pfH666MutC8KL4eS' },
+  suggest: {
+    query: 'Capital On',
+    found: 5,
+    suggestions: [
+      { suggestion: 'Capital One',
+        score: 0,
+        id: '7141735' },
+      { suggestion: 'Capital One ATM',
+        score: 0,
+        id: '4549096' },
+      { suggestion: 'Capital One Bank - Belle Terre',
+        score: 0,
+        id: '4500191' },
+      { suggestion: 'Capital One Bank - Hide-a-way Lake',
+        score: 0,
+        id: '6146735' },
+      { suggestion: 'Capital One Bank - Enterprise',
+        score: 0,
+        id: '8181733' },
+      { suggestion: 'Capital One Bank',
+        score: 0,
+        id: '2131734' },
+      { suggestion: 'Capital one bank',
+        score: 0,
+        id: '2131734' },
+      { suggestion: 'Capital one mortgage | Melanie Welsh | Wilmington, Nc',
+        score: 0,
+        id: '2345567' },
+      { suggestion: 'Capital One ATM ',
+        score: 0,
+        id: '4549096' }
+    ]
+  }
+}
+
 describe('# Lender Search', () => {
   let dynamoDbClientQueryStub
   let lenderSearchRunSearchStub
@@ -129,12 +171,61 @@ describe('# Lender Search', () => {
 
     describe('cloudsearchsuggester query', () => {
       it('should suggest lenders with a given incomplete lender name', async () => {
+        lenderSearchRunSuggesterStub.returns(exampleCloudSuggestEmptyResponse)
         await lenderSearch.fetchSuggestions({ lenderName: 'Chase Ban' })
         lenderSearchRunSuggesterStub.calledWith({
           query: "'Chase Ban'",
           suggester: 'lender_name_suggester',
           size: '10'
         }).should.be.true
+      })
+
+      it('should return list of suggesters', async () => {
+        lenderSearchRunSuggesterStub.returns(exampleCloudSuggestResponse)
+        let result = await lenderSearch.fetchSuggestions({ lenderName: 'Capital On' })
+
+        result.should.eql([ 'Capital One', 'Capital One Bank', 'Capital One Mortgage' ])
+      })
+
+      it('should dedupe list of lenders', () => {
+        let suggestions = lenderSearch.dedupeLenders(exampleCloudSuggestResponse.suggest.suggestions)
+
+        suggestions.should.eql([ 'Capital One', 'Capital One Bank', 'Capital One Mortgage' ])
+      })
+
+      it('removes ATM from the lender name', () => {
+        let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america ATM' }])
+
+        lenders[0].should.eq('Bank Of America')
+      })
+
+      it('removes everything preseding a - ', () => {
+        let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america - blah blah blah' }])
+
+        lenders[0].should.eq('Bank Of America')
+      })
+
+      it('removes everything preseding a | ', () => {
+        let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america | blah blah blah' }])
+
+        lenders[0].should.eq('Bank Of America')
+      })
+
+      it('removes any trailing spaces', () => {
+        let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america         ' }])
+
+        lenders[0].should.eq('Bank Of America')
+      })
+
+      it('returns if given no value', () => {
+        let lenders = lenderSearch.dedupeLenders([])
+        lenders.length.should.eq(0)
+      })
+
+      it('title cases all lender names', () => {
+        let lenders = lenderSearch.titleCase('bank of america')
+
+        lenders.should.eq('Bank Of America')
       })
     })
 
