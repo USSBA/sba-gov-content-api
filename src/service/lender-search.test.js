@@ -183,7 +183,7 @@ describe('# Lender Search', () => {
       it('should return list of suggesters', async () => {
         lenderSearchRunSuggesterStub.returns(exampleCloudSuggestResponse)
         let result = await lenderSearch.fetchSuggestions({ lenderName: 'Capital On' })
-      
+
         result.should.eql([ 'Capital One', 'Capital One Bank', 'Capital One Mortgage' ])
       })
 
@@ -222,7 +222,6 @@ describe('# Lender Search', () => {
 
         lenders.should.eq('Bank Of America')
       })
-
     })
 
     describe('cloudsearch query', () => {
