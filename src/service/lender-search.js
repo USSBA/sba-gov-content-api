@@ -134,4 +134,3 @@ module.exports.fetchLenders = fetchLenders
 module.exports.fetchSuggestions = fetchSuggestions
 module.exports.dedupeLenders = dedupeLenders
 module.exports.titleCase = titleCase
-
