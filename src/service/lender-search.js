@@ -64,10 +64,9 @@ function titleCase (str) {
 }
 
 function dedupeLenders (lenders) {
-  let cleanupLenderList = []
-  if (lenders.length < 1) return
+  if (lenders.length < 1) return lenders
 
-  cleanupLenderList = lenders.map((lender) => {
+  const cleanupLenderList = lenders.map((lender) => {
     return titleCase(lender
       .suggestion
       .split(/ -| \|/)[0]
@@ -75,6 +74,7 @@ function dedupeLenders (lenders) {
       .trim()
     )
   })
+
   return [...new Set(cleanupLenderList)]
 }
 
@@ -87,7 +87,6 @@ async function fetchSuggestions (query) {
       size: '10'
     }
     const suggestedLenders = await cloudsearch.runSuggester(params, endpoint) // call the module.exports version for stubbing during testing
-
     return dedupeLenders(suggestedLenders.suggest.suggestions)
   } catch (err) {
     console.error(err, err.stack)

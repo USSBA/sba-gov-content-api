@@ -188,7 +188,6 @@ describe('# Lender Search', () => {
       })
 
       it('should dedupe list of lenders', () => {
-        lenderSearchRunSuggesterStub.returns(exampleCloudSuggestResponse)
         let suggestions = lenderSearch.dedupeLenders(exampleCloudSuggestResponse.suggest.suggestions)
 
         suggestions.should.eql([ 'Capital One', 'Capital One Bank', 'Capital One Mortgage' ])
@@ -199,6 +198,7 @@ describe('# Lender Search', () => {
 
         lenders[0].should.eq('Bank Of America')
       })
+
       it('removes everything preseding a - ', () => {
         let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america - blah blah blah' }])
 
@@ -215,6 +215,11 @@ describe('# Lender Search', () => {
         let lenders = lenderSearch.dedupeLenders([{ suggestion: 'bank of america         ' }])
 
         lenders[0].should.eq('Bank Of America')
+      })
+
+      it('returns if given no value', () => {
+        let lenders = lenderSearch.dedupeLenders([])
+        lenders.length.should.eq(0)
       })
 
       it('title cases all lender names', () => {
