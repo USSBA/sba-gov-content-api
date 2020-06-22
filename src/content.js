@@ -82,6 +82,7 @@ async function fetchContentByType (pathParams, queryStringParameters) {
   const typeFunctionsMap = {
     announcements: fetchAnnouncements,
     articles: fetchArticles,
+    authors: getAuthors,
     blog: fetchBlog,
     blogs: fetchBlogs,
     contacts: fetchContacts,
@@ -101,8 +102,7 @@ async function fetchContentByType (pathParams, queryStringParameters) {
     search: runSearch,
     siteMap: fetchFormattedMenu,
     suggestedRoutes: getSuggestedRoutes,
-    taxonomys: fetchTaxonomys,
-    authors: getAuthors
+    taxonomys: fetchTaxonomys
   }
 
   if (pathParams && pathParams.type) {

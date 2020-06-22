@@ -6,33 +6,50 @@ The docs for AWS Cloudsearch Developer Guide can be found here: https://docs.aws
 
 _Note:_ This API only is for `GET` actions. It does not support any create or update actions. Those actions are handled by other services
 
+```
+paths:
+  /api/content/search/{type}:
+    get:
+      responses: {}
+  /api/content/search/{type}/{id}:
+    get:
+      responses: {}
+```
+
+## Announcements API
+Hit the announcements endpoint at `*/announcements.json`
+
+The announcements endpoint pulls and returns the announcements.json from S3.
+
 ## Article API
 Hit the articles endpoint at `*/articles.json`
 
+The articles endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain for articles. The results will be transformed into an analogous object and returned.
+
+_Note:_ All parameters are optional
 | Parameters       | Description
 |------------------|------------------
-|  searchTerm      | A keyword search.
-|  articleCategory | The category of the article. Articles can be associated with multiple categories
-|  program         | The program that artcle is associated with. Articles can be assoicated with multiple programs
-|  type            | The type of resource being accessed.
-|  relatedOffice   | The ID of an office. This will search Cloudsearch on the `related_offices` field (articles tagged to a certain office).
-|  office   | The ID of an office. This will search Cloudsearch on the `office` field (articles authored by a certain office).
-|  region          | The region of an office.
-|  national        | Boolean field that, when `true`, will search Cloudsearch on the `region` field for articles containing a `National` region. This will search Cloudsearch on the related_offices field (artices tagged to a certain office) AND the office field (articles authored by a certain office).
-|  sortBy          | The field that will be sorted determined by the `order` param. Valid inputs are `Title` and `Authored on Date`. Will default to sort on the `updated` field.
+|  searchTerm      | A keyword search. Will search on cloudsearch's `title`, `article_body`, `summary`, and `url` fields.
+|  articleCategory | The category of the article. Articles can be associated with multiple categories. Also accepts a value of `all`
+|  program         | The program that artcle is associated with. Articles can be assoicated with multiple programs. Also accepts a value of `all`
+|  relatedOffice   | The ID of an office. This will search on cloudsearch's `related_offices` field (articles tagged to a certain office).
+|  office          | The ID of an office. This will search on cloudsearch's `office` field (articles authored by a certain office).
+|  region          | The locational region an article is associated with. Example value: `Region I`
+|  national        | Boolean field that, when `true`, will search on cloudsearch's `region` field for articles containing a `National` region.
+|  sortBy          | The field that will be sorted determined by the `order` param. Valid inputs are `Title` and `Authored on Date`. Will default to sort on cloudsearch's `updated` field.
 |  order           | The order of the articles based on the `sortBy` param. Will default to descending order. Only accepts `asc` and `desc` as valid.
 |  start           | The first index of the matching articles that will be returned
-|  end             | The index after the last index of the returned matching articles
+|  end             | The index after the last matching article that will be returned
 
 Example Request:
 ```
-  https://example.com/articles.json?searchTerm=foo&category=bar&office=7428
+https://example.com/articles.json?searchTerm=foo&category=bar&office=7428?start=0?end=2
 ```
 
 Example Response
 ```
 {
-  count: 2,
+  count: 25,
   items: [
       {
       'articleId': {},
@@ -82,10 +99,17 @@ Example Response
 }
 ```
 
+## Authors API
+Hit the authors endpoint at `*/authors.json`
+
+Returns a hardcoded array of author id's. Used to determine what authors should be featured on the `/blogs` webpage.
+
 ## Blog API
 
 #### Search Blogs
 Hit the blogs endpoint at `*/blogs.json`
+
+The blogs endpoint pulls, searches, and filters blogs from the blogs.json in S3.
 
 | Parameters | Description
 |------------|------------------
@@ -159,7 +183,7 @@ To get an individual blog post make request at `*/blogs/{:id}.json`. This endpoi
 
 Example Request
 ```
-  https://example.com/blogs/10000.json
+https://example.com/blogs/10000.json
 ```
 Example Response
 ```
@@ -187,21 +211,60 @@ Example Response
 }
 ```
 
-## Documents API
+## Contacts API
+Hit the contacts endpoint at `*/contacts.json`
 
+The contacts endpoint pulls, filters, and returns the contacts.json from S3. The endpoint will filter by exact match with key/value pair of any query parameters, if present.
+
+Example Request
+```
+https://example.com/contacts.json?stateServed=Georgia
+```
+
+Example Response
+```
+[
+  {
+    "id": 2737,
+    "type": "contact",
+    "category": "Export working capital",
+    "city": "Columbus",
+    "link": "https://www.synovus.com/local/columbus-ga/",
+    "state": "GA",
+    "stateServed": "Georgia",
+    "streetAddress": "1148 Broadway",
+    "zipCode": 31901,
+    "title": "Synovus Bank"
+  },
+  {
+    "id": 2738,
+    "type": "contact",
+    "category": "Export working capital",
+    "city": "Atlanta",
+    "link": "https://atlanticcapitalbank.com/contact-us",
+    "state": "GA",
+    "stateServed": "Georgia",
+    "streetAddress": "3280 Peachtree Rd Ne, Suite 160",
+    "zipCode": 30305,
+    "title": "Atlantic Capital Bank"
+  }
+]
+```
+
+## Documents API
 Hit the documents endpoint at `*/documents.json`
 
 | Parameters    | Description
 |---------------|------------------
 |  url          | The url associated with the particular document
-|  activity     | The activity that is associated with the document. Documents can have more then one activity.
-|  program      | The program that the document is assoicated with. Documents can be associated with more then one program
+|  activity     | The activity that is associated with the document. Documents can have more than one activity.
+|  program      | The program that the document is assoicated with. Documents can be associated with more than one program
 |  documentType | The type of the document. This is an exact string match
 |  searchTerm   | A keyword search on the document title and document ID number fields.
 |  sortBy       | Determines the order of the documents that are returned. Valid inputs are `Title`, `Number`, `documentIdNumber`, `Last Updated`, and `Effectve Date`. Will not do any sorting if no valid `sortBy` parameter is provided.
 | office        | The ID for the office that authored the document. Not all documents will be associated with an office and documents may only be associated with one office
 |  start        | The first index of the matching documents that will be returned
-|  end          | The last index of the matching documents that will be returned
+|  end          | The index after the last matching document that will be returned
 
 Example Request
 ```
@@ -291,6 +354,9 @@ Example Response
   ]
 }
 ```
+
+Response: 500 error if start or end params are not a number
+
 ## Events API
 
 Access the events endpoint at `*search/events.json`. Will search against events saved in an AWS Cloudsearch instance.
