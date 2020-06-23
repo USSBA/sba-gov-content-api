@@ -92,16 +92,16 @@ async function fetchContentByType (pathParams, queryStringParameters) {
     disaster: fetchDisaster,
     documents: fetchDocuments,
     events: fetchEvents,
+    lenders: fetchLenders,
     mainMenu: fetchMainMenu,
     nodes: fetchNodes,
     offices: fetchOffices,
     officesRaw: fetchOfficesRaw,
-    lenders: fetchLenders,
-    suggestions: fetchSuggestions,
     persons: fetchPersons,
     search: runSearch,
     siteMap: fetchFormattedMenu,
     suggestedRoutes: getSuggestedRoutes,
+    suggestions: fetchSuggestions,
     taxonomys: fetchTaxonomys
   }
 

@@ -391,8 +391,15 @@ Example Response
 }
 ```
 
+## Disaster API
+Hit the disaster endpoint at `*/disaster.json`
+
+The disaster endpoint pulls and returns the disaster.json from S3.
+
 ## Documents API
 Hit the documents endpoint at `*/documents.json`
+
+The documents endpoint pulls, filters/sorts, and returns the documents.json from S3.
 
 _Note:_ All parameters are optional
 | Parameters    | Description
@@ -496,10 +503,7 @@ Example Response
 }
 ```
 
-Response: 500 error if start or end params are not a number
-
 ## Events API
-
 Access the events endpoint at `*search/events.json`. Will search against events saved in an AWS Cloudsearch instance.
 
 | Parameters    | Description
@@ -600,22 +604,24 @@ Example Response
 ```
 
 ## Lenders API
-
 Hit the lenders endpoint at `*/lenders.json`
+
+The lenders endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain for lenders. Returns results directly from clousearch.
 
 | Parameters         | Description
 |--------------------|------------------
 |  address           | The zip code to search for nearby lenders. If both `address` and `mapCenter` are passed in, it will search by the `address`
+|  lenderName        | Searches coudsearch's `lender_name` field
 |  mapCenter         | Comma separated latitude and longitude coordinates to search for nearby lenders. If both `address` and `mapCenter` are passed in, it will search by the `address`
 |  hasFiled2019Taxes | Accepts `true` to search for rapid (fast track) lenders. If empty or any value except `true`, it will return ALL lenders (both rapid and non-rapid)
 |  pageSize          | The number of results to return per page (utilized for pagination on the front end)
 |  start             | The index of the matching lenders that will be returned, where the first index is `0`. Can be utilized in conjunction with `pageSize` for pagination on the front end
 
-**Note:** The search will return ALL lenders, but will sort lenders by distance to the specified address or map center, if present.
+_Note:_ The search will return ALL lenders, but will sort lenders by distance to the specified address or map center, if present.
 
 Example Request:
 ```
-  https://example.com/lenders.json?address=12345&mapCenter=mapCenter=39.283041199676305%2C-76.61091513698732&hasFiled2019Taxes=true&pageSize=5&start=0
+https://example.com/lenders.json?address=12345&mapCenter=mapCenter=39.283041199676305%2C-76.61091513698732&hasFiled2019Taxes=true&pageSize=5&start=0
 ```
 
 Example Response:
@@ -690,6 +696,220 @@ Example Response:
     }
   ]
 }
+```
+
+## Main Menu API
+Hit the main menu endpoint at `*/mainMenu.json`
+
+The main menu endpoint pulls and returns the mainMenu.json from S3.
+
+## Node API
+Hit the node endpoint at `*/node.json`
+
+The node endpoint gets the json for the specified id from S3.
+
+| Parameters | Description
+|------------|------------------
+|  id        | ***Required*** Accepts a number
+
+Example Request
+```
+https://example.com/node.json?id=7766
+```
+
+Example Response
+```
+{
+  "bio": "<p>Mr. Larry Stubblefield is the Associate Administrator for the Office of Veterans Business Development (OVBD) at the U.S. Small Business Administration (SBA).</p>",
+  "emailAddress": {},
+  "fax": "202-205-7292",
+  "firstName": "Larry",
+  "highResolutionPhoto": "/sites/default/files/2019-02/larry_stubblefield.jpg",
+  "lastName": "Stubblefield",
+  "office": 15840,
+  "phone": "202-205-6773",
+  "picture": {
+    "alt": "Larry Stubblefield",
+    "src": "/sites/default/files/2019-02/bio-larry-stubblefield.jpg"
+  },
+  "shortBio": "Associate Administrator",
+  "title": "Associate Administrator ",
+  "type": "person",
+  "url": "/person/larry-stubblefield",
+  "name": "Larry Stubblefield",
+  "id": 7766,
+  "updated": 1589564851,
+  "created": 1536607523,
+  "langCode": "en"
+}
+```
+
+## Nodes API
+Hit the nodes endpoint at `*/nodes.json`
+
+The nodes endpoint pulls and returns the nodes.json from S3.
+
+## Offices API
+Hit the offices endpoint at `*/offices.json`
+
+The offices endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain for offices. Returns results directly from clousearch.
+
+_Note:_ All parameters are optional
+| Parameters         | Description
+|--------------------|------------------
+|  q                 | Accepts a string and queries cloudsearch's `title`, `location_name`, and `office_type` fields
+|  address           | The zip code to search for nearby offices. If both `address` and `mapCenter` are passed in, it will search by the `address`
+|  mapCenter         | Comma separated latitude and longitude coordinates to search for nearby offices. If both `address` and `mapCenter` are passed in, it will search by the `address`
+|  service           | Filters against cloudsearch's `office_service` field for a match
+|  type              | Filters against cloudsearch's `office_type` field for a match
+|  pageSize          | The number of results to return per page (utilized for pagination on the front end)
+|  start             | The index of the matching offices that will be returned, where the first index is `0`. Can be utilized in conjunction with `pageSize` for pagination on the front end
+
+_Note:_ The search (unless filtered by type or service parameters) will return ALL offices, but will sort offices by distance to the specified address or map center, if present.
+
+Example Request:
+```
+https://www.example.com/offices.json?pageSize=5&start=0&type=Certified%20Development%20Company&q=business
+```
+
+Example Response:
+```
+{
+  "found": 54,
+  "start": 0,
+  "hit": [
+    {
+      "id": "16140",
+      "fields": {
+        "location_city": [
+          "Liberty Township"
+        ],
+        "location_phone_number": [
+          "513-777-2225"
+        ],
+        "location_zipcode": [
+          "45044"
+        ],
+        "location_state": [
+          "OH"
+        ],
+        "location_name": [
+          "Access Business Development & Finance Inc."
+        ],
+        "title": [
+          "Access Business Development & Finance Inc."
+        ],
+        "office_type": [
+          "Certified Development Company"
+        ],
+        "geolocation": [
+          "39.376635,-84.366275"
+        ],
+        "type": [
+          "office"
+        ],
+        "location_street_address": [
+          "7370 Liberty One Dr., "
+        ]
+      }
+    },
+    {
+      "id": "17691",
+      "fields": {
+        "location_city": [
+          "Brownsville"
+        ],
+        "location_phone_number": [
+          "956-546-4020"
+        ],
+        "location_zipcode": [
+          "78520"
+        ],
+        "location_name": [
+          "Business Development Fund of Texas"
+        ],
+        "location_fax": [
+          "956-548-6134"
+        ],
+        "location_state": [
+          "TX"
+        ],
+        "title": [
+          "Brownsville Local Development Company, Inc."
+        ],
+        "office_type": [
+          "Certified Development Company"
+        ],
+        "geolocation": [
+          "25.938965,-97.510299"
+        ],
+        "type": [
+          "office"
+        ],
+        "location_street_address": [
+          "2335 Central Blvd, "
+        ]
+      }
+    }
+  ]
+}
+```
+
+## Offices Raw API
+Hit the offices raw endpoint at `*/officesRaw.json`
+
+The offices raw endpoint pulls and returns the offices.json from S3.
+
+## Persons API
+Hit the persons endpoint at `*/persons.json`
+
+The persons endpoint pulls the persons.json from S3. For each person, the code adds the office name and type to the `office` key. It will then sort the array or persons alphabetically by last name and returns the results.
+
+## Search API
+Hit the search endpoint at `*/search.json`
+
+The search endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain associated with a global search of the site. Returns results directly from clousearch.
+
+| Parameters    | Description
+|---------------|------------------
+|  term         | ***Required*** Accepts a string to search cloudsearch's fields
+|  pageSize     | Accepts a number. Will return an array of results equal to pageSize value
+|  start        | Accepts a number. Indicates what index the returned results should start with. Filters out results with an index lower than the indicated value
+
+## Site Map API
+Hit the site map endpoint at `*/siteMap.json`
+
+The site map endpoint pulls and returns the siteMap.json from S3.
+
+## Suggested Routes API
+Hit the site map endpoint at `*/suggestedRoutes.json`
+
+Returns a hardcoded array of suggested routes. Used to suggest alternate routes to users.
+
+## Suggestions API
+Hit the site map endpoint at `*/suggestions.json`
+
+Middleware to get a list of suggested lender names in the cloudsearch domain for lenders based on a passed in query string.
+
+| Parameters    | Description
+|---------------|------------------
+|  lenderName   | ***Required*** Accepts a string
+
+Example Request
+```
+https://example.com/suggestions.json?lenderName=PNC
+```
+
+Example Response
+```
+[
+  "Pnc",
+  "Pnc Bank",
+  "Pnc Bank (atm)",
+  "Pnc Bank Drive-thru",
+  "Pnc Bank, National Association",
+  "Pnc Investor Center"
+]
 ```
 
 ## Taxonomys API
