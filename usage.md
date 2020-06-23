@@ -104,13 +104,14 @@ Hit the authors endpoint at `*/authors.json`
 
 Returns a hardcoded array of author id's. Used to determine what authors should be featured on the `/blogs` webpage.
 
-## Blog API
+## Blogs API
 
 #### Search Blogs
 Hit the blogs endpoint at `*/blogs.json`
 
 The blogs endpoint pulls, searches, and filters blogs from the blogs.json in S3.
 
+_Note:_ All parameters are optional
 | Parameters | Description
 |------------|------------------
 |  category  | The category of blogs to be included in the results. Excludes results that are listed as a different category
@@ -122,7 +123,7 @@ The blogs endpoint pulls, searches, and filters blogs from the blogs.json in S3.
 
 Example Request:
 ```
-  https://example.com/blogs.json?category=foo&author=12345&office=99999
+https://example.com/blogs.json?category=foo&author=12345&office=99999
 ```
 
 Example Response:
@@ -251,9 +252,149 @@ Example Response
 ]
 ```
 
+## Courses API
+
+#### Search Courses
+Hit the courses endpoint at `*/courses.json`
+
+The courses endpoint pulls, searches, and filters courses from the courses.json in S3.
+
+_Note:_ All parameters are optional
+| Parameters    | Description
+|---------------|------------------
+| businessStage | The category of courses to be included in the results (value will be in `courseCategory` of the results). Excludes results that are listed as a different category. Also accepts a value of `All`
+| sortBy        | Accepts a value of `Title` and, if present, will sort results by course titles in alphabetical order
+
+Example Request:
+```
+https://example.com/courses.json?businessStage=Launch%20your%20business
+```
+
+Example Response:
+```
+[
+  {
+    "body": "<p>This self-paced training exercise is an introduction to financing options for your business.</p>",
+    "courseCategory": [
+      "Plan your business",
+      "Launch your business"
+    ],
+    "courseMaterials": [
+      {
+        "url": "/sites/default/files/2019-12/Worksheet%20-%20Financing%20Options%20for%20Small%20Business.pdf",
+        "description": "Financing Options Worksheet"
+      }
+    ],
+    "courseType": "HTML5",
+    "courseUrl": {
+      "url": "/media/training/financing_options/story_html5.html",
+      "title": ""
+    },
+    "image": {
+      "url": "/sites/default/files/2018-01/shutterstock_648969952_500.jpg",
+      "alt": "Financing Options for Small Businesses",
+      "width": 500,
+      "height": 331
+    },
+    "summary": "An introduction to financing options for your small business.",
+    "transcript": "<p>Welcome to SBA’s online training course: Financing Options for Small Businesses.</p>",
+    "type": "course",
+    "title": "Financing Options for Small Businesses",
+    "id": 5884,
+    "updated": 1588256653,
+    "created": 1516898917,
+    "langCode": "en",
+    "url": "/course/financing-options-small-businesses"
+  },
+  {
+    "body": "<p>This course provides a basic overview of marketing for small business owners who are looking to reach a broader customer base and expand their markets.</p>",
+    "courseCategory": [
+      "Launch your business",
+      "Manage your business"
+    ],
+    "courseMaterials": [
+      {
+        "url": "/sites/default/files/2018-01/SBA_Keyboard_Shortcuts_6_1.pdf",
+        "description": "SBA Keyboard Shortcuts"
+      },
+      {
+        "url": "/sites/default/files/2019-12/Marketing101_Worksheet-2019-FormFields.pdf",
+        "description": "Marketing 101: Worksheet"
+      }
+    ],
+    "courseType": "HTML5",
+    "courseUrl": {
+      "url": "/media/training/marketing-101/story_html5.html",
+      "title": ""
+    },
+    "image": {
+      "url": "/sites/default/files/2018-01/shutterstock_665356801_500.jpg",
+      "alt": "Marketing 101: A Guide to Winning Customers",
+      "width": 500,
+      "height": 333
+    },
+    "summary": "An overview of marketing for small business owners who are looking to reach a broader customer base and expand their markets.",
+    "transcript": "<p>The Marketing 101: A Guide to Winning Customers course is comprised of five topics.</p>",
+    "type": "course",
+    "title": "Marketing 101: A Guide to Winning Customers",
+    "id": 5888,
+    "updated": 1588256871,
+    "created": 1516901819,
+    "langCode": "en",
+    "url": "/course/marketing-101-guide-winning-customers"
+  }
+]
+```
+
+#### Fetch a Course
+To get an individual course  make request at `*/course.json`.
+
+Must specifiy the pathname query parameter.
+
+| Parameters | Description
+|------------|------------------
+|  pathname  | ***Required*** The `url` (_not_ `courseUrl`) associated with the particular course
+
+Example Request
+```
+https://example.com/course.json?pathname=%2Fcourse%2Fbuying-business
+```
+Example Response
+```
+{
+  "body": "<p>This self-paced training provides an overview of the process of buying a business and provides resources to help you decide if buying a business is right for you.</p>",
+  "courseCategory": [
+    "Plan your business"
+  ],
+  "courseMaterials": {},
+  "courseType": "HTML5",
+  "courseUrl": {
+    "url": "/media/training/buying-business/story_html5.html",
+    "title": ""
+  },
+  "image": {
+    "url": "/sites/default/files/2018-02/shutterstock_274686497_500.jpg",
+    "alt": "Buying a Business",
+    "width": 500,
+    "height": 334
+  },
+  "summary": "The process of buying a business and resources to help decide if buying a business is right for you.",
+  "transcript": "<p>Welcome to SBA's online training course: Buying a Business</p>",
+  "type": "course",
+  "title": "Buying a Business",
+  "id": 5980,
+  "updated": 1588257490,
+  "created": 1518205996,
+  "langCode": "en",
+  "url": "/course/buying-business",
+  "isFound": true
+}
+```
+
 ## Documents API
 Hit the documents endpoint at `*/documents.json`
 
+_Note:_ All parameters are optional
 | Parameters    | Description
 |---------------|------------------
 |  url          | The url associated with the particular document
@@ -457,6 +598,7 @@ Example Response
   ]
 }
 ```
+
 ## Lenders API
 
 Hit the lenders endpoint at `*/lenders.json`
@@ -548,4 +690,48 @@ Example Response:
     }
   ]
 }
+```
+
+## Taxonomys API
+Hit the taxonomys endpoint at `*/taxonomys.json`
+
+The taxonomys endpoint pulls, filters, and returns the taxonomys.json from S3.
+
+_Note:_ Parameters are optional
+| Parameters    | Description
+|---------------|------------------
+|  names        | A single name of the taxonomy or a comma separated list of the names of taxonomys to be returned.
+
+Example Request
+```
+https://example.com/taxonomys.json?names=blogCategories,articleCategory
+```
+
+Example Response
+```
+[
+  {
+    "name": "blogCategories",
+    "terms": [
+      "SBA News and Views",
+      "Industry Word",
+      "Success Story"
+    ]
+  },
+  {
+    "name": "articleCategory",
+    "terms": [
+      "Congressional Testimony",
+      "Disaster Press Release",
+      "Media advisory",
+      "Offering Circular - Debenture",
+      "Speech",
+      "Offering Circular - Participating Security",
+      "Press release",
+      "Policy notice",
+      "Information notice",
+      "Procedural notice"
+    ]
+  }
+]
 ```
