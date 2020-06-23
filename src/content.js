@@ -82,6 +82,7 @@ async function fetchContentByType (pathParams, queryStringParameters) {
   const typeFunctionsMap = {
     announcements: fetchAnnouncements,
     articles: fetchArticles,
+    authors: getAuthors,
     blog: fetchBlog,
     blogs: fetchBlogs,
     contacts: fetchContacts,
@@ -91,18 +92,17 @@ async function fetchContentByType (pathParams, queryStringParameters) {
     disaster: fetchDisaster,
     documents: fetchDocuments,
     events: fetchEvents,
+    lenders: fetchLenders,
     mainMenu: fetchMainMenu,
     nodes: fetchNodes,
     offices: fetchOffices,
     officesRaw: fetchOfficesRaw,
-    lenders: fetchLenders,
-    suggestions: fetchSuggestions,
     persons: fetchPersons,
     search: runSearch,
     siteMap: fetchFormattedMenu,
     suggestedRoutes: getSuggestedRoutes,
-    taxonomys: fetchTaxonomys,
-    authors: getAuthors
+    suggestions: fetchSuggestions,
+    taxonomys: fetchTaxonomys
   }
 
   if (pathParams && pathParams.type) {

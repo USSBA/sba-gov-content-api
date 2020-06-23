@@ -35,6 +35,8 @@ function fetchFormattedMenu () {
   return s3CacheReader.getKey('siteMap')
 }
 
+// TODO: look into removing this function and code associated with it
+// it appears to be old and non-functioning
 function fetchCounsellorCta () {
   const counsellorCtaNodeId = config.get('counsellorCta.nodeId')
   return s3CacheReader.getKey(counsellorCtaNodeId).then(data => {
