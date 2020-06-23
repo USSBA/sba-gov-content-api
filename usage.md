@@ -6,6 +6,15 @@ The docs for AWS Cloudsearch Developer Guide can be found here: https://docs.aws
 
 _Note:_ This API only is for `GET` actions. It does not support any create or update actions. Those actions are handled by other services
 
+### Responses
+| Status                             | Description
+|------------------------------------|------------------
+|  HttpStatus.OK                     | For successful results or empty results
+|  HttpStatus.INTERNAL_SERVER_ERROR  | When there is an error fetching data
+|  HttpStatus.NOT_FOUND              | If the API endpoint is invalid; Unable to find ${type} with id ${id}
+
+### Relationship to AWS API Gateway
+API Gateway sits in front of the content api lambda code. The above are the paths that API gateway uses to direct traffic to all the endpoints specified in the API usage in the rest of this file
 ```
 paths:
   /api/content/search/{type}:
