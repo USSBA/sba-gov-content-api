@@ -14,7 +14,7 @@ _Note:_ This API only is for `GET` actions. It does not support any create or up
 |  HttpStatus.NOT_FOUND              | If the API endpoint is invalid; Unable to find ${type} with id ${id}
 
 ### Relationship to AWS API Gateway
-API Gateway sits in front of the content api lambda code. The above are the paths that API gateway uses to direct traffic to all the endpoints specified in the API usage in the rest of this file
+API Gateway sits in front of the content api lambda code. The below are the paths that API gateway uses to direct traffic to all the endpoints specified in the API usage in the rest of this file
 ```
 paths:
   /api/content/search/{type}:
@@ -52,7 +52,7 @@ _Note:_ All parameters are optional
 
 Example Request:
 ```
-https://example.com/articles.json?searchTerm=foo&category=bar&office=7428?start=0?end=2
+https://sba.gov/api/content/search/articles.json?searchTerm=foo&category=bar&office=7428?start=0?end=2
 ```
 
 Example Response
@@ -132,7 +132,7 @@ _Note:_ All parameters are optional
 
 Example Request:
 ```
-https://example.com/blogs.json?category=foo&author=12345&office=99999
+https://sba.gov/api/content/search/blogs.json?category=foo&author=12345&office=99999
 ```
 
 Example Response:
@@ -193,7 +193,7 @@ To get an individual blog post make request at `*/blogs/{:id}.json`. This endpoi
 
 Example Request
 ```
-https://example.com/blogs/10000.json
+https://sba.gov/api/content/search/blogs/10000.json
 ```
 Example Response
 ```
@@ -228,7 +228,7 @@ The contacts endpoint pulls, filters, and returns the contacts.json from S3. The
 
 Example Request
 ```
-https://example.com/contacts.json?stateServed=Georgia
+https://sba.gov/api/content/search/contacts.json?stateServed=Georgia
 ```
 
 Example Response
@@ -276,7 +276,7 @@ _Note:_ All parameters are optional
 
 Example Request:
 ```
-https://example.com/courses.json?businessStage=Launch%20your%20business
+https://sba.gov/api/content/search/courses.json?businessStage=Launch%20your%20business
 ```
 
 Example Response:
@@ -362,7 +362,7 @@ Must specifiy the pathname query parameter.
 
 Example Request
 ```
-https://example.com/course.json?pathname=%2Fcourse%2Fbuying-business
+https://sba.gov/api/content/search/course.json?pathname=%2Fcourse%2Fbuying-business
 ```
 Example Response
 ```
@@ -421,7 +421,7 @@ _Note:_ All parameters are optional
 
 Example Request
 ```
-https://example.com/documents.json?searchTerm=foo&activity=bar
+https://sba.gov/api/content/search/documents.json?searchTerm=foo&activity=bar
 ```
 
 Example Response
@@ -626,7 +626,7 @@ _Note:_ The search will return ALL lenders, but will sort lenders by distance to
 
 Example Request:
 ```
-https://example.com/lenders.json?address=12345&mapCenter=mapCenter=39.283041199676305%2C-76.61091513698732&hasFiled2019Taxes=true&pageSize=5&start=0
+https://sba.gov/api/content/search/lenders.json?address=12345&mapCenter=mapCenter=39.283041199676305%2C-76.61091513698732&hasFiled2019Taxes=true&pageSize=5&start=0
 ```
 
 Example Response:
@@ -719,7 +719,7 @@ The node endpoint gets the json for the specified id from S3.
 
 Example Request
 ```
-https://example.com/node.json?id=7766
+https://sba.gov/api/content/search/node.json?id=7766
 ```
 
 Example Response
@@ -902,7 +902,7 @@ Middleware to get a list of suggested lender names in the cloudsearch domain for
 
 Example Request
 ```
-https://example.com/suggestions.json?lenderName=PNC
+https://sba.gov/api/content/search/suggestions.json?lenderName=PNC
 ```
 
 Example Response
@@ -929,7 +929,7 @@ _Note:_ Parameters are optional
 
 Example Request
 ```
-https://example.com/taxonomys.json?names=blogCategories,articleCategory
+https://sba.gov/api/content/search/taxonomys.json?names=blogCategories,articleCategory
 ```
 
 Example Response
