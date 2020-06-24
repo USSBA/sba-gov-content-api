@@ -323,10 +323,6 @@ Example Response:
     ],
     "courseMaterials": [
       {
-        "url": "/sites/default/files/2018-01/SBA_Keyboard_Shortcuts_6_1.pdf",
-        "description": "SBA Keyboard Shortcuts"
-      },
-      {
         "url": "/sites/default/files/2019-12/Marketing101_Worksheet-2019-FormFields.pdf",
         "description": "Marketing 101: Worksheet"
       }
