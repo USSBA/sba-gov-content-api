@@ -7,6 +7,7 @@ The docs for AWS Cloudsearch Developer Guide can be found here: https://docs.aws
 _Note:_ This API only is for `GET` actions. It does not support any create or update actions. Those actions are handled by other services
 
 ### Responses
+
 | Status                             | Description
 |------------------------------------|------------------
 |  HttpStatus.OK                     | For successful results or empty results
@@ -14,6 +15,7 @@ _Note:_ This API only is for `GET` actions. It does not support any create or up
 |  HttpStatus.NOT_FOUND              | If the API endpoint is invalid; Unable to find ${type} with id ${id}
 
 ### Relationship to AWS API Gateway
+
 API Gateway sits in front of the content api lambda code. The below are the paths that API gateway uses to direct traffic to all the endpoints specified in the API usage in the rest of this file
 ```
 paths:
@@ -26,11 +28,13 @@ paths:
 ```
 
 ## Announcements API
+
 Hit the announcements endpoint at `*/announcements.json`
 
 The announcements endpoint pulls and returns the announcements.json from S3.
 
 ## Article API
+
 Hit the articles endpoint at `*/articles.json`
 
 The articles endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain for articles. The results will be transformed into an analogous object and returned.
@@ -109,6 +113,7 @@ Example Response
 ```
 
 ## Authors API
+
 Hit the authors endpoint at `*/authors.json`
 
 Returns a hardcoded array of author id's. Used to determine what authors should be featured on the `/blogs` webpage.
@@ -116,6 +121,7 @@ Returns a hardcoded array of author id's. Used to determine what authors should 
 ## Blogs API
 
 #### Search Blogs
+
 Hit the blogs endpoint at `*/blogs.json`
 
 The blogs endpoint pulls, searches, and filters blogs from the blogs.json in S3.
@@ -189,6 +195,7 @@ Example Response:
 ```
 
 #### Fetch a Blog
+
 To get an individual blog post make request at `*/blogs/{:id}.json`. This endpoint does not accept any other parameters.
 
 Example Request
@@ -222,6 +229,7 @@ Example Response
 ```
 
 ## Contacts API
+
 Hit the contacts endpoint at `*/contacts.json`
 
 The contacts endpoint pulls, filters, and returns the contacts.json from S3. The endpoint will filter by exact match with key/value pair of any query parameters, if present.
@@ -264,6 +272,7 @@ Example Response
 ## Courses API
 
 #### Search Courses
+
 Hit the courses endpoint at `*/courses.json`
 
 The courses endpoint pulls, searches, and filters courses from the courses.json in S3.
@@ -352,6 +361,7 @@ Example Response:
 ```
 
 #### Fetch a Course
+
 To get an individual course  make request at `*/course.json`.
 
 Must specifiy the pathname query parameter.
@@ -397,11 +407,13 @@ Example Response
 ```
 
 ## Disaster API
+
 Hit the disaster endpoint at `*/disaster.json`
 
 The disaster endpoint pulls and returns the disaster.json from S3.
 
 ## Documents API
+
 Hit the documents endpoint at `*/documents.json`
 
 The documents endpoint pulls, filters/sorts, and returns the documents.json from S3.
@@ -509,6 +521,7 @@ Example Response
 ```
 
 ## Events API
+
 Access the events endpoint at `*search/events.json`. Will search against events saved in an AWS Cloudsearch instance.
 
 | Parameters    | Description
@@ -609,6 +622,7 @@ Example Response
 ```
 
 ## Lenders API
+
 Hit the lenders endpoint at `*/lenders.json`
 
 The lenders endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain for lenders. Returns results directly from clousearch.
@@ -704,11 +718,13 @@ Example Response:
 ```
 
 ## Main Menu API
+
 Hit the main menu endpoint at `*/mainMenu.json`
 
 The main menu endpoint pulls and returns the mainMenu.json from S3.
 
 ## Node API
+
 Hit the node endpoint at `*/node.json`
 
 The node endpoint gets the json for the specified id from S3.
@@ -750,11 +766,13 @@ Example Response
 ```
 
 ## Nodes API
+
 Hit the nodes endpoint at `*/nodes.json`
 
 The nodes endpoint pulls and returns the nodes.json from S3.
 
 ## Offices API
+
 Hit the offices endpoint at `*/offices.json`
 
 The offices endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain for offices. Returns results directly from clousearch.
@@ -861,16 +879,19 @@ Example Response:
 ```
 
 ## Offices Raw API
+
 Hit the offices raw endpoint at `*/officesRaw.json`
 
 The offices raw endpoint pulls and returns the offices.json from S3.
 
 ## Persons API
+
 Hit the persons endpoint at `*/persons.json`
 
 The persons endpoint pulls the persons.json from S3. For each person, the code adds the office name and type to the `office` key. It will then sort the array or persons alphabetically by last name and returns the results.
 
 ## Search API
+
 Hit the search endpoint at `*/search.json`
 
 The search endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain associated with a global search of the site. Returns results directly from clousearch.
@@ -882,16 +903,19 @@ The search endpoint is a middleware resource used to construct a query to the AW
 |  start        | Accepts a number. Indicates what index the returned results should start with. Filters out results with an index lower than the indicated value
 
 ## Site Map API
+
 Hit the site map endpoint at `*/siteMap.json`
 
 The site map endpoint pulls and returns the siteMap.json from S3.
 
 ## Suggested Routes API
+
 Hit the site map endpoint at `*/suggestedRoutes.json`
 
 Returns a hardcoded array of suggested routes. Used to suggest alternate routes to users.
 
 ## Suggestions API
+
 Hit the site map endpoint at `*/suggestions.json`
 
 Middleware to get a list of suggested lender names in the cloudsearch domain for lenders based on a passed in query string.
@@ -918,6 +942,7 @@ Example Response
 ```
 
 ## Taxonomys API
+
 Hit the taxonomys endpoint at `*/taxonomys.json`
 
 The taxonomys endpoint pulls, filters, and returns the taxonomys.json from S3.
