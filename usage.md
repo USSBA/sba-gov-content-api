@@ -39,20 +39,19 @@ Hit the articles endpoint at `*/articles.json`
 
 The articles endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain for articles. The results will be transformed into an analogous object and returned.
 
-_Note:_ All parameters are optional
-| Parameters       | Description
-|------------------|------------------
-|  searchTerm      | A keyword search. Will search on cloudsearch's `title`, `article_body`, `summary`, and `url` fields.
-|  articleCategory | The category of the article. Articles can be associated with multiple categories. Also accepts a value of `all`
-|  program         | The program that artcle is associated with. Articles can be assoicated with multiple programs. Also accepts a value of `all`
-|  relatedOffice   | The ID of an office. This will search on cloudsearch's `related_offices` field (articles tagged to a certain office).
-|  office          | The ID of an office. This will search on cloudsearch's `office` field (articles authored by a certain office).
-|  region          | The locational region an article is associated with. Example value: `Region I`
-|  national        | Boolean field that, when `true`, will search on cloudsearch's `region` field for articles containing a `National` region.
-|  sortBy          | The field that will be sorted determined by the `order` param. Valid inputs are `Title` and `Authored on Date`. Will default to sort on cloudsearch's `updated` field.
-|  order           | The order of the articles based on the `sortBy` param. Will default to descending order. Only accepts `asc` and `desc` as valid.
-|  start           | The first index of the matching articles that will be returned
-|  end             | The index after the last matching article that will be returned
+| Parameters (optional) | Description
+|-----------------------|------------------
+|  searchTerm           | A keyword search. Will search on cloudsearch's `title`, `article_body`, `summary`, and `url` fields.
+|  articleCategory      | The category of the article. Articles can be associated with multiple categories. Also accepts a value of `all`
+|  program              | The program that artcle is associated with. Articles can be assoicated with multiple programs. Also accepts a value of `all`
+|  relatedOffice        | The ID of an office. This will search on cloudsearch's `related_offices` field (articles tagged to a certain office).
+|  office               | The ID of an office. This will search on cloudsearch's `office` field (articles authored by a certain office).
+|  region               | The locational region an article is associated with. Example value: `Region I`
+|  national             | Boolean field that, when `true`, will search on cloudsearch's `region` field for articles containing a `National` region.
+|  sortBy               | The field that will be sorted determined by the `order` param. Valid inputs are `Title` and `Authored on Date`. Will default to sort on cloudsearch's `updated` field.
+|  order                | The order of the articles based on the `sortBy` param. Will default to descending order. Only accepts `asc` and `desc` as valid.
+|  start                | The first index of the matching articles that will be returned
+|  end                  | The index after the last matching article that will be returned
 
 Example Request:
 ```
@@ -126,15 +125,14 @@ Hit the blogs endpoint at `*/blogs.json`
 
 The blogs endpoint pulls, searches, and filters blogs from the blogs.json in S3.
 
-_Note:_ All parameters are optional
-| Parameters | Description
-|------------|------------------
-|  category  | The category of blogs to be included in the results. Excludes results that are listed as a different category
-|  author    | The ID of the `person` who wrote the blog
-|  office    | The ID of the `office` associated with the blog
-|  order     | The order of the results based on the published date. Will default to descending order. Only accepts `asc` and `desc` as valid.
-|  start     | The first index of the matching blogs that will be returned
-|  end       | The index after the last matching blog that will be returned
+| Parameters (Optional) | Description
+|-----------------------|------------------
+|  category             | The category of blogs to be included in the results. Excludes results that are listed as a different category
+|  author               | The ID of the `person` who wrote the blog
+|  office               | The ID of the `office` associated with the blog
+|  order                | The order of the results based on the published date. Will default to descending order. Only accepts `asc` and `desc` as valid.
+|  start                | The first index of the matching blogs that will be returned
+|  end                  | The index after the last matching blog that will be returned
 
 Example Request:
 ```
@@ -277,11 +275,10 @@ Hit the courses endpoint at `*/courses.json`
 
 The courses endpoint pulls, searches, and filters courses from the courses.json in S3.
 
-_Note:_ All parameters are optional
-| Parameters    | Description
-|---------------|------------------
-| businessStage | The category of courses to be included in the results (value will be in `courseCategory` of the results). Excludes results that are listed as a different category. Also accepts a value of `All`
-| sortBy        | Accepts a value of `Title` and, if present, will sort results by course titles in alphabetical order
+| Parameters (optional) | Description
+|-----------------------|------------------
+| businessStage         | The category of courses to be included in the results (value will be in `courseCategory` of the results). Excludes results that are listed as a different category. Also accepts a value of `All`
+| sortBy                | Accepts a value of `Title` and, if present, will sort results by course titles in alphabetical order
 
 Example Request:
 ```
@@ -418,18 +415,17 @@ Hit the documents endpoint at `*/documents.json`
 
 The documents endpoint pulls, filters/sorts, and returns the documents.json from S3.
 
-_Note:_ All parameters are optional
-| Parameters    | Description
-|---------------|------------------
-|  url          | The url associated with the particular document
-|  activity     | The activity that is associated with the document. Documents can have more than one activity.
-|  program      | The program that the document is assoicated with. Documents can be associated with more than one program
-|  documentType | The type of the document. This is an exact string match
-|  searchTerm   | A keyword search on the document title and document ID number fields.
-|  sortBy       | Determines the order of the documents that are returned. Valid inputs are `Title`, `Number`, `documentIdNumber`, `Last Updated`, and `Effectve Date`. Will not do any sorting if no valid `sortBy` parameter is provided.
-| office        | The ID for the office that authored the document. Not all documents will be associated with an office and documents may only be associated with one office
-|  start        | The first index of the matching documents that will be returned
-|  end          | The index after the last matching document that will be returned
+| Parameters (Optional) | Description
+|-----------------------|------------------
+|  url                  | The url associated with the particular document
+|  activity             | The activity that is associated with the document. Documents can have more than one activity.
+|  program              | The program that the document is assoicated with. Documents can be associated with more than one program
+|  documentType         | The type of the document. This is an exact string match
+|  searchTerm           | A keyword search on the document title and document ID number fields.
+|  sortBy               | Determines the order of the documents that are returned. Valid inputs are `Title`, `Number`, `documentIdNumber`, `Last Updated`, and `Effectve Date`. Will not do any sorting if no valid `sortBy` parameter is provided.
+|  office               | The ID for the office that authored the document. Not all documents will be associated with an office and documents may only be associated with one office
+|  start                | The first index of the matching documents that will be returned
+|  end                  | The index after the last matching document that will be returned
 
 Example Request
 ```
@@ -777,16 +773,15 @@ Hit the offices endpoint at `*/offices.json`
 
 The offices endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain for offices. Returns results directly from clousearch.
 
-_Note:_ All parameters are optional
-| Parameters         | Description
-|--------------------|------------------
-|  q                 | Accepts a string and queries cloudsearch's `title`, `location_name`, and `office_type` fields
-|  address           | The zip code to search for nearby offices. If both `address` and `mapCenter` are passed in, it will search by the `address`
-|  mapCenter         | Comma separated latitude and longitude coordinates to search for nearby offices. If both `address` and `mapCenter` are passed in, it will search by the `address`
-|  service           | Filters against cloudsearch's `office_service` field for a match
-|  type              | Filters against cloudsearch's `office_type` field for a match
-|  pageSize          | The number of results to return per page (utilized for pagination on the front end)
-|  start             | The index of the matching offices that will be returned, where the first index is `0`. Can be utilized in conjunction with `pageSize` for pagination on the front end
+| Parameters (Optional) | Description
+|-----------------------|------------------
+|  q                    | Accepts a string and queries cloudsearch's `title`, `location_name`, and `office_type` fields
+|  address              | The zip code to search for nearby offices. If both `address` and `mapCenter` are passed in, it will search by the `address`
+|  mapCenter            | Comma separated latitude and longitude coordinates to search for nearby offices. If both `address` and `mapCenter` are passed in, it will search by the `address`
+|  service              | Filters against cloudsearch's `office_service` field for a match
+|  type                 | Filters against cloudsearch's `office_type` field for a match
+|  pageSize             | The number of results to return per page (utilized for pagination on the front end)
+|  start                | The index of the matching offices that will be returned, where the first index is `0`. Can be utilized in conjunction with `pageSize` for pagination on the front end
 
 _Note:_ The search (unless filtered by type or service parameters) will return ALL offices, but will sort offices by distance to the specified address or map center, if present.
 
@@ -947,10 +942,9 @@ Hit the taxonomys endpoint at `*/taxonomys.json`
 
 The taxonomys endpoint pulls, filters, and returns the taxonomys.json from S3.
 
-_Note:_ Parameters are optional
-| Parameters    | Description
-|---------------|------------------
-|  names        | A single name of the taxonomy or a comma separated list of the names of taxonomys to be returned.
+| Parameters (optional) | Description
+|-----------------------|------------------
+|  names                | A single name of the taxonomy or a comma separated list of the names of taxonomys to be returned.
 
 Example Request
 ```
