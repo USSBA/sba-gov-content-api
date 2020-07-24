@@ -87,7 +87,7 @@ DocumentSearch.prototype.getFilesDataIfPresent = function (docFile, latestFileEf
     file.fileUrl = docFile[0]
   }
   if (latestFileEffectiveDate) {
-    file.effectiveDate = effectiveDate[0]
+    file.effectiveDate = latestFileEffectiveDate[0]
   }
 
   if (Object.keys(file).length > 0) {
@@ -104,7 +104,7 @@ DocumentSearch.prototype.transformToDaishoDocumentObjectFormat = function (docum
       activitys: fields.document_activitys ? fields.document_activitys : {},
       documentIdNumber: fields.document_id ? fields.document_id[0] : {},
       documentIdType: fields.document_type ? fields.document_type[0] : {},
-      files: getFilesDataIfPresent(document.fields.doc_file, document.fields.latest_file_effective_date),
+      files: this.getFilesDataIfPresent(document.fields.doc_file, document.fields.latest_file_effective_date),
       office: fields.office ? Number(fields.office[0]) : {},
       programs: fields.document_programs ? fields.document_programs : [],
       removeDownloadButton: fields.removeDownloadButton ? Number(fields.removeDownloadButton[0]) === 1 : {},
@@ -113,7 +113,7 @@ DocumentSearch.prototype.transformToDaishoDocumentObjectFormat = function (docum
       type: 'document',
       created: fields.created ? Number(fields.created[0]) : {},
       updated: fields.updated ? Number(fields.updated[0]) : {},
-      url: fields.url ? fields.url[0] : '',
+      url: fields.url ? fields.url[0] : ''
     }
 
     remappedDocuments.push(remappedDocument)
