@@ -7,16 +7,6 @@ chai.should()
 const documentSearch = require('./document-search')
 const cloudsearch = require('../clients/cloudsearch')
 
-const defaultQueryParams = {
-  'searchTerm': 'test',
-  'documentType': 'Information notice',
-  'documentActivity': 'Processing',
-  'program': 'PPP',
-  'office': '3948',
-  'start': '0',
-  'end': '3'
-}
-
 describe('documentSearch', () => {
   let stubRunSearch, spyBuildQuery, spyBuildFilters, spySetDocumentSearchSort
   before(() => {
@@ -78,7 +68,7 @@ describe('documentSearch', () => {
   describe('buildQuery', () => {
     it('should format query string for cloudSearch()', () => {
       const params = {
-        'searchTerm': 'test',
+        'searchTerm': 'test'
       }
       const expected = "(or title: 'test' summary: 'test' url: 'test')"
       const result = documentSearch.buildQuery(params.searchTerm)
@@ -92,7 +82,7 @@ describe('documentSearch', () => {
         'documentType': 'Information notice',
         'documentActivity': 'Processing',
         'program': 'PPP',
-        'office': '3948',
+        'office': '3948'
       }
       const expected = "(and office: '3948' document_programs: 'PPP' document_type: 'Information notice' document_activitys: 'Processing')"
       const result = documentSearch.buildFilters(params)
@@ -411,7 +401,7 @@ describe('documentSearch', () => {
       const latestFileEffectiveDate = ['2017-08-28T00:00:00']
       const fileData = documentSearch.getFilesDataIfPresent(docFile, latestFileEffectiveDate)
 
-      expected = [
+      const expected = [
         {
           effectiveDate: '2017-08-28',
           fileUrl: '/file/url'
@@ -425,7 +415,7 @@ describe('documentSearch', () => {
       const latestFileEffectiveDate = undefined
       const fileData = documentSearch.getFilesDataIfPresent(docFile, latestFileEffectiveDate)
 
-      expected = [
+      const expected = [
         {
           fileUrl: '/file/url'
         }
@@ -438,7 +428,7 @@ describe('documentSearch', () => {
       const latestFileEffectiveDate = ['2017-08-28T00:00:00']
       const fileData = documentSearch.getFilesDataIfPresent(docFile, latestFileEffectiveDate)
 
-      expected = [
+      const expected = [
         {
           effectiveDate: '2017-08-28'
         }
@@ -451,7 +441,7 @@ describe('documentSearch', () => {
       const latestFileEffectiveDate = undefined
       const fileData = documentSearch.getFilesDataIfPresent(docFile, latestFileEffectiveDate)
 
-      expected = []
+      const expected = []
       fileData.should.eql(expected)
     })
   })
