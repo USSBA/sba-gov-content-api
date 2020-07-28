@@ -77,7 +77,9 @@ describe('documentSearch', () => {
 
   describe('buildQuery', () => {
     it('should format query string for cloudSearch()', () => {
-      const params = Object.assign({}, defaultQueryParams)
+      const params = {
+        'searchTerm': 'test',
+      }
       const expected = "(or title: 'test' summary: 'test' url: 'test')"
       const result = documentSearch.buildQuery(params.searchTerm)
       result.should.eql(expected)
@@ -85,9 +87,57 @@ describe('documentSearch', () => {
   })
 
   describe('buildFilters', () => {
-    it('should format filter string for cloudsearch()', () => {
-      const params = Object.assign({}, defaultQueryParams)
+    it('should format filter string for cloudsearch() when multiple params are passed in', () => {
+      const params = {
+        'documentType': 'Information notice',
+        'documentActivity': 'Processing',
+        'program': 'PPP',
+        'office': '3948',
+      }
       const expected = "(and office: '3948' document_programs: 'PPP' document_type: 'Information notice' document_activitys: 'Processing')"
+      const result = documentSearch.buildFilters(params)
+      result.should.eql(expected)
+    })
+
+    it('should format filter string for cloudsearch() when only "documentType" is passed in', () => {
+      const params = {
+        'documentType': 'Information notice'
+      }
+      const expected = "(and document_type: 'Information notice')"
+      const result = documentSearch.buildFilters(params)
+      result.should.eql(expected)
+    })
+
+    it('should format filter string for cloudsearch() when only "documentActivity" is passed in', () => {
+      const params = {
+        'documentActivity': 'Processing'
+      }
+      const expected = "(and document_activitys: 'Processing')"
+      const result = documentSearch.buildFilters(params)
+      result.should.eql(expected)
+    })
+
+    it('should format filter string for cloudsearch() when only "program" is passed in', () => {
+      const params = {
+        'program': 'PPP'
+      }
+      const expected = "(and document_programs: 'PPP')"
+      const result = documentSearch.buildFilters(params)
+      result.should.eql(expected)
+    })
+
+    it('should format filter string for cloudsearch() when only "office" is passed in', () => {
+      const params = {
+        'office': '3948'
+      }
+      const expected = "(and office: '3948')"
+      const result = documentSearch.buildFilters(params)
+      result.should.eql(expected)
+    })
+
+    it('should return empty filter string for cloudsearch() when no params are passed in', () => {
+      const params = {}
+      const expected = ''
       const result = documentSearch.buildFilters(params)
       result.should.eql(expected)
     })
@@ -95,43 +145,43 @@ describe('documentSearch', () => {
 
   describe('setDocumentSearchSort', () => {
     it('should set the default sort and order of "updated desc" when no "sortBy" and no "order" query parameter is passed in', () => {
-      const params = Object.assign({}, defaultQueryParams)
+      const params = {}
       const expected = 'updated desc'
       const result = documentSearch.setDocumentSearchSort(params)
       result.should.eql(expected)
     })
 
     it('should set the sort to use "title" when "Title" is passed in', () => {
-      const params = Object.assign({}, defaultQueryParams, {
+      const params = {
         'sortBy': 'Title'
-      })
+      }
       const expected = 'title desc'
       const result = documentSearch.setDocumentSearchSort(params)
       result.should.eql(expected)
     })
 
     it('should set the sort to use "document_id" when "Number" is passed in', () => {
-      const params = Object.assign({}, defaultQueryParams, {
+      const params = {
         'sortBy': 'Number'
-      })
+      }
       const expected = 'document_id desc'
       const result = documentSearch.setDocumentSearchSort(params)
       result.should.eql(expected)
     })
 
     it('should set the sort to use "latest_file_effective_date" when "Effective Date" is passed in', () => {
-      const params = Object.assign({}, defaultQueryParams, {
+      const params = {
         'sortBy': 'Effective Date'
-      })
+      }
       const expected = 'latest_file_effective_date desc'
       const result = documentSearch.setDocumentSearchSort(params)
       result.should.eql(expected)
     })
 
     it('should set the sort to order by "asc" when "asc" is passed in', () => {
-      const params = Object.assign({}, defaultQueryParams, {
+      const params = {
         'order': 'asc'
-      })
+      }
       const expected = 'updated asc'
       const result = documentSearch.setDocumentSearchSort(params)
       result.should.eql(expected)
@@ -352,6 +402,57 @@ describe('documentSearch', () => {
 
       const result = documentSearch.transformToDaishoDocumentObjectFormat(items)
       result.should.eql(expected)
+    })
+  })
+
+  describe('getFilesDataIfPresent', () => {
+    it('should reformat the file data when both "docFile" and "latestFileEffectiveDate" exist', () => {
+      const docFile = ['/file/url']
+      const latestFileEffectiveDate = ['2017-08-28T00:00:00']
+      const fileData = documentSearch.getFilesDataIfPresent(docFile, latestFileEffectiveDate)
+
+      expected = [
+        {
+          effectiveDate: '2017-08-28',
+          fileUrl: '/file/url'
+        }
+      ]
+      fileData.should.eql(expected)
+    })
+
+    it('should reformat the file data when only "docFile" exists', () => {
+      const docFile = ['/file/url']
+      const latestFileEffectiveDate = undefined
+      const fileData = documentSearch.getFilesDataIfPresent(docFile, latestFileEffectiveDate)
+
+      expected = [
+        {
+          fileUrl: '/file/url'
+        }
+      ]
+      fileData.should.eql(expected)
+    })
+
+    it('should reformat the file data when only "latestFileEffectiveDate" exists', () => {
+      const docFile = undefined
+      const latestFileEffectiveDate = ['2017-08-28T00:00:00']
+      const fileData = documentSearch.getFilesDataIfPresent(docFile, latestFileEffectiveDate)
+
+      expected = [
+        {
+          effectiveDate: '2017-08-28'
+        }
+      ]
+      fileData.should.eql(expected)
+    })
+
+    it('should return an empty array when both "docFile" and "latestFileEffectiveDate" are undefined', () => {
+      const docFile = undefined
+      const latestFileEffectiveDate = undefined
+      const fileData = documentSearch.getFilesDataIfPresent(docFile, latestFileEffectiveDate)
+
+      expected = []
+      fileData.should.eql(expected)
     })
   })
 })

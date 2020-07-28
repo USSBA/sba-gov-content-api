@@ -157,12 +157,13 @@ DocumentSearch.prototype.fetchDocuments = async function (queryParams) {
 }
 
 const _documentSearch = new DocumentSearch()
-const { fetchDocuments, transformToDaishoDocumentObjectFormat, setDocumentSearchSort, buildFilters, buildQuery } = _documentSearch
+const { fetchDocuments, transformToDaishoDocumentObjectFormat, setDocumentSearchSort, buildFilters, buildQuery, getFilesDataIfPresent } = _documentSearch
 
 module.exports = {
   fetchDocuments: fetchDocuments.bind(_documentSearch),
   transformToDaishoDocumentObjectFormat: transformToDaishoDocumentObjectFormat.bind(_documentSearch),
   setDocumentSearchSort: setDocumentSearchSort.bind(_documentSearch),
   buildFilters: buildFilters.bind(_documentSearch),
-  buildQuery: buildQuery.bind(_documentSearch)
+  buildQuery: buildQuery.bind(_documentSearch),
+  getFilesDataIfPresent: getFilesDataIfPresent.bind(_documentSearch)
 }
