@@ -1,3 +1,4 @@
+const moment = require('moment')
 const cloudsearch = require('../clients/cloudsearch.js')
 const config = require('../config')
 const endpoint = config.cloudSearch.documentEndpoint
@@ -8,9 +9,11 @@ DocumentSearch.prototype.buildQuery = function (query) {
   const queryStatements = []
   let queryString = ''
   const fieldsToSearch = ['title', 'summary', 'url']
+
   for (const field of fieldsToSearch) {
     queryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
   }
+
   if (queryStatements.length > 1) {
     queryString = `(or ${queryStatements.join(' ')})`
   }
@@ -42,15 +45,13 @@ DocumentSearch.prototype.buildFilters = function (params) {
     activityFilterString = `document_activitys: '${cloudsearch.formatString(params.documentActivity)}'`
   }
 
+  officeFilterString.length > 0 && filters.push(officeFilterString)
   programFilterString.length > 0 && filters.push(programFilterString)
   typeFilterString.length > 0 && filters.push(typeFilterString)
   activityFilterString.length > 0 && filters.push(activityFilterString)
-  if (officeFilterString.length > 0 && filters.length === 0) {
-    filterString += `(or ${officeFilterString})`
-  } else if (officeFilterString.length === 0 && filters.length > 0) {
+
+  if (filters.length > 0) {
     filterString += `(and ${filters.join(' ')})`
-  } else if (officeFilterString.length > 0 && filters.length > 0) {
-    filterString += `(and (or ${officeFilterString}) ${filters.join(' ')})`
   }
 
   return filterString
@@ -87,7 +88,7 @@ DocumentSearch.prototype.getFilesDataIfPresent = function (docFile, latestFileEf
     file.fileUrl = docFile[0]
   }
   if (latestFileEffectiveDate) {
-    file.effectiveDate = latestFileEffectiveDate[0]
+    file.effectiveDate = moment(latestFileEffectiveDate[0]).utc().format('YYYY-MM-DD')
   }
 
   if (Object.keys(file).length > 0) {
@@ -97,17 +98,18 @@ DocumentSearch.prototype.getFilesDataIfPresent = function (docFile, latestFileEf
 
 DocumentSearch.prototype.transformToDaishoDocumentObjectFormat = function (documents) {
   const remappedDocuments = []
+
   for (let i = 0; i < documents.length; i++) {
     const { fields } = documents[i]
     const remappedDocument = {
       id: Number(documents[i].id),
       activitys: fields.document_activitys ? fields.document_activitys : {},
       documentIdNumber: fields.document_id ? fields.document_id[0] : {},
-      documentIdType: fields.document_type ? fields.document_type[0] : {},
-      files: this.getFilesDataIfPresent(document.fields.doc_file, document.fields.latest_file_effective_date),
+      documentIdType: fields.document_type ? fields.document_type[0] : '',
+      files: this.getFilesDataIfPresent(fields.doc_file, fields.latest_file_effective_date),
       office: fields.office ? Number(fields.office[0]) : {},
       programs: fields.document_programs ? fields.document_programs : [],
-      removeDownloadButton: fields.removeDownloadButton ? Number(fields.removeDownloadButton[0]) === 1 : {},
+      removeDownloadButton: fields.remove_download_button ? Number(fields.remove_download_button[0]) === 1 : {},
       summary: fields.summary ? fields.summary[0] : '',
       title: fields.title ? fields.title[0] : '',
       type: 'document',
@@ -118,11 +120,12 @@ DocumentSearch.prototype.transformToDaishoDocumentObjectFormat = function (docum
 
     remappedDocuments.push(remappedDocument)
   }
+
   return remappedDocuments
 }
 
 DocumentSearch.prototype.fetchDocuments = async function (queryParams) {
-  const query = queryParams.searchTerm ? this.buildQuery(queryParams.searchTerm) : 'matchall'
+  const query = (queryParams && queryParams.searchTerm) ? this.buildQuery(queryParams.searchTerm) : 'matchall'
   let cloudParams = {
     query: query, /* required */
     queryParser: 'structured',
@@ -130,18 +133,23 @@ DocumentSearch.prototype.fetchDocuments = async function (queryParams) {
     start: 0,
     return: '_all_fields'
   }
+
   const filters = this.buildFilters(queryParams)
   if (filters.length > 0) {
     cloudParams.filterQuery = filters
   }
+
   const { end, start } = queryParams
   if (start) {
     cloudParams.start = start
   }
+
   if (end) {
     cloudParams.size = end - cloudParams.start
   }
+
   const result = await cloudsearch.runSearch(cloudParams, endpoint)
+
   return Object.assign({}, {
     items: this.transformToDaishoDocumentObjectFormat(result.hits.hit),
     count: result.hits.found
