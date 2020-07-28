@@ -14,7 +14,7 @@ const defaultQueryParams = {
   'program': 'PPP',
   'office': '3948',
   'start': '0',
-  'end': '3',
+  'end': '3'
 }
 
 describe('documentSearch', () => {
@@ -260,7 +260,7 @@ describe('documentSearch', () => {
           id: '20351',
           fields: {
             document_activitys: ['Processing', 'Notice'],
-            document_programs: ['PPP', 'Pandemic News'],
+            document_programs: ['PPP', 'Pandemic News']
           }
         }
       ]
@@ -293,7 +293,7 @@ describe('documentSearch', () => {
         {
           id: '20351',
           fields: {
-            remove_download_button: ['1'],
+            remove_download_button: ['1']
           }
         }
       ]
@@ -326,7 +326,7 @@ describe('documentSearch', () => {
         {
           id: '20351',
           fields: {
-            remove_download_button: ['0'],
+            remove_download_button: ['0']
           }
         }
       ]
