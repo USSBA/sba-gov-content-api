@@ -4,7 +4,8 @@ module.exports = {
     officeEndpoint: process.env.CLOUDSEARCH_OFFICE_ENDPOINT,
     lenderEndpoint: process.env.CLOUDSEARCH_LENDER_ENDPOINT,
     eventEndpoint: process.env.CLOUDSEARCH_EVENT_ENDPOINT,
-    articleEndpoint: process.env.CLOUDSEARCH_ARTICLE_ENDPOINT
+    articleEndpoint: process.env.CLOUDSEARCH_ARTICLE_ENDPOINT,
+    documentEndpoint: process.env.CLOUDSEARCH_DOCUMENT_ENDPOINT
   },
   contentBucket: process.env.CONTENT_BUCKET,
   zipCodeDynamoDbTable: process.env.ZIP_CODE_DYNAMODB_TABLE,

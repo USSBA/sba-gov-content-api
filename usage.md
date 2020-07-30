@@ -413,7 +413,7 @@ The disaster endpoint pulls and returns the disaster.json from S3.
 
 Hit the documents endpoint at `*/documents.json`
 
-The documents endpoint pulls, filters/sorts, and returns the documents.json from S3.
+The documents endpoint is a middleware resource used to construct a query to the AWS cloudsearch domain for documents. The results will be transformed into an analogous object and returned.
 
 | Parameters (Optional) | Description
 |-----------------------|------------------
@@ -445,19 +445,11 @@ Example Response
       'documentIdType': 'example document type',
       'files': [
         {
-          'id': 1111,
-          'type': 'docFile',
           'effectiveDate': '2017-08-28',
-          'expirationDate': null,
-          'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf',
-          'version': '1'
+          'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf'
         }
       ],
-      'officeLink': {
-        'url': '/offices/headquarters/oca',
-        'title': 'Office of Capital Access'
-      },
-      'ombNumber': {},
+      'office': 6442,
       'programs': [
         '7(a)',
         'CDC/504',
@@ -471,7 +463,6 @@ Example Response
       'id': 1111,
       'updated': 1512075693,
       'created': 1504815259,
-      'langCode': 'en',
       'url': '/document/policy-notice-5000-4021-sba-provides-loan-deferments-hurricane-harvey-affected-areas'
     },
     {
@@ -482,19 +473,11 @@ Example Response
       'documentIdType': 'Policy notice',
       'files': [
         {
-          'id': 1112,
-          'type': 'docFile',
           'effectiveDate': '2017-08-28',
-          'expirationDate': null,
-          'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf',
-          'version': '1'
+          'fileUrl': '/sites/default/files/2017-09/5000-4021.pdf'
         }
       ],
-      'officeLink': {
-        'url': '/offices/headquarters/oca',
-        'title': 'Office of Capital Access'
-      },
-      'ombNumber': {},
+      'office': 1234,
       'programs': [
         '7(a)',
         'CDC/504',
@@ -509,7 +492,6 @@ Example Response
       'id': 1112,
       'updated': 1512075693,
       'created': 1504815259,
-      'langCode': 'en',
       'url': '/document/policy-notice-5000-4021-sba-provides-loan-deferments-hurricane-harvey-affected-areas'
     }
   ]
