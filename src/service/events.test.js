@@ -15,7 +15,6 @@ function makeArray (n) {
   return new Array(n).fill(0)
 }
 
-// TODO: remove this describe block when feature flag, getBackendSourceToggle, for events backend is removed
 describe('Event Service for D7', () => {
   let eventClientStub, eventClientCountStub, getBackendSourceToggleStub, clock, todayDateString, tomorrowDateString, sevenDaysFromNowDateString, thirtyDaysFromNowDateString
 
