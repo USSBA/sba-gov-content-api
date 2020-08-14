@@ -5,9 +5,11 @@ An microservice in the SBA.gov to provide an API to search SBA.gov content
 ## Environment Setup
 See [development.md](development.md)
 
+## Usage
+See [usage.md](usage.md)
+
 ## Testing
 1. Unit Tests: `npm run test`
-2. Integration Tests: `npm run test-int`  (requires aws-cli installation)
 
 # Project Details
 
