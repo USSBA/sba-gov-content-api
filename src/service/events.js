@@ -155,8 +155,6 @@ async function fetchTotalLength (params) {
   return totalCount
 }
 
-// TODO: feature flag used here for events via getBackendSourceToggle
-// all other functions in this file can also be removed when feature flag is removed
 async function fetchEvents (query) {
   let result
   let params = translateQueryParamsForD7(query)
