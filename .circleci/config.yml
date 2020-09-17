@@ -57,8 +57,6 @@ workflows:
             - mint
             - qa
             - /int-\w+/
-            - amy
-            - pat
     - upload-package:
         requires: [build-package]
         filters:
@@ -68,8 +66,6 @@ workflows:
           tags:
             only:
             - /int-\w+/
-            - amy
-            - pat
         context: sba-gov-lower
     - upload-package-integration:
         requires: [build-package]
@@ -87,8 +83,6 @@ workflows:
           tags:
             only:
             - /int-\w+/
-            - amy
-            - pat
         context: sba-gov-lower
     - deploy-package-integration:
         requires: [upload-package-integration]
