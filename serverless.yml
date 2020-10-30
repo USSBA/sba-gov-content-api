@@ -1,0 +1,90 @@
+frameworkVersion: '2'
+
+service:
+  name: content-api-sls
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'mint'} # Set the default stage used. Default is mint
+  region: ${opt:region, 'us-east-1'}
+  apiGateway:
+    restApiId: ${ssm:/${self:provider.stage}/content_api/apigw_id}
+    restApiRootResourceId: ${ssm:/${self:provider.stage}/content_api/apigw_root_resource_id}
+  role: ${ssm:/${self:provider.stage}/content_api/lambda_role_arn}
+  environment:
+    CLOUDSEARCH_SEARCH_ENDPOINT: ${self:custom.env.cloudsearch_endpoint}
+    CLOUDSEARCH_ARTICLE_ENDPOINT: ${self:custom.env.cloudsearch_article_endpoint}
+    CLOUDSEARCH_DOCUMENT_ENDPOINT: ${self:custom.env.cloudsearch_document_endpoint}
+    CLOUDSEARCH_EVENT_ENDPOINT: ${self:custom.env.cloudsearch_event_endpoint}
+    CLOUDSEARCH_LENDER_ENDPOINT: ${self:custom.env.cloudsearch_lender_endpoint}
+    CLOUDSEARCH_OFFICE_ENDPOINT: ${self:custom.env.cloudsearch_office_endpoint}
+    CONTENT_BUCKET: ${self:custom.env.content_bucket}
+    ZIP_CODE_DYNAMODB_TABLE: ZipCodes${self:custom.env.account_type}
+    EVENTS_HOSTNAME: ${self:custom.env.events_hostname}
+    EVENTS_API_ENDPOINT: ${self:custom.event_api_hostname}
+    EVENTS_API_COUNT_ENDPOINT: ${self:custom.event_api_count_hostname}
+    EVENTS_BACKEND_SOURCE_DRUPAL_8_TOGGLE: ${self:custom.env.events_backend_source_d8_toggle}
+
+package: 
+  artifact: workspace/sba-gov-content-api.zip
+  excludeDevDependencies: false
+
+functions:
+  content-api:
+    name: ${self:provider.stage}-content-api-serverless
+    handler: index.handler
+    events:
+      - http: "GET api/content/search/{type}"
+      - http: "GET api/content/search/{type}/{id}"
+
+custom: 
+  config:
+    mint:
+      account_type: Lower
+      cloudsearch_endpoint: search-mint-hdgvyg66mwvfnu46tzaszesh5u.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_article_endpoint: search-mint-articles-ils7y5itoblsy3sd45kfw5ozzu.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_document_endpoint: search-mint-documents-2tpy4yqgpjhsgp7z7vrwjogy7i.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_event_endpoint: search-mint-events-ph4a77krpl334zmus2kwr7kwye.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_lender_endpoint: search-mint-sbalenders-qhusrujsxwvtcrae2mjl34sdfu.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_office_endpoint: search-mint-offices-mjhazqnua7k5nqkxojddfhkrw4.us-east-1.cloudsearch.amazonaws.com
+      content_bucket: mint-content-sba-gov
+      events_hostname: wakizashi.mint.ussba.io
+      events_backend_source_d8_toggle: false
+    qa:
+      account_type: Lower
+      cloudsearch_endpoint: search-quality-assurance-qqo7akxk4opeqacn6idpauxqfe.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_article_endpoint: search-quality-assurance-articles-gmkqzpaemimcxwzq4tlex57bie.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_document_endpoint: search-quality-assurance-documents-rhatmfbf7nivvqk5m7lz63suhy.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_event_endpoint: search-production-events-jci4g7uydcf4tiidmfoqxnfckq.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_lender_endpoint: search-mint-sbalenders-qhusrujsxwvtcrae2mjl34sdfu.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_office_endpoint: search-quality-assurance-offices-pdgo52zvxji7pd575iaithdnoi.us-east-1.cloudsearch.amazonaws.com
+      content_bucket: qa-content-sba-gov
+      events_hostname: wakizashi.mint.ussba.io
+      events_backend_source_d8_toggle: false
+    staging:
+      account_type: Upper
+      cloudsearch_endpoint: search-staging-2qt6cxrxhpdkdv5pnjgw54wzqi.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_article_endpoint: search-staging-articles-76kq5y2xjsjtxrx7xxymo5vpkq.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_document_endpoint: placeholder
+      cloudsearch_event_endpoint: placeholder
+      cloudsearch_lender_endpoint: placeholder
+      cloudsearch_office_endpoint: search-staging-offices-igktog6nphm6kuwkkkj52j2rba.us-east-1.cloudsearch.amazonaws.com
+      content_bucket: staging-content-sba-gov
+      events_hostname: wakizashi.staging.sba.gov
+      events_backend_source_d8_toggle: true
+    production:
+      account_type: Upper
+      cloudsearch_endpoint: search-production-b4waq4e3rl6daphct5rtlxjmmm.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_article_endpoint: search-production-articles-w5d7ercmqowge22h773nafgsyy.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_document_endpoint: placeholder
+      cloudsearch_event_endpoint: search-production-events-jci4g7uydcf4tiidmfoqxnfckq.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_lender_endpoint: search-production-sbalenders-k6efyvbchmbwy34fkwygtprid4.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_office_endpoint: search-production-offices-lzpi5yk5h5c6jaa42nqkrtxm6e.us-east-1.cloudsearch.amazonaws.com
+      content_bucket: production-content-sba-gov
+      events_hostname: wakizashi.www.sba.gov
+      events_backend_source_d8_toggle: true
+  event_api_hostname: event-list/drupal7-events-api.json
+  event_api_count_hostname: event-list/drupal7-events-api-count.json
+  env: ${self:custom.config.${self:provider.stage}}
+  
