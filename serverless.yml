@@ -12,6 +12,8 @@ provider:
     restApiId: ${ssm:/${self:provider.stage}/content_api/apigw_id}
     restApiRootResourceId: ${ssm:/${self:provider.stage}/content_api/apigw_root_resource_id}
   role: ${ssm:/${self:provider.stage}/content_api/lambda_role_arn}
+  vpc:
+    subnetIds: ${ssm:/${self:provider.stage}/network/private_subnet_ids}
   environment:
     CLOUDSEARCH_SEARCH_ENDPOINT: ${self:custom.env.cloudsearch_endpoint}
     CLOUDSEARCH_ARTICLE_ENDPOINT: ${self:custom.env.cloudsearch_article_endpoint}
