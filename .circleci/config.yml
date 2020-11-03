@@ -313,24 +313,24 @@ jobs:
           name: deploy
           shell: /bin/bash -eo pipefail
           command: |
-          if [ -z "${CIRCLE_BRANCH}" ]	       
-            then	
-              TARGET_ENVIRONMENT=${CIRCLE_TAG}	
-            else	
-              TARGET_ENVIRONMENT=${CIRCLE_BRANCH}	
-            fi	
+            if [ -z "${CIRCLE_BRANCH}" ]	       
+              then	
+                TARGET_ENVIRONMENT=${CIRCLE_TAG}	
+              else	
+                TARGET_ENVIRONMENT=${CIRCLE_BRANCH}	
+              fi	
 
-            case $TARGET_ENVIRONMENT in	
-              master)	
-                export ENVIRONMENT=mint	
-                ;;
-              *)	
-                export ENVIRONMENT=${CIRCLE_TAG}	
-                ;;	
-            esac
+              case $TARGET_ENVIRONMENT in	
+                master)	
+                  export ENVIRONMENT=mint	
+                  ;;
+                *)	
+                  export ENVIRONMENT=${CIRCLE_TAG}	
+                  ;;	
+              esac
 
-            sudo npm i -g serverless
-            serverless deploy --stage ${ENVIRONMENT}
+              sudo npm i -g serverless
+              serverless deploy --stage ${ENVIRONMENT}
 
   upload-package-with-approval:
     docker:
