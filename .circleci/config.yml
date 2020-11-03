@@ -92,13 +92,13 @@ workflows:
             - master
         context: sba-gov-lower
     - deploy-package-serverless:
-      requires: [build-package]
-      filters:
-        branches:
-          only:
+        requires: [build-package]
+        filters:
+          branches:
+            only:
             - master
-        tags:
-          only:
+          tags:
+            only:
             - qa
             - mint
         context: sba-gov-lower
