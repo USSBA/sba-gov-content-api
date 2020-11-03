@@ -91,6 +91,17 @@ workflows:
             only:
             - master
         context: sba-gov-lower
+    - deploy-package-serverless:
+      requires: [build-package]
+      filters:
+        branches:
+          only:
+            - master
+        tags:
+          only:
+            - qa
+            - mint
+        context: sba-gov-lower
     - hold:
         type: approval
         requires: [build-package]
@@ -291,6 +302,36 @@ jobs:
             export LAMBDA_NAME="${QUALITYASSURANCE}-ContentLambda"
             aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${QUALITYASSURANCE}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
   
+  deploy-package-serverless:
+    docker:
+      - image: cimg/node:12.18
+    steps:
+    - checkout
+    - attach_workspace:
+        at: workspace
+    - run:
+          name: deploy
+          shell: /bin/bash -eo pipefail
+          command: |
+          if [ -z "${CIRCLE_BRANCH}" ]	       
+            then	
+              TARGET_ENVIRONMENT=${CIRCLE_TAG}	
+            else	
+              TARGET_ENVIRONMENT=${CIRCLE_BRANCH}	
+            fi	
+
+            case $TARGET_ENVIRONMENT in	
+              master)	
+                export ENVIRONMENT=mint	
+                ;;
+              *)	
+                export ENVIRONMENT=${CIRCLE_TAG}	
+                ;;	
+            esac
+
+            sudo npm i -g serverless
+            serverless deploy --stage ${ENVIRONMENT}
+
   upload-package-with-approval:
     docker:
       - image: ussba/cc-docker-git-aws:latest
