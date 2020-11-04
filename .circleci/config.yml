@@ -136,7 +136,7 @@ workflows:
             - production
         context: sba-gov-upper
     - deploy-package-serverless-with-approval:
-        requires: [build-package]
+        requires: [hold]
         filters:
           branches:
             ignore:
@@ -390,7 +390,7 @@ jobs:
           name: deploy
           shell: /bin/bash -eo pipefail
           command: |
-          
+
             sudo npm i -g serverless
             serverless deploy --stage ${ENVIRONMENT}
 
