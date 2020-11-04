@@ -392,5 +392,5 @@ jobs:
           command: |
 
             sudo npm i -g serverless
-            serverless deploy --stage ${ENVIRONMENT}
+            serverless deploy --stage ${CIRCLE_TAG}
 
