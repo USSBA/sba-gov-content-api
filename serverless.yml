@@ -68,7 +68,7 @@ custom:
       account_type: Upper
       cloudsearch_endpoint: search-staging-2qt6cxrxhpdkdv5pnjgw54wzqi.us-east-1.cloudsearch.amazonaws.com
       cloudsearch_article_endpoint: search-staging-articles-76kq5y2xjsjtxrx7xxymo5vpkq.us-east-1.cloudsearch.amazonaws.com
-      cloudsearch_document_endpoint: placeholder
+      cloudsearch_document_endpoint: search-staging-documents-5o74pnjfnowxf3qm3wohyyiuyq.us-east-1.cloudsearch.amazonaws.com
       cloudsearch_event_endpoint: placeholder
       cloudsearch_lender_endpoint: placeholder
       cloudsearch_office_endpoint: search-staging-offices-igktog6nphm6kuwkkkj52j2rba.us-east-1.cloudsearch.amazonaws.com
