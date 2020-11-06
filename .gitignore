@@ -61,6 +61,7 @@ typings/
 .next
 
 .serverless
+/workspace
 
 .DS_Store
 probes

@@ -85,7 +85,7 @@ custom:
       cloudsearch_office_endpoint: search-production-offices-lzpi5yk5h5c6jaa42nqkrtxm6e.us-east-1.cloudsearch.amazonaws.com
       content_bucket: production-content-sba-gov
       events_hostname: wakizashi.www.sba.gov
-      events_backend_source_d8_toggle: true
+      events_backend_source_d8_toggle: false
   event_api_hostname: event-list/drupal7-events-api.json
   event_api_count_hostname: event-list/drupal7-events-api-count.json
   env: ${self:custom.config.${self:provider.stage}}
