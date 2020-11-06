@@ -63,7 +63,7 @@ custom:
       cloudsearch_office_endpoint: search-quality-assurance-offices-pdgo52zvxji7pd575iaithdnoi.us-east-1.cloudsearch.amazonaws.com
       content_bucket: qa-content-sba-gov
       events_hostname: wakizashi.mint.ussba.io
-      events_backend_source_d8_toggle: false
+      events_backend_source_d8_toggle: true
     staging:
       account_type: Upper
       cloudsearch_endpoint: search-staging-2qt6cxrxhpdkdv5pnjgw54wzqi.us-east-1.cloudsearch.amazonaws.com
