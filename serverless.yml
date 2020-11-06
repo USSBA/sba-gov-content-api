@@ -68,7 +68,7 @@ custom:
       account_type: Upper
       cloudsearch_endpoint: search-staging-2qt6cxrxhpdkdv5pnjgw54wzqi.us-east-1.cloudsearch.amazonaws.com
       cloudsearch_article_endpoint: search-staging-articles-76kq5y2xjsjtxrx7xxymo5vpkq.us-east-1.cloudsearch.amazonaws.com
-      cloudsearch_document_endpoint: placeholder
+      cloudsearch_document_endpoint: search-staging-documents-5o74pnjfnowxf3qm3wohyyiuyq.us-east-1.cloudsearch.amazonaws.com
       cloudsearch_event_endpoint: placeholder
       cloudsearch_lender_endpoint: placeholder
       cloudsearch_office_endpoint: search-staging-offices-igktog6nphm6kuwkkkj52j2rba.us-east-1.cloudsearch.amazonaws.com
@@ -79,7 +79,7 @@ custom:
       account_type: Upper
       cloudsearch_endpoint: search-production-b4waq4e3rl6daphct5rtlxjmmm.us-east-1.cloudsearch.amazonaws.com
       cloudsearch_article_endpoint: search-production-articles-w5d7ercmqowge22h773nafgsyy.us-east-1.cloudsearch.amazonaws.com
-      cloudsearch_document_endpoint: placeholder
+      cloudsearch_document_endpoint: search-production-documents-64q4y7xq26evomehiepbipitza.us-east-1.cloudsearch.amazonaws.com
       cloudsearch_event_endpoint: search-production-events-jci4g7uydcf4tiidmfoqxnfckq.us-east-1.cloudsearch.amazonaws.com
       cloudsearch_lender_endpoint: search-production-sbalenders-k6efyvbchmbwy34fkwygtprid4.us-east-1.cloudsearch.amazonaws.com
       cloudsearch_office_endpoint: search-production-offices-lzpi5yk5h5c6jaa42nqkrtxm6e.us-east-1.cloudsearch.amazonaws.com
