@@ -36,9 +36,8 @@ DocumentSearch.prototype.buildFilters = function (params) {
   if (params.program && params.program !== 'all') {
     programFilterString = `document_programs: '${cloudsearch.formatString(params.program)}'`
   }
-
-  if (params.documentType && params.documentType !== 'all') {
-    typeFilterString = `document_type: '${cloudsearch.formatString(params.documentType)}'`
+  if (params.type && params.type !== 'all') {
+    typeFilterString = `document_type: '${cloudsearch.formatString(params.type)}'`
   }
 
   if (params.documentActivity && params.documentActivity !== 'all') {
@@ -117,7 +116,6 @@ DocumentSearch.prototype.transformToDaishoDocumentObjectFormat = function (docum
       updated: fields.updated ? Number(fields.updated[0]) : {},
       url: fields.url ? fields.url[0] : ''
     }
-
     remappedDocuments.push(remappedDocument)
   }
 
@@ -133,7 +131,6 @@ DocumentSearch.prototype.fetchDocuments = async function (queryParams) {
     start: 0,
     return: '_all_fields'
   }
-
   const filters = this.buildFilters(queryParams)
   if (filters.length > 0) {
     cloudParams.filterQuery = filters
