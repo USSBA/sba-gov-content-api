@@ -36,10 +36,10 @@ DocumentSearch.prototype.buildFilters = function (params) {
   if (params.program && params.program !== 'all') {
     programFilterString = `document_programs: '${cloudsearch.formatString(params.program)}'`
   }
-  console.log('B--- ', params.documentIdType)
-  if (params.documentIdType && params.documentIdType !== 'all') {
-    console.log('C--- ', params.documentIdType)
-    typeFilterString = `document_type: '${cloudsearch.formatString(params.documentIdType)}'`
+  console.log('B--- ', params.type)
+  if (params.type && params.type !== 'all') {
+    console.log('C--- ', params.type)
+    typeFilterString = `document_type: '${cloudsearch.formatString(params.type)}'`
   }
 
   if (params.documentActivity && params.documentActivity !== 'all') {
