@@ -134,7 +134,7 @@ DocumentSearch.prototype.fetchDocuments = async function (queryParams) {
     start: 0,
     return: '_all_fields'
   }
-
+  console.log('A-- ', queryParams)
   const filters = this.buildFilters(queryParams)
   if (filters.length > 0) {
     cloudParams.filterQuery = filters
