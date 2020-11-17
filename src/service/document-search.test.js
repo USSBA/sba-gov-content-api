@@ -79,7 +79,7 @@ describe('documentSearch', () => {
   describe('buildFilters', () => {
     it('should format filter string for cloudsearch() when multiple params are passed in', () => {
       const params = {
-        'documentType': 'Information notice',
+        'documentIdType': 'Information notice',
         'documentActivity': 'Processing',
         'program': 'PPP',
         'office': '3948'
@@ -89,9 +89,9 @@ describe('documentSearch', () => {
       result.should.eql(expected)
     })
 
-    it('should format filter string for cloudsearch() when only "documentType" is passed in', () => {
+    it('should format filter string for cloudsearch() when only "documentIdType" is passed in', () => {
       const params = {
-        'documentType': 'Information notice'
+        'documentIdType': 'Information notice'
       }
       const expected = "(and document_type: 'Information notice')"
       const result = documentSearch.buildFilters(params)
