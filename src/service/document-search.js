@@ -36,8 +36,9 @@ DocumentSearch.prototype.buildFilters = function (params) {
   if (params.program && params.program !== 'all') {
     programFilterString = `document_programs: '${cloudsearch.formatString(params.program)}'`
   }
-
+  console.log('B--- ', params.documentType)
   if (params.documentType && params.documentType !== 'all') {
+    console.log('C--- ', params.documentType)
     typeFilterString = `document_type: '${cloudsearch.formatString(params.documentType)}'`
   }
 
