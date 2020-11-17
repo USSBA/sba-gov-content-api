@@ -36,9 +36,7 @@ DocumentSearch.prototype.buildFilters = function (params) {
   if (params.program && params.program !== 'all') {
     programFilterString = `document_programs: '${cloudsearch.formatString(params.program)}'`
   }
-  console.log('B--- ', params.type)
   if (params.type && params.type !== 'all') {
-    console.log('C--- ', params.type)
     typeFilterString = `document_type: '${cloudsearch.formatString(params.type)}'`
   }
 
@@ -118,7 +116,6 @@ DocumentSearch.prototype.transformToDaishoDocumentObjectFormat = function (docum
       updated: fields.updated ? Number(fields.updated[0]) : {},
       url: fields.url ? fields.url[0] : ''
     }
-    console.log('A-- ', i, ' ', fields)
     remappedDocuments.push(remappedDocument)
   }
 
@@ -134,7 +131,6 @@ DocumentSearch.prototype.fetchDocuments = async function (queryParams) {
     start: 0,
     return: '_all_fields'
   }
-  console.log('AB-- ', queryParams)
   const filters = this.buildFilters(queryParams)
   if (filters.length > 0) {
     cloudParams.filterQuery = filters
