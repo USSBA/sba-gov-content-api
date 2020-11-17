@@ -36,10 +36,10 @@ DocumentSearch.prototype.buildFilters = function (params) {
   if (params.program && params.program !== 'all') {
     programFilterString = `document_programs: '${cloudsearch.formatString(params.program)}'`
   }
-  console.log('B--- ', params.documentType)
-  if (params.documentType && params.documentType !== 'all') {
-    console.log('C--- ', params.documentType)
-    typeFilterString = `document_type: '${cloudsearch.formatString(params.documentType)}'`
+  console.log('B--- ', params.documentIdType)
+  if (params.documentIdType && params.documentIdType !== 'all') {
+    console.log('C--- ', params.documentIdType)
+    typeFilterString = `document_type: '${cloudsearch.formatString(params.documentIdType)}'`
   }
 
   if (params.documentActivity && params.documentActivity !== 'all') {
@@ -134,7 +134,7 @@ DocumentSearch.prototype.fetchDocuments = async function (queryParams) {
     start: 0,
     return: '_all_fields'
   }
-  console.log('A-- ', queryParams)
+  console.log('AB-- ', queryParams)
   const filters = this.buildFilters(queryParams)
   if (filters.length > 0) {
     cloudParams.filterQuery = filters
