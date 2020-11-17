@@ -117,7 +117,7 @@ DocumentSearch.prototype.transformToDaishoDocumentObjectFormat = function (docum
       updated: fields.updated ? Number(fields.updated[0]) : {},
       url: fields.url ? fields.url[0] : ''
     }
-
+    console.log("A-- ", i , " ", fields)
     remappedDocuments.push(remappedDocument)
   }
 
