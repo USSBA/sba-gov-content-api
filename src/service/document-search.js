@@ -37,8 +37,12 @@ DocumentSearch.prototype.buildFilters = function (params) {
     programFilterString = `document_programs: '${cloudsearch.formatString(params.program)}'`
   }
 
-  if ((params.type && params.type !== 'all') || (params.documentType && params.documentType !== 'all')) {
+  if (params.type && params.type !== 'all') {
     typeFilterString = `document_type: '${cloudsearch.formatString(params.type)}'`
+  }
+
+  if (params.documentType && params.documentType !== 'all') {
+    typeFilterString = `document_type: '${cloudsearch.formatString(params.documentType)}'`
   }
 
   if (params.documentActivity && params.documentActivity !== 'all') {
