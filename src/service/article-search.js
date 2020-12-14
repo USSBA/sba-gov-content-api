@@ -46,10 +46,13 @@ ArticleSearch.prototype.buildFilters = function (params) {
   }
 
   if (params.program && params.program !== 'all') {
+    console.log('program ', params.program)
     programFilterString = `article_programs: '${cloudsearch.formatString(params.program)}'`
   }
 
+  console.log('A ---- articleCategory ', params.articleCategory)
   if (params.articleCategory && params.articleCategory !== 'all') {
+    console.log('B ---- articleCategory ', params.articleCategory)
     categoryFilterString = `article_category: '${cloudsearch.formatString(params.articleCategory)}'`
   }
 
@@ -120,6 +123,7 @@ ArticleSearch.prototype.fetchArticles = async function (queryParams) {
     start: 0,
     return: '_all_fields'
   }
+  console.log('A ----- query params ', queryParams)
   const filters = this.buildFilters(queryParams)
   if (filters.length > 0) {
     cloudParams.filterQuery = filters
