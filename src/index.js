@@ -47,11 +47,9 @@ async function run (event) {
       statusCode: fetchResult.statusCode,
       body: resultBody,
       headers: {
-        'Content-Type': returnType
-        'Access-Control-Allow-Headers': "Content-Type",
+        'Content-Type': returnType,
         'Access-Control-Allow-Origin': "*",
         'Access-Control-Allow-Methods': "GET"
-
       }
     }
   } else {
