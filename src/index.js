@@ -48,8 +48,9 @@ async function run (event) {
       body: resultBody,
       headers: {
         'Content-Type': returnType
-        'Access-Control-Allow-Headers' : "*",
-        'Access-Control-Allow-Methods": "GET"
+        'Access-Control-Allow-Headers': "Content-Type",
+        'Access-Control-Allow-Origin': "*",
+        'Access-Control-Allow-Methods': "GET"
 
       }
     }
