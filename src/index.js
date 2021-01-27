@@ -48,8 +48,8 @@ async function run (event) {
       body: resultBody,
       headers: {
         'Content-Type': returnType,
-        'Access-Control-Allow-Origin': "*",
-        'Access-Control-Allow-Methods': "GET"
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET'
       }
     }
   } else {
