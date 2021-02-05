@@ -53,6 +53,17 @@ custom:
       content_bucket: mint-content-sba-gov
       events_hostname: wakizashi.mint.ussba.io
       events_backend_source_d8_toggle: false
+    demo:
+      account_type: Lower
+      cloudsearch_endpoint: placeholder
+      cloudsearch_article_endpoint: placeholder
+      cloudsearch_document_endpoint: placeholder
+      cloudsearch_event_endpoint: placeholder
+      cloudsearch_lender_endpoint: placeholder
+      cloudsearch_office_endpoint: placeholder
+      content_bucket: demo-content-sba-gov
+      events_hostname: wakizashi.mint.ussba.io
+      events_backend_source_d8_toggle: true
     qa:
       account_type: Lower
       cloudsearch_endpoint: search-quality-assurance-qqo7akxk4opeqacn6idpauxqfe.us-east-1.cloudsearch.amazonaws.com
