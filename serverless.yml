@@ -55,12 +55,12 @@ custom:
       events_backend_source_d8_toggle: false
     demo:
       account_type: Lower
-      cloudsearch_endpoint: placeholder
-      cloudsearch_article_endpoint: placeholder
-      cloudsearch_document_endpoint: placeholder
-      cloudsearch_event_endpoint: placeholder
-      cloudsearch_lender_endpoint: placeholder
-      cloudsearch_office_endpoint: placeholder
+      cloudsearch_endpoint: search-demo-433nhd76jp533uquucyttquv34.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_article_endpoint: search-demo-articles-wj2lablekfrkohfjobmosbiirq.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_document_endpoint: search-demo-documents-ha3rrjptfdasis7c4dvqgcnmbu.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_event_endpoint: search-demo-events-l5eh5wkrn2k7miskquc4jvwiim.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_lender_endpoint: search-mint-sbalenders-qhusrujsxwvtcrae2mjl34sdfu.us-east-1.cloudsearch.amazonaws.com   # Intentionally used mint endpoint
+      cloudsearch_office_endpoint: search-demo-offices-7txat4q5awsn7mupdaro6zggsu.us-east-1.cloudsearch.amazonaws.com
       content_bucket: demo-content-sba-gov
       events_hostname: wakizashi.mint.ussba.io
       events_backend_source_d8_toggle: true
