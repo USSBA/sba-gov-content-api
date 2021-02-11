@@ -55,7 +55,7 @@ workflows:
             - production
             - staging
             - mint
-            - qa
+            - demo
             - /int-\w+/
     - upload-package:
         requires: [build-package]
@@ -85,7 +85,7 @@ workflows:
             - master
           tags:
             only:
-            - qa
+            - demo
             - mint
         context: sba-gov-lower
     - hold:
