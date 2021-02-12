@@ -64,6 +64,17 @@ custom:
       content_bucket: demo-content-sba-gov
       events_hostname: wakizashi.mint.ussba.io
       events_backend_source_d8_toggle: true
+    venus:
+      account_type: Lower
+      cloudsearch_endpoint: search-mint-hdgvyg66mwvfnu46tzaszesh5u.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_article_endpoint: search-mint-articles-ils7y5itoblsy3sd45kfw5ozzu.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_document_endpoint: search-mint-documents-2tpy4yqgpjhsgp7z7vrwjogy7i.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_event_endpoint: search-mint-events-ph4a77krpl334zmus2kwr7kwye.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_lender_endpoint: search-mint-sbalenders-qhusrujsxwvtcrae2mjl34sdfu.us-east-1.cloudsearch.amazonaws.com
+      cloudsearch_office_endpoint: search-mint-offices-mjhazqnua7k5nqkxojddfhkrw4.us-east-1.cloudsearch.amazonaws.com
+      content_bucket: venus-content-sba-gov
+      events_hostname: wakizashi.mint.ussba.io
+      events_backend_source_d8_toggle: false
     staging:
       account_type: Upper
       cloudsearch_endpoint: search-staging-2qt6cxrxhpdkdv5pnjgw54wzqi.us-east-1.cloudsearch.amazonaws.com
