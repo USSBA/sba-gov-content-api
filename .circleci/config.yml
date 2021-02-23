@@ -57,28 +57,7 @@ workflows:
             - mint
             - demo
             - venus
-            - /int-\w+/
-    - upload-package:
-        requires: [build-package]
-        filters:
-          branches:
-            ignore:
-            - /.*/
-          tags:
-            only:
-            - /int-\w+/
-        context: sba-gov-lower
     - deploy-package:
-        requires: [upload-package]
-        filters:
-          branches:
-            ignore:
-            - /.*/
-          tags:
-            only:
-            - /int-\w+/
-        context: sba-gov-lower
-    - deploy-package-serverless:
         requires: [build-package]
         filters:
           branches:
@@ -193,46 +172,7 @@ jobs:
           root: workspace
           paths:
             - sba-gov-content-api.zip
-  upload-package:
-    docker:
-      - image: ussba/cc-docker-git-aws:latest
-    steps:
-      - checkout
-      - attach_workspace:
-          at: workspace
-      - run:
-          name: publish
-          shell: /bin/bash -eo pipefail
-          command: |
-
-            export ENVIRONMENT=${CIRCLE_TAG}
-
-            export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
-            export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
-
-            aws s3api put-object --body "workspace/sba-gov-content-api.zip" --bucket "${BUCKET_NAME}" --key "${ENVIRONMENT}/sba-gov-content-api.zip"
-  
   deploy-package:
-    docker:
-      - image: ussba/cc-docker-git-aws:latest
-    steps:
-      - checkout
-      - run:
-          name: deploy
-          shell: /bin/bash -eo pipefail
-          command: |
-            
-            export ENVIRONMENT=${CIRCLE_TAG}
-            
-            export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
-            export AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT:-json}
-
-            export VERSION_ID=$(aws s3api list-object-versions --bucket ${BUCKET_NAME} --prefix "${ENVIRONMENT}/sba-gov-content-api.zip" | jq '.Versions[0].VersionId')
-            export LAMBDA_NAME="${ENVIRONMENT}-ContentLambda"
-
-            aws lambda update-function-code --function-name "${LAMBDA_NAME}" --s3-bucket "${BUCKET_NAME}" --s3-key "${ENVIRONMENT}/sba-gov-content-api.zip" --s3-object-version "${VERSION_ID}"
-
-  deploy-package-serverless:
     docker:
       - image: cimg/node:12.18
     steps:
