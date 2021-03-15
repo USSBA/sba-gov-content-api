@@ -24,7 +24,6 @@ Use `./push-tag.sh <environment name>`
 1. Create a test file: `cp local-testing/test-event.json_template local-testing/test-event.json`
 1. Update `local-testing/test-event.json`
 1. `npm run test-local` 
-#### *TODO* replace ^^^^ with SAM LOCAL (See https://github.com/awslabs/aws-sam-cli)
 
 ## Required Environment Variables
 See [config.js](src/config.js) for details
