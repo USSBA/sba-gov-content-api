@@ -5,7 +5,26 @@
 # UPPER_AWS_KEY=
 # UPPER_AWS_SECRET=
 
-version: 2
+version: 2.1
+
+executors:
+  node:
+    docker:
+    - image: cimg/node:12.13
+
+commands:
+  restore-npm-cache:
+    steps:
+      - restore_cache:
+          keys:
+          - v3-dependencies-{{ checksum "package-lock.json" }}
+  save-npm-cache:
+    steps:
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v3-dependencies-{{ checksum "package-lock.json" }}
+
 workflows:
   version: 2
   test-build-deploy:
@@ -17,14 +36,6 @@ workflows:
             - /.*/
           tags:
             only: 
-            - /.*/
-    - poirot:
-        filters:
-          branches:
-            only:
-            - /.*/
-          tags:
-            only:
             - /.*/
     - npm-test:
         requires: [cache-dependencies]
@@ -45,7 +56,7 @@ workflows:
             only:
             - /.*/
     - build-package:
-        requires: [npm-test, poirot, test-lint]
+        requires: [npm-test, test-lint]
         filters:
           branches:
             only:
@@ -94,65 +105,38 @@ workflows:
         context: sba-gov-upper
 jobs:
   cache-dependencies:
-    docker:
-      - image: circleci/node:12.13
+    executor: node
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - v2-dependencies-{{ checksum "package.json" }}
+      - restore-npm-cache
       - run:
           name: install dependencies
           command: |
             npm install --silent --no-save
-      - save_cache:
-          paths:
-            - ./node_modules
-          key: v2-dependencies-{{ checksum "package.json" }}
+      - save-npm-cache
   npm-test:
-    docker:
-    - image: circleci/node:12.13
+    executor: node
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - v2-dependencies-{{ checksum "package.json" }}
+      - restore-npm-cache
       - run:
           name: run mocha
           command: |
             npm test
   test-lint:
-    docker:
-    - image: circleci/node:12.13
+    executor: node
     steps:
       - checkout
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v2-dependencies-{{ checksum "package.json" }}
+      - restore-npm-cache
       - run:
           name: run lint
           command: |
             npm run lint-no-fix
-  poirot:
-    docker:
-    - image: circleci/python:latest
-    steps:
-    - checkout
-    - run:
-       name: Run poirot tests
-       command: |
-         sudo pip install poirot
-         poirot --patterns='https://raw.githubusercontent.com/DCgov/poirot/master/poirot/patterns/default.txt'
-         poirot --patterns='https://raw.githubusercontent.com/DCgov/poirot-patterns/master/financial.txt'
   build-package:
-    docker:
-      - image: circleci/node:12.13
+    executor: node
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - v2-dependencies-{{ checksum "package.json" }}
+      - restore-npm-cache
       - run:
           name: create zip package
           command: |
@@ -173,8 +157,7 @@ jobs:
           paths:
             - sba-gov-content-api.zip
   deploy-package:
-    docker:
-      - image: cimg/node:12.18
+    executor: node
     steps:
     - checkout
     - attach_workspace:
@@ -203,8 +186,7 @@ jobs:
               serverless deploy --stage ${ENVIRONMENT}
 
   deploy-package-serverless-with-approval:
-    docker:
-      - image: cimg/node:12.18
+    executor: node
     steps:
     - checkout
     - attach_workspace:
