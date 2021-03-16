@@ -37,14 +37,6 @@ workflows:
           tags:
             only: 
             - /.*/
-    - poirot:
-        filters:
-          branches:
-            only:
-            - /.*/
-          tags:
-            only:
-            - /.*/
     - npm-test:
         requires: [cache-dependencies]
         filters:
@@ -64,7 +56,7 @@ workflows:
             only:
             - /.*/
     - build-package:
-        requires: [npm-test, poirot, test-lint]
+        requires: [npm-test, test-lint]
         filters:
           branches:
             only:
