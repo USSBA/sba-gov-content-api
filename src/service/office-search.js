@@ -27,7 +27,7 @@ function buildQuery (query) {
 
 function buildFilters (service, type) {
   const officeTypes = type ? type.split(',') : []
-  const formattedTypes = officeTypes.map((type) => { return `office_type:${cloudsearch.formatString(type)}` })
+  const formattedTypes = officeTypes.map((type) => { return `office_type:'${cloudsearch.formatString(type)}'` })
   let filters = [
     service ? `office_service: '${cloudsearch.formatString(service)}'` : null,
     formattedTypes.length > 0 ? `(or ${formattedTypes.join(' ')})` : null
