@@ -14,7 +14,7 @@ function buildQuery (query) {
   let queryString = `type: 'office'`
 
   if (query) {
-    const fieldsToSearch = ['title', 'location_name', 'office_type']
+    const fieldsToSearch = ['title', 'location_name', 'office_type', '_id']
     for (const field of fieldsToSearch) {
       queryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
     }
