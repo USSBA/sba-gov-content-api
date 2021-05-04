@@ -184,19 +184,19 @@ describe('# Office Search', () => {
       result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
     })
 
-    it('should return result when query by id', async () => {
-      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
-      officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
-      let result = await officeSearch.fetchOffices({ id: '5663' })
-      console.log('result is >>', result.hit)
-      console.log('result count is', result.hit.count)
-      officeSearchRunSearchStub.callCount.should.eql(1)
-      console.log(officeSearchRunSearchStub.callCount)
-      officeSearchRunSearchStub.calledWith({
-        query: `type: 'office' _id: '5663'`
-      }).should.be.true
-      console.log('called with >>>>>>', officeSearchRunSearchStub)
-    })
+    // it('should return result when query by id', async () => {
+    //   dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+    //   officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
+    //   let result = await officeSearch.fetchOffices({ id: '5663' })
+    //   console.log('result is >>', result.hit)
+    //   console.log('result count is', result.hit.count)
+    //   officeSearchRunSearchStub.callCount.should.eql(1)
+    //   console.log(officeSearchRunSearchStub.callCount)
+    //   officeSearchRunSearchStub.calledWith({
+    //     query: `type: 'office' _id: '5663'`
+    //   }).should.be.true
+    //   console.log('called with >>>>>>', officeSearchRunSearchStub)
+    // })
 
     it('should enter the lat and long into the params for cloudsearch query', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
