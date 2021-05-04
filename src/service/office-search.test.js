@@ -184,19 +184,23 @@ describe('# Office Search', () => {
       result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
     })
 
-    // it('should return result when query by id', async () => {
-    //   dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
-    //   officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
-    //   let result = await officeSearch.fetchOffices({ id: '5663' })
-    //   console.log('result is >>', result.hit)
-    //   console.log('result count is', result.hit.count)
-    //   officeSearchRunSearchStub.callCount.should.eql(1)
-    //   console.log(officeSearchRunSearchStub.callCount)
-    //   officeSearchRunSearchStub.calledWith({
-    //     query: `type: 'office' _id: '5663'`
-    //   }).should.be.true
-    //   console.log('called with >>>>>>', officeSearchRunSearchStub)
-    // })
+    it('should return result when query by id', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
+      await officeSearch.fetchOffices({ id: '5663', address: '59717' })
+
+      officeSearchRunSearchStub.callCount.should.eql(1)
+      officeSearchRunSearchStub.calledWith({
+        query: '(or _id: 5663)',
+        filterQuery: null,
+        return: '_all_fields,distance',
+        sort: 'distance asc',
+        queryParser: 'structured',
+        size: 20,
+        start: 0,
+        expr: '{"distance":"haversin(41.033347,-73.568040,geolocation.latitude,geolocation.longitude)"}'
+      }).should.be.true
+    })
 
     it('should enter the lat and long into the params for cloudsearch query', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)

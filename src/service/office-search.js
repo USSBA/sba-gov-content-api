@@ -9,19 +9,25 @@ const defaultOfficeGeocode = {
   longitude: -77.014647
 }
 
-function buildQuery (query) {
+function buildQuery (query, id) {
   const queryStatements = []
   let queryString = `type: 'office'`
 
   if (query) {
-    const fieldsToSearch = ['title', 'location_name', 'office_type', '_id']
+    const fieldsToSearch = ['title', 'location_name', 'office_type']
     for (const field of fieldsToSearch) {
       queryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
     }
   }
-  if (queryStatements.length > 1) {
+
+  if (id) {
+    queryStatements.push(`_id: ${id}`)
+  }
+
+  if (queryStatements.length > 1 || id) {
     queryString = `(or ${queryStatements.join(' ')})`
   }
+
   return queryString
 }
 
@@ -64,10 +70,10 @@ function buildDefaultOfficeQueryParams (geo) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, q, service, type, distance } = query // eslint-disable-line id-length
+  const { pageSize, start, q, service, type, distance, id } = query // eslint-disable-line id-length
   const { latitude, longitude } = geo
   const filterString = buildFilters(service, type, distance)
-  const queryString = buildQuery(q)
+  const queryString = buildQuery(q, id)
   const defaultPageSize = 20
   const defaultStart = 0
   let params = {
@@ -95,6 +101,7 @@ async function fetchOffices (query) {
   const { address, mapCenter } = queryObj
 
   let geo = await location.generateGeocode(address, mapCenter)
+
   const params = buildParams(queryObj, geo)
   try {
     const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
