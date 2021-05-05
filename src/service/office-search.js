@@ -98,7 +98,6 @@ async function fetchOffices (query) {
   const { address, mapCenter } = queryObj
 
   let geo = await location.generateGeocode(address, mapCenter)
-
   const params = buildParams(queryObj, geo)
   try {
     const result = await cloudsearch.runSearch(params, endpoint) // call the module.exports version for stubbing during testing
