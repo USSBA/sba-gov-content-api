@@ -187,7 +187,7 @@ describe('# Office Search', () => {
     it('should return result when query by id', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
-      await officeSearch.fetchOffices({ id: '5663', address: '59717' })
+      await officeSearch.fetchOffices({ officeId: '5663', address: '59717' })
 
       officeSearchRunSearchStub.callCount.should.eql(1)
       officeSearchRunSearchStub.calledWith({

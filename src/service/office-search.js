@@ -67,10 +67,10 @@ function buildDefaultOfficeQueryParams (geo) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, q, service, type, distance, id } = query // eslint-disable-line id-length
+  const { pageSize, start, q, service, type, distance, officeId } = query // eslint-disable-line id-length
   const { latitude, longitude } = geo
   const filterString = buildFilters(service, type, distance)
-  const queryString = buildQuery(q, id)
+  const queryString = buildQuery(q, officeId)
   const defaultPageSize = 20
   const defaultStart = 0
   let params = {
