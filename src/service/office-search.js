@@ -19,15 +19,12 @@ function buildQuery (query, id) {
       queryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
     }
   }
-
   if (id) {
     queryStatements.push(`_id: ${id}`)
   }
-
   if (queryStatements.length > 1 || id) {
     queryString = `(or ${queryStatements.join(' ')})`
   }
-
   return queryString
 }
 
