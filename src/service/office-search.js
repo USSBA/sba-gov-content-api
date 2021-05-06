@@ -9,7 +9,7 @@ const defaultOfficeGeocode = {
   longitude: -77.014647
 }
 
-function buildQuery (query) {
+function buildQuery (query, id) {
   const queryStatements = []
   let queryString = `type: 'office'`
 
@@ -19,7 +19,10 @@ function buildQuery (query) {
       queryStatements.push(`${field}: '${cloudsearch.formatString(query)}'`)
     }
   }
-  if (queryStatements.length > 1) {
+  if (id) {
+    queryStatements.push(`_id: ${id}`)
+  }
+  if (queryStatements.length > 1 || id) {
     queryString = `(or ${queryStatements.join(' ')})`
   }
   return queryString
@@ -64,10 +67,10 @@ function buildDefaultOfficeQueryParams (geo) {
 }
 
 function buildParams (query, geo) {
-  const { pageSize, start, q, service, type, distance } = query // eslint-disable-line id-length
+  const { pageSize, start, q, service, type, distance, officeId } = query // eslint-disable-line id-length
   const { latitude, longitude } = geo
   const filterString = buildFilters(service, type, distance)
-  const queryString = buildQuery(q)
+  const queryString = buildQuery(q, officeId)
   const defaultPageSize = 20
   const defaultStart = 0
   let params = {
