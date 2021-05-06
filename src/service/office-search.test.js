@@ -129,7 +129,7 @@ describe('# Office Search', () => {
       result.start.should.eql(exampleCloudSearchEmptyResponse.hits.start)
     })
 
-    it('should convert distance from miles to kg when address is present', async () => {
+    it('should convert distance from miles to kg when address', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchResponse)
       const kilometersToMiles = 0.621371
