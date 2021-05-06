@@ -82,6 +82,7 @@ function buildParams (query, geo) {
     size: pageSize || defaultPageSize,
     start: start || defaultStart
   }
+
   if (latitude && longitude) {
     params = Object.assign({}, params, {
       sort: 'distance asc',
@@ -89,6 +90,7 @@ function buildParams (query, geo) {
       expr: `{"distance":"haversin(${latitude},${longitude},geolocation.latitude,geolocation.longitude)"}`
     })
   }
+
   return params
 }
 
@@ -106,7 +108,7 @@ async function fetchOffices (query) {
       const newHitList = hits.hit.map(item => {
         let _item = item
         if (item && item.exprs && item.exprs.distance >= 0) {
-          if (!address) {
+          if (!address || !item.geolocation) {
             _item = Object.assign({}, item)
             delete _item.exprs
           } else {
