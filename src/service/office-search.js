@@ -106,7 +106,7 @@ async function fetchOffices (query) {
       const newHitList = hits.hit.map(item => {
         let _item = item
         if (item && item.exprs && item.exprs.distance >= 0) {
-          if (!address) {
+          if (!address || !item.fields.geolocation) {
             _item = Object.assign({}, item)
             delete _item.exprs
           } else {

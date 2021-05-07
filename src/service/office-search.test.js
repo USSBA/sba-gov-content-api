@@ -35,6 +35,34 @@ let exampleDynamoDBResponse = {
   ScannedCount: 1
 }
 
+let exampleCloudSearchNoGeoResponse = {
+  status: { timems: 3, rid: '3sCN9b4slBwKlnJa' },
+  hits: {
+    found: 526,
+    start: 0,
+    hit: [
+      {
+        id: '5663',
+        fields: {
+          location_city: ['Bozeman'],
+          location_state: ['MT'],
+          location_zipcode: ['59717'],
+          location_name: ['Bozeman'],
+          location_hours_of_operation: ['Monday through Friday from 9 a.m. to 5 p.m.'],
+          title: ['406 Labs'],
+          office_type: ['Startup accelerator'],
+          office_website: ['http://www.montana.edu/launchpad/accelerator.html'],
+          type: ['office'],
+          location_street_address: ['251 A&B Strand Union Building']
+        },
+        exprs: {
+          distance: 100
+        }
+      }
+    ]
+  }
+}
+
 let exampleCloudSearchResponse = {
   status: { timems: 3, rid: '3sCN9b4slBwKlnJa' },
   hits: {
@@ -157,6 +185,21 @@ describe('# Office Search', () => {
       let result = await officeSearch.fetchOffices({ mapCenter: '1,1' })
       result.hit[0].hasOwnProperty('exprs').should.be.false
       result.hit[1].hasOwnProperty('exprs').should.be.false
+    })
+
+    it('should not return distance when no geolocation is present in the data for district office', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchNoGeoResponse)
+    })
+
+    it('should not return city when no geolocation is present in the data for district office', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchNoGeoResponse)
+    })
+
+    it('should return distance when no geolocation is present in the data non district offices', async () => {
+      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
+      officeSearchRunSearchStub.returns(exampleCloudSearchNoGeoResponse)
     })
 
     it('should return distance when there is an address parameter present', async () => {
