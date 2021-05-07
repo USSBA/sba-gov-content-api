@@ -190,16 +190,8 @@ describe('# Office Search', () => {
     it('should not return distance when no geolocation is present in the data for district office', async () => {
       dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
       officeSearchRunSearchStub.returns(exampleCloudSearchNoGeoResponse)
-    })
-
-    it('should not return city when no geolocation is present in the data for district office', async () => {
-      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
-      officeSearchRunSearchStub.returns(exampleCloudSearchNoGeoResponse)
-    })
-
-    it('should return distance when no geolocation is present in the data non district offices', async () => {
-      dynamoDbClientQueryStub.returns(exampleDynamoDBResponse)
-      officeSearchRunSearchStub.returns(exampleCloudSearchNoGeoResponse)
+      let result = await officeSearch.fetchOffices({ address: '21202' })
+      result.hit[0].hasOwnProperty('exprs').should.be.false
     })
 
     it('should return distance when there is an address parameter present', async () => {
