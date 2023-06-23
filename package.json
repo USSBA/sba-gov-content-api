@@ -26,9 +26,9 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chai-subset": "^1.6.0",
-    "mocha": "~6.2.0",
+    "mocha": "~10.2.0",
     "sinon": "~7.4.1",
-    "standard": "^12.0.0"
+    "standard": "^17.1.0"
   },
   "dependencies": {
     "accept-language-parser": "^1.5.0",
@@ -40,7 +40,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
-    "snyk": "^1.518.0"
+    "snyk": "^1.1184.0"
   },
   "snyk": true
 }
